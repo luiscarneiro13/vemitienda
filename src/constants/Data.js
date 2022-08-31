@@ -1,4 +1,4 @@
-const CATEGORIES = [
+export const CATEGORIES = [
     { 'id': '0', 'name': 'Todas' },
     { 'id': '1', 'name': 'Categoría 1' },
     { 'id': '2', 'name': 'Categoría 2' },
@@ -14,26 +14,65 @@ const CATEGORIES = [
     { 'id': '12', 'name': 'Categoría 12' },
 ]
 
-const PLANTAS = [
+export const PRODUCTS = [
     {
         id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-        title: "Mi plantita 1",
-        description: "lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        image: 'https://www.thespruce.com/thmb/xm6GZcLawJ5A2XtxUQ390AXdL2A=/2761x1553/smart/filters:no_upscale()/difference-between-cacti-and-succulents-3976741-hero-fdb0b4d4197a4796b86dbdf39ebf026a.jpg'
+        title: "Laptop",
+        category: "Electrónica",
+        image: 'https://mercado.com.ar/wp/wp-content/uploads/2021/11/electro%CC%81nicos-1.jpg'
     },
     {
         id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-        title: "Mi plantita 2",
-        description: 'lorem ipsum dolor sit amet, consectetur',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbwiKAiMChPFzq15hWk2rTv8oew0UkLOPS4g&usqp=CAU'
+        title: "Zapatos",
+        category: 'Calzado',
+        image: 'https://vasari.vteximg.com.br/arquivos/ids/203791-500-500/VZC174532-BL-39.jpg?v=637862619614930000'
 
     },
     {
         id: "58694a0f-3da1-471f-bd96-145571e29d72",
-        title: "Mi plantita 3",
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5iQ2zS8jK3SYD2gCmX5TjR3iSFWQVe9C5KQ&usqp=CAU'
+        title: "Collares",
+        category:'Bisutería',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nhupQ1QALr-KSaC-tucgU4EUnHqdEfKFZw&usqp=CAU'
+
+    },
+    {
+        id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba1",
+        title: "Laptop",
+        category: "Electrónica",
+        image: 'https://mercado.com.ar/wp/wp-content/uploads/2021/11/electro%CC%81nicos-1.jpg'
+    },
+    {
+        id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f631",
+        title: "Zapatos",
+        category: 'Calzado',
+        image: 'https://vasari.vteximg.com.br/arquivos/ids/203791-500-500/VZC174532-BL-39.jpg?v=637862619614930000'
+
+    },
+    {
+        id: "58694a0f-3da1-471f-bd96-145571e29d721",
+        title: "Collares",
+        category:'Bisutería',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nhupQ1QALr-KSaC-tucgU4EUnHqdEfKFZw&usqp=CAU'
+
+    },
+    {
+        id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba12",
+        title: "Laptop",
+        category: "Electrónica",
+        image: 'https://mercado.com.ar/wp/wp-content/uploads/2021/11/electro%CC%81nicos-1.jpg'
+    },
+    {
+        id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f6312",
+        title: "Zapatos",
+        category: 'Calzado',
+        image: 'https://vasari.vteximg.com.br/arquivos/ids/203791-500-500/VZC174532-BL-39.jpg?v=637862619614930000'
+
+    },
+    {
+        id: "58694a0f-3da1-471f-bd96-145571e29d7212",
+        title: "Collares",
+        category:'Bisutería',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nhupQ1QALr-KSaC-tucgU4EUnHqdEfKFZw&usqp=CAU'
 
     },
 ]
-
-module.exports = { CATEGORIES, PLANTAS }

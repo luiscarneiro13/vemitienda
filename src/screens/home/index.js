@@ -12,6 +12,8 @@ import { selectDB } from '../../constants/DataBase'
 import { addCategories } from '../../redux/slices/categoriesSlice'
 import * as Func from '../add/Functions'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { PRODUCTS } from '../../constants/Data'
+
 
 export default function Index() {
     const dispatch = useDispatch()
@@ -73,7 +75,7 @@ export default function Index() {
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                     <ScrollHorizontal categories={categories} filterCategory={(item) => filterCategory(item)} />
                 </View>
-                <CardCustom data={plants} onClick={onClickCardCustom} />
+                <CardCustom data={PRODUCTS} onClick={onClickCardCustom} />
             </View>
         </View>
     )
