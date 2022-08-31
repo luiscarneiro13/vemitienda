@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Mis Plantitas",
-    "slug": "mis_plantitas",
+    "name": "Ve mi Tienda",
+    "slug": "ve_mi_tienda",
     "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

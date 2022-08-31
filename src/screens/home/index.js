@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { ActivityIndicator, Alert, View } from 'react-native'
+import { StatusBar, View } from 'react-native'
 import Header from '../../components/Header'
 import Search from '../../components/Search'
 import CardCustom from '../../components/CardCustom'

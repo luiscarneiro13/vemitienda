@@ -1,20 +1,20 @@
-import { View, Text, StyleSheet, TextInput, Image } from 'react-native'
 import React from 'react'
+import { View, Text, StyleSheet, TextInput, Image } from 'react-native'
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+
+MIcon.loadFont()
 
 export default function Search({ query, onChange }) {
     return (
         <View style={styles.container}>
             <TextInput
                 placeholder="Buscar..."
-                placeholderTextColor="#b1e5d3"
+                placeholderTextColor="#0c77c340"
                 style={styles.text}
                 value={query || ''}
                 onChangeText={(text) => onChange(text)}
             />
-            <Image
-                source={require('../images/3.png')}
-                style={styles.image}
-            />
+            <MIcon name={'magnify'} size={30} color={'#0c77c340'} />
         </View>
     )
 }

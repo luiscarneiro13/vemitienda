@@ -1,21 +1,22 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, StatusBar } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 
 export default function Header() {
 
-    const colors = ["rgba(42,174,124,1)", "transparent"]
+    const colors = ["rgba(412,119,195,1)", "transparent"]
 
     return (
         <>
-            <LinearGradient colors={colors} style={styles.gradient} />
+            <StatusBar translucent backgroundColor="transparent" />
+            <LinearGradient colors={["rgba(412,119,195,1)", "transparent"]} style={styles.gradient} />
             <View style={styles.header}>
                 <View style={styles.headerTitle}>
                     <Image
                         source={require('../images/icon.png')}
                         style={styles.image}
                     />
-                    <Text style={styles.title}>Mis Plantitas</Text>
+                    <Text style={styles.title}>Ve mi Tienda</Text>
                 </View>
             </View>
         </>
@@ -24,7 +25,7 @@ export default function Header() {
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: "#00a46c",
+        backgroundColor: "#0c77c3",
         height: "24%",
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,

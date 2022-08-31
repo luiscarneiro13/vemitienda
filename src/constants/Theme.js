@@ -5,7 +5,7 @@ const THEME = {
     roundness: 2,
     colors: {
         ...DefaultTheme.colors,
-        primary: 'green',
+        primary: '#0c77c3',
         secondary: '#333333',
         background: '#FFFFFF',
     },

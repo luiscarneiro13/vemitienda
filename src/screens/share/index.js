@@ -18,7 +18,7 @@ export default function Share() {
     const [html, setHtml] = useState()
     const name = 'Nombre de ejemplo para el pdf'
     const [plants, setPlants] = useState([])
-    const title = 'Plantitas'
+    const title = 'Productos'
     const select = `Select plants.*, categories.name as category from plants INNER JOIN categories ON plants.category_id = categories.id where plants.share=1;`
 
 
@@ -51,7 +51,7 @@ export default function Share() {
             <View style={Styles.container}>
                 <HeaderGrid sending={sending} onPress={() => generatePdf()} title={title} showButton={true} titleButton={'Compartir'} iconButton={'share-variant-outline'} />
                 <View style={{ marginTop: -10, marginBottom: 10 }}>
-                    <Text>A continuación se mostrarán las Plantitas a las que les colocaste la opción de compartir</Text>
+                    <Text>A continuación se mostrarán los Productos a los que colocaste la opción de compartir</Text>
                 </View>
                 <CardCustom data={plants} onClick={onClickShare} compartir={true}/>
             </View>

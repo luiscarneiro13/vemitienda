@@ -5,19 +5,21 @@ import NavigatorHome from './Tabs/NavigatorHome'
 import NavigatorAdd from './Tabs/NavigatorAdd'
 import NavigatorCategories from './Tabs/NavigatorCategories'
 import NavigatorShare from './Tabs/NavigatorShare'
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+
+MIcon.loadFont()
 
 const Tab = createBottomTabNavigator()
 
 export default function TabNavigator() {
 
-    const Header = ({ icon, title }) => {
+    const textColorGlobal ='#FFFFFF'
+
+    const Header = ({ icon, title, textColor }) => {
         return (
             <>
-                <Image
-                    source={icon}
-                    style={styles.icono}
-                />
-                <Text style={{ color: '#333' }}>{title}</Text>
+                <MIcon name={icon} size={30} color={textColor} />
+                <Text style={{ color: textColor ? textColor : '#333', fontSize:12 }}>{title}</Text>
             </>
         )
     }
@@ -26,11 +28,11 @@ export default function TabNavigator() {
         <Tab.Navigator
             screenOptions={{
                 headerShown: false,
+                headerTransparent: true,
                 tabBarStyle: {
-                    height: 55,
-                    justifyContent: "center",
-                    paddingVertical: -25,
-                    backgroundColor: "#eff4f0",
+                    backgroundColor: "#0c77c3",
+                    height:70,
+                    marginBottom:-10
                 }
             }}
         >
@@ -39,16 +41,7 @@ export default function TabNavigator() {
                 component={NavigatorHome}
                 options={{
                     tabBarLabel: "",
-                    tabBarIcon: ({ color, size }) => <Header icon={require('../images/misplantitas.png')} title='Plantitas' />
-                }}
-            />
-
-            <Tab.Screen
-                name="AddNavigator"
-                component={NavigatorAdd}
-                options={{
-                    tabBarLabel: "",
-                    tabBarIcon: ({ color, size }) => <Header icon={require('../images/plantas.png')} title='Agregar' />
+                    tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'package-variant'} title='Productos' />
                 }}
             />
 
@@ -57,7 +50,16 @@ export default function TabNavigator() {
                 component={NavigatorCategories}
                 options={{
                     tabBarLabel: "",
-                    tabBarIcon: ({ color, size }) => <Header icon={require('../images/categories.png')} title='Categorías' />
+                    tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'shape'} title='Categorías' />
+                }}
+            />
+
+            <Tab.Screen
+                name="StoreNavigator"
+                component={NavigatorShare}
+                options={{
+                    tabBarLabel: "",
+                    tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'store'} title='Tienda' />
                 }}
             />
 
@@ -66,13 +68,9 @@ export default function TabNavigator() {
                 component={NavigatorShare}
                 options={{
                     tabBarLabel: "",
-                    tabBarIcon: ({ color, size }) => <Header style={{ height: 10, width: 10 }} icon={require('../images/share.png')} title='Compartir' />
+                    tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'share-variant'} title='Compartir' />
                 }}
             />
         </Tab.Navigator >
-    );
-};
-
-const styles = StyleSheet.create({
-    icono: { height: 40, width: 40 }
-})
+    )
+}
