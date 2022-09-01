@@ -1,0 +1,1 @@
+export const BASE_URL = "http://vemitienda.dev/api/v1/"
