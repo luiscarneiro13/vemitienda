@@ -1,17 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const todas = [{ id: 0, name: 'Todas' }]
+const initialState= ''
 
 const tokenSlice = createSlice({
     name: 'token',
-    initialState: '',
+    initialState: initialState,
     reducers: {
         addToken(state, action) {
             return action.payload
         },
         deleteToken(state, action) {
-            const id = action.payload;
-            return state.filter(item => item.id !== id);
+            return {...initialState}
         },
     },
 })

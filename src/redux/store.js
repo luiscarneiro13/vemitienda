@@ -6,15 +6,21 @@ import plants from './slices/plantsSlice'
 import filtrados from './slices/filtradosSlice'
 import token from './slices/tokenSlice'
 
-const reducer = combineReducers({
+const combinedReducer = combineReducers({
     categories,
     plants,
     filtrados,
     token
 })
 
-const store = configureStore({
-    reducer,
-})
+const rootReducer = (state, action) => {
+    if (action.type === 'logout') {
+        state = undefined
+    }
+    return combinedReducer(state, action);
+};
 
-export default store;
+export default configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware() //Para cerrar sesión sin problemas
+})

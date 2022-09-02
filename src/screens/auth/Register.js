@@ -1,57 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image, StyleSheet, Text, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { TextInput, Button, Card, ActivityIndicator } from 'react-native-paper'
+import { TextInput, Button, Card } from 'react-native-paper'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
-import { useSelector, useDispatch } from 'react-redux'
 import SvgComponent from './Svg'
 import { BASE_URL } from '../../constants/Config'
-import DropList from '../../components/DropDown'
-// import { addEstados, addCiudades } from '../../store/slices/locationSlice'
-// import { addEstadoId, addCiudadId } from '../../store/slices/selectedSlice'
 
 export default function Register() {
-
-    const estadosRedux = useSelector(state => state?.location?.estados)
-    const ciudadesRedux = useSelector(state => state?.location?.ciudades)
-    const seleccionado = useSelector(state => state?.selected)
-    const dispatch = useDispatch()
 
     const [showPass1, setShowPass1] = useState(true)
     const [showPass2, setShowPass2] = useState(true)
 
     const navigation = useNavigation()
-
-    useEffect(() => {
-        (
-            async () => {
-                if (!estadosRedux.length) {
-                    const response = await axios.get(`${BASE_URL}estados`)
-                    const data = await response.data.data
-                    // dispatch(addEstados(data))
-                }
-            }
-        )()
-    }, [])
-
-    const handleEstadoId = async (data) => {
-        formik.setFieldValue('estado_id', data.id)
-        // dispatch(addEstadoId(data.id))
-        const response = await getCiudades(data.id)
-    }
-
-    const getCiudades = async (id) => {
-        const response = await axios.get(`${BASE_URL}ciudades?estado_id=${id}`)
-        const data = await response.data.data
-        // dispatch(addCiudades(data))
-    }
-
-    const handleCiudadId = async (data) => {
-        formik.setFieldValue('ciudad_id', data.id)
-        // dispatch(addCiudadId(data.id))
-    }
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -96,111 +58,71 @@ export default function Register() {
 
     return (
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            {/* <SvgComponent /> */}
+            <SvgComponent />
             <View>
-                <Image source={require('../../images/icon.png')} style={{ width: 170, height: 80, marginTop: -310 }} />
+                <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -310 }} />
             </View>
             <Card style={{ width: '90%', marginTop: -205, borderRadius: 10 }}>
-                {estadosRedux.length
-                    ?
-                    <>
-                        <Card.Title title="Registro" />
-                        <Card.Content>
-                            <TextInput
-                                mode='outlined'
-                                label="Email"
-                                left={<TextInput.Icon name="mail" />}
-                                value={formik.values.email}
-                                onChangeText={(text) => formik.setFieldValue('email', text)}
-                            />
-                            {formik.errors.email && <Text style={styles.error}>{formik.errors.email}</Text>}
+                <Card.Title title="Registro" />
+                <Card.Content>
+                    <TextInput
+                        mode='outlined'
+                        label="Email"
+                        left={<TextInput.Icon name="mail" />}
+                        value={formik.values.email}
+                        onChangeText={(text) => formik.setFieldValue('email', text)}
+                    />
+                    {formik.errors.email && <Text style={styles.error}>{formik.errors.email}</Text>}
 
-                            <TextInput
-                                mode='outlined'
-                                label="Contraseña"
-                                secureTextEntry={showPass1}
-                                left={<TextInput.Icon name="lock" />}
-                                right={<TextInput.Icon name="eye" onPress={() => showingPass1()} />}
-                                value={formik.values.password}
-                                onChangeText={(text) => formik.setFieldValue('password', text)}
-                            />
-                            {formik.errors.password && <Text style={styles.error}>{formik.errors.password}</Text>}
+                    <TextInput
+                        mode='outlined'
+                        label="Contraseña"
+                        secureTextEntry={showPass1}
+                        left={<TextInput.Icon name="lock" />}
+                        right={<TextInput.Icon name="eye" onPress={() => showingPass1()} />}
+                        value={formik.values.password}
+                        onChangeText={(text) => formik.setFieldValue('password', text)}
+                    />
+                    {formik.errors.password && <Text style={styles.error}>{formik.errors.password}</Text>}
 
-                            <TextInput
-                                mode='outlined'
-                                label="Repita la contraseña"
-                                secureTextEntry={showPass2}
-                                left={<TextInput.Icon name="lock" />}
-                                right={<TextInput.Icon name="eye" onPress={() => showingPass2()} />}
-                                value={formik.values.password_confirmation}
-                                onChangeText={(text) => formik.setFieldValue('password_confirmation', text)}
-                            />
-                            {formik.errors.password_confirmation && <Text style={styles.error}>{formik.errors.password_confirmation}</Text>}
+                    <TextInput
+                        mode='outlined'
+                        label="Repita la contraseña"
+                        secureTextEntry={showPass2}
+                        left={<TextInput.Icon name="lock" />}
+                        right={<TextInput.Icon name="eye" onPress={() => showingPass2()} />}
+                        value={formik.values.password_confirmation}
+                        onChangeText={(text) => formik.setFieldValue('password_confirmation', text)}
+                    />
+                    {formik.errors.password_confirmation && <Text style={styles.error}>{formik.errors.password_confirmation}</Text>}
 
-                            {estadosRedux.length > 0 &&
-                                <>
-                                    <DropList
-                                        label='Estado'
-                                        placeholder='Estado'
-                                        searchPlaceholder='Escriba el nombre del estado'
-                                        iconName='city'
-                                        data={estadosRedux}
-                                        onChange={handleEstadoId}
-                                        value={seleccionado.estadoId}
-                                    />
-                                    {formik.errors.estado_id && <Text style={styles.error}>{formik.errors.estado_id}</Text>}
+                    <View style={{ marginTop: 40 }}></View>
+                    <Button
+                        icon="account"
+                        mode="contained"
+                        onPress={formik.handleSubmit}
+                        uppercase={false}
+                    >
+                        Registrarme
+                    </Button>
 
-
-                                    {seleccionado.estadoId > 0 &&
-                                        <>
-                                            <DropList
-                                                label='Ciudad'
-                                                placeholder='Ciudad'
-                                                searchPlaceholder='Escriba el nombre de la ciudad'
-                                                iconName='city'
-                                                data={ciudadesRedux}
-                                                onChange={handleCiudadId}
-                                                value={seleccionado.ciudadId}
-                                            />
-                                            {formik.errors.ciudad_id && <Text style={styles.error}>{formik.errors.ciudad_id}</Text>}
-                                        </>
-                                    }
-                                </>
-                            }
-                            <View style={{ marginTop: 40 }}></View>
-                            <Button
-                                icon="account"
-                                mode="contained"
-                                onPress={formik.handleSubmit}
-                                uppercase={false}
-                            >
-                                Registrarme
-                            </Button>
-
-                        </Card.Content>
-                        <Card.Actions style={{ paddingTop: 50 }}>
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-                                <Button
-                                    onPress={() => navigation.navigate('Login')}
-                                    uppercase={false}
-                                >
-                                    Iniciar Sesión
-                                </Button>
-                                <Button
-                                    onPress={() => navigation.navigate('ForgotPassword')}
-                                    uppercase={false}
-                                >
-                                    Recuperar Contraseña
-                                </Button>
-                            </View>
-                        </Card.Actions>
-                    </>
-                    :
-                    <>
-                        <Card.Title title="Cargando data" />
-                        <ActivityIndicator style={{ marginBottom: 50 }} />
-                    </>
-                }
+                </Card.Content>
+                <Card.Actions style={{ paddingTop: 50 }}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+                        <Button
+                            onPress={() => navigation.navigate('Login')}
+                            uppercase={false}
+                        >
+                            Iniciar Sesión
+                        </Button>
+                        <Button
+                            onPress={() => navigation.navigate('ForgotPassword')}
+                            uppercase={false}
+                        >
+                            Recuperar Contraseña
+                        </Button>
+                    </View>
+                </Card.Actions>
             </Card>
         </View>
     )

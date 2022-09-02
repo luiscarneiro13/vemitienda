@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View, Image, StyleSheet, Text, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { TextInput, Button, Card } from 'react-native-paper'
@@ -6,12 +6,10 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import SvgComponent from './Svg'
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { BASE_URL } from '../../constants/Config'
-// import { createUsuario, logoutUsuario } from '../../store/slices/usuarioSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-// import { logoutUserInformation } from '../../store/slices/userInformationSlice'
-// import { deleteCargaInicial } from '../../store/slices/cargaInicialSlice'
+import { addToken } from '../../redux/slices/tokenSlice'
 
 
 export default function Login() {
@@ -26,26 +24,22 @@ export default function Login() {
         validationSchema: Yup.object(validationSchema()),
         onSubmit: async (data) => {
             setSending(true)
-            console.log("data: ", data)
             try {
                 const response = await axios.post(`${BASE_URL}login`, data)
-                const status = await response?.data
+                const status = await response?.data.status
 
-                // if (status && status == 200) {
+                if (status && status == 200) {
 
-                //     /* Borro el estado por si acaso */
-                //     // dispatch(logoutUserInformation())
-                //     // dispatch(deleteCargaInicial())
-                //     // dispatch(logoutUsuario())
+                    const datos = await response.data.data
+                    await AsyncStorage.setItem('@token', datos.token)
+                    dispatch(addToken(datos.token))
 
-                //     const datos = await response.data.data
-                //     await AsyncStorage.setItem('@token', datos.token)
-                //     // dispatch(createUsuario(datos))
+                } else if (status && status !== 400 && status !== 422) {
 
-                // } else if (status && status !== 400 && status !== 422) {
-                //     setSending(false)
-                //     Alert.alert('Error', response.data.message)
-                // }
+                    setSending(false)
+                    Alert.alert('Error', response.data.message)
+
+                }
             } catch (error) {
                 setSending(false)
                 console.log(error)
@@ -56,33 +50,6 @@ export default function Login() {
 
     const showingPass = () => {
         setShowPass(!showPass)
-    }
-
-    const _enviarIOS = async (email) => {
-
-        try {
-            const response = await axios.post(`${BASE_URL}loguearIOS`, { 'user': email })
-            const status = await response?.data?.status
-            console.log(response)
-            if (status && status == 200) {
-
-                /* Borro el estado por si acaso */
-                // dispatch(logoutUserInformation())
-                // dispatch(deleteCargaInicial())
-                // dispatch(logoutUsuario())
-
-                const datos = await response.data.data
-                await AsyncStorage.setItem('@token', datos.token)
-                // dispatch(createUsuario(datos))
-
-            } else if (status && status !== 400 && status !== 422) {
-                setSending(false)
-                Alert.alert('Error', response.data.message)
-            }
-
-        } catch (error) {
-            Alert.alert('Oops', 'No podemos conectarnos a internet');
-        }
     }
 
     return (

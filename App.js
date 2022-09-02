@@ -14,57 +14,53 @@ import { addToken } from './src/redux/slices/tokenSlice'
 
 const RootNavigation = () => {
 
-  const token = useSelector(state => state.token) || null
+  const token = useSelector(state => state.token) || ''
   const dispatch = useDispatch()
 
-  // useEffect(() => {
-  //   (async () => {
-  //     if (!token) {
-  //       const findToken = await AsyncStorage.getItem('@token')
-  //       if (findToken) {
-  //         dispatch(addToken(findToken))
-  //       }else{
-  //         await AsyncStorage.setItem('@token', '')
-  //       }
-  //     }
-  //   })()
-  // })
+  useEffect(() => {
+    (async () => {
+      if (token.length === 0) {
+        const findToken = await AsyncStorage.getItem('@token')
+        if (findToken) {
+          dispatch(addToken(findToken))
+        } else {
+          await AsyncStorage.setItem('@token', '')
+        }
+      }
+    })()
+  })
 
-  // axios.defaults.baseURL = BASE_URL
-
-  axios.defaults.headers.common['Accept'] = 'application/json'
-  axios.defaults.headers.common['Content-Type'] = 'application/json'
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : ''
 
   /* Tuve que usar el interceptor, porque el token tarda para montarse en el estado de redux */
-  // axios.interceptors.request.use(
-  //   config => { return config },
-  //   error => { Promise.reject(error) }
-  // )
+  axios.interceptors.request.use(
+    config => { return config },
+    error => { Promise.reject(error) }
+  )
 
-  // axios.interceptors.response.use(function (response) {
-  //   /* Si todo va bien, se devuelve todo tal cual */
-  //   if (response?.data?.errors) {
-  //     Alert.alert("Error", Object.values(response.data.errors)[0][0]);
-  //   } else {
-  //     return response
-  //   }
-  // }, function (error) {
-  //   /* Si hay un código diferente a 2xx, entonces busco a ver si es 403, de ser así lo envío al login */
-  //   if (error?.response?.data?.status === 403 && token) {
+  axios.interceptors.response.use(function (response) {
+    /* Si todo va bien, se devuelve todo tal cual */
+    if (response?.data?.errors) {
+      Alert.alert("Error", Object.values(response.data.errors)[0][0]);
+    } else {
+      return response
+    }
+  }, function (error) {
+    /* Si hay un código diferente a 2xx, entonces busco a ver si es 403, de ser así lo envío al login */
+    if (error?.response?.data?.status === 403 && token) {
 
-  //     // dispatch(logoutUserInformation())
-  //     // dispatch(deleteCargaInicial())
-  //     // dispatch(logoutUsuario())
-  //     AsyncStorage.clear()
-  //   }
-  // })
+      // dispatch(logoutUserInformation())
+      // dispatch(deleteCargaInicial())
+      // dispatch(logoutUsuario())
+      AsyncStorage.clear()
+    }
+  })
 
   return (
     <PaperProvider theme={THEME}>
       <NavigationContainer>
         {
-          token !== null ? <TabNavigator /> : <AuthNavigator />
+          token.length > 0 ? <TabNavigator /> : <AuthNavigator />
         }
       </NavigationContainer>
     </PaperProvider>

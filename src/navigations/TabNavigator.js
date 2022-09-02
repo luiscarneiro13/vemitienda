@@ -5,6 +5,7 @@ import NavigatorHome from './Tabs/NavigatorHome'
 import NavigatorAdd from './Tabs/NavigatorAdd'
 import NavigatorCategories from './Tabs/NavigatorCategories'
 import NavigatorShare from './Tabs/NavigatorShare'
+import NavigatorStore from './Tabs/NavigatorStore'
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 MIcon.loadFont()
@@ -13,13 +14,13 @@ const Tab = createBottomTabNavigator()
 
 export default function TabNavigator() {
 
-    const textColorGlobal ='#FFFFFF'
+    const textColorGlobal = '#FFFFFF'
 
     const Header = ({ icon, title, textColor }) => {
         return (
             <>
                 <MIcon name={icon} size={30} color={textColor} />
-                <Text style={{ color: textColor ? textColor : '#333', fontSize:12 }}>{title}</Text>
+                <Text style={{ color: textColor ? textColor : '#333', fontSize: 12 }}>{title}</Text>
             </>
         )
     }
@@ -31,8 +32,8 @@ export default function TabNavigator() {
                 headerTransparent: true,
                 tabBarStyle: {
                     backgroundColor: "#0c77c3",
-                    height:70,
-                    marginBottom:-10
+                    height: 70,
+                    marginBottom: -10
                 }
             }}
         >
@@ -55,15 +56,6 @@ export default function TabNavigator() {
             />
 
             <Tab.Screen
-                name="StoreNavigator"
-                component={NavigatorShare}
-                options={{
-                    tabBarLabel: "",
-                    tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'store'} title='Tienda' />
-                }}
-            />
-
-            <Tab.Screen
                 name="ShareNavigator"
                 component={NavigatorShare}
                 options={{
@@ -71,6 +63,16 @@ export default function TabNavigator() {
                     tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'share-variant'} title='Compartir' />
                 }}
             />
+
+            <Tab.Screen
+                name="StoreNavigator"
+                component={NavigatorStore}
+                options={{
+                    tabBarLabel: "",
+                    tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'store'} title='Tienda' />
+                }}
+            />
+
         </Tab.Navigator >
     )
 }
