@@ -10,9 +10,9 @@ export default function CardCustom({ data, onClick, compartir = false }) {
     const RenderItem = ({ item }) => {
         return (
             <List.Item
-                title={item.title}
-                description={item.category}
-                left={props => <Image mode='cover' source={{ uri: item.image }} style={{ width: 70, height: 70 }} />}
+                title={item.name}
+                description={item.category?.name}
+                left={props => <Image mode='cover' source={{ uri: item?.images[0]?.url }} style={{ width: 70, height: 70 }} />}
                 right={props => <List.Icon {...props} icon="arrow-right" />}
             />
         )

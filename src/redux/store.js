@@ -5,12 +5,14 @@ import categories from './slices/categoriesSlice'
 import plants from './slices/plantsSlice'
 import filtrados from './slices/filtradosSlice'
 import token from './slices/tokenSlice'
+import userInformation from './slices/userInformationSlice'
 
 const combinedReducer = combineReducers({
     categories,
     plants,
     filtrados,
-    token
+    token,
+    userInformation
 })
 
 const rootReducer = (state, action) => {

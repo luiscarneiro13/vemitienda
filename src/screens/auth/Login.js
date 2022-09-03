@@ -10,6 +10,8 @@ import { useDispatch } from 'react-redux'
 import { BASE_URL } from '../../constants/Config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { addToken } from '../../redux/slices/tokenSlice'
+import { getAll } from '../../api/index.js'
+import { addUserInformation } from '../../redux/slices/userInformationSlice'
 
 
 export default function Login() {
@@ -30,9 +32,18 @@ export default function Login() {
 
                 if (status && status == 200) {
 
-                    const datos = await response.data.data
+                    const datos = await response?.data?.data
                     await AsyncStorage.setItem('@token', datos.token)
                     dispatch(addToken(datos.token))
+
+                    const response2 = await getAll('user-information', data)
+                    const status2 = await response?.data.status
+   
+                    if (status2 && status2 == 200) {
+                        const userInformation = await response2.data?.data
+                        console.log(userInformation)
+                        dispatch(addUserInformation(userInformation))
+                    }
 
                 } else if (status && status !== 400 && status !== 422) {
 

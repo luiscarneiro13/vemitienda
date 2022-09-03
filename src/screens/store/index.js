@@ -17,7 +17,7 @@ export default function Index() {
 
     const logout = async () => {
         setSending(true)
-        await AsyncStorage.removeItem('@token')
+        await AsyncStorage.clear()
         dispatch(deleteToken())
         setSending(false)
     }
