@@ -6,18 +6,21 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import SvgComponent from './Svg'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BASE_URL } from '../../constants/Config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { addToken } from '../../redux/slices/tokenSlice'
 import { getAll } from '../../api/index.js'
 import { addUserInformation } from '../../redux/slices/userInformationSlice'
+import { addCategories } from '../../redux/slices/categoriesSlice'
 
 
 export default function Login() {
 
     const [sending, setSending] = useState(false)
     const [showPass, setShowPass] = useState(true)
+    const userInfo = useSelector(state => state?.userInformation) || []
+    const categories = useSelector(state => state?.categories) || []
     const navigation = useNavigation()
     const dispatch = useDispatch()
 
@@ -36,14 +39,18 @@ export default function Login() {
                     await AsyncStorage.setItem('@token', datos.token)
                     dispatch(addToken(datos.token))
 
-                    const response2 = await getAll('user-information', data)
-                    const status2 = await response?.data.status
-   
+                    const response2 = await getAll('user-information')
+                    const status2 = await response2?.data.status
+
                     if (status2 && status2 == 200) {
                         const userInformation = await response2.data?.data
-                        console.log(userInformation)
                         dispatch(addUserInformation(userInformation))
                     }
+
+                    const response3 = await getAll('categorias')
+                    const resp3 = await response3?.data?.data || []
+
+                    dispatch(addCategories(resp3))
 
                 } else if (status && status !== 400 && status !== 422) {
 
