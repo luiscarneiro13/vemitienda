@@ -3,15 +3,15 @@ import { BASE_URL } from "../constants/Config"
 
 export async function getAll(url) {
     try {
-        return await axios.get(BASE_URL + url)
+        return await axios.get(BASE_URL + url, params = null, headers = null)
     } catch (error) {
         throw error
     }
 }
 
-export async function storeDB(url, params) {
+export async function storeDB(url, params, headers = {}) {
     try {
-        return await axios.post(BASE_URL + url, params)
+        return await axios.post(BASE_URL + url, params = null, headers = null)
     } catch (error) {
         throw error
     }

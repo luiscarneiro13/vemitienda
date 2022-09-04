@@ -18,7 +18,7 @@ export default function Share() {
     const [html, setHtml] = useState()
     const name = 'Nombre de ejemplo para el pdf'
     const [plants, setPlants] = useState([])
-    const title = 'Productos'
+    const title = 'Catálogo'
     const select = `Select plants.*, categories.name as category from plants INNER JOIN categories ON plants.category_id = categories.id where plants.share=1;`
 
 

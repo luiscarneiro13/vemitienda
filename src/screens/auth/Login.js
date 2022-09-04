@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Image, StyleSheet, Text, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { TextInput, Button, Card } from 'react-native-paper'
@@ -23,6 +23,13 @@ export default function Login() {
     const categories = useSelector(state => state?.categories) || []
     const navigation = useNavigation()
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        /** Esto es para que no dé error al cerrar sesión */
+        const unsubscribe = navigator.addListener('focus', () => { })
+        return unsubscribe
+    })
+
 
     const formik = useFormik({
         initialValues: initialValues(),

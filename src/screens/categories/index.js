@@ -43,11 +43,14 @@ export default function Index() {
                     } catch (error) {
                         setSending(false)
                     }
-                }else{
+                } else {
                     setLoading(false)
                 }
             }
         )()
+
+        return () => { }
+
     }, [])
 
     const goDetail = (item) => {

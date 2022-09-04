@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView, Image, Alert } from 'react-native'
-import { Button, TextInput, Switch, Portal, Dialog } from 'react-native-paper'
+import { Button, TextInput, Switch, Portal, Dialog, IconButton } from 'react-native-paper'
 import Header from '../../components/Header'
 import HeaderGrid from '../../components/HeaderGrid'
 import SparatorFooter from '../../components/SparatorFooter'
 import { Styles } from '../../constants/Styles'
 import DropList from '../../components/DropDown'
 import { useSelector, useDispatch } from 'react-redux'
-import * as Func from '../add/Functions'
 import { deletePlant } from '../../redux/slices/plantsSlice'
 import { useNavigation } from '@react-navigation/native'
-
+import Atras from '../../components/Atras'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import * as Func from './Functions'
+import * as ImagePicker from 'expo-image-picker'
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator'
+import * as MediaLibrary from 'expo-media-library'
 
 export default function Index(props) {
 
     const item = props?.route?.params?.item || null
     const [foto, setFoto] = useState(null)
+    const [foto2, setFoto2] = useState(null)
     const [isSwitchOn, setIsSwitchOn] = useState(false)
     const [sending, setSending] = useState(false)
     const categories = useSelector(state => state.categories)
@@ -25,6 +31,36 @@ export default function Index(props) {
 
     const hideDialog = () => setVisible(false)
     const handleConfirm = () => { setVisible(true) }
+
+    const formik = useFormik({
+        initialValues: Func.initialValues(item),
+        validationSchema: Yup.object(Func.validationSchema()),
+        onSubmit: (data) => {
+            (
+                async () => {
+                    setSending(true)
+                    try {
+                        const resp = await Func.handleForm(data, accion, props)
+                        if (resp.status && (resp.status === 200)) {
+                            if (accion === 'Update') {
+                                dispatch(updateCategory(resp.data))
+                            } else {
+                                dispatch(addCategory(resp.data))
+                            }
+                            navigator.navigate('Categories')
+                            Alert.alert("Excelente!", "Categoría agregada con éxito")
+                        } else {
+                            Alert.alert('Error', resp.message)
+                        }
+                        setSending(false)
+                    } catch (error) {
+                        setSending(false)
+                        console.log("error: ", error)
+                    }
+                }
+            )()
+        }
+    })
 
     const handleDelete = async () => {
         hideDialog()
@@ -45,44 +81,111 @@ export default function Index(props) {
         }
     }
 
+    const pickImage1 = async () => {
+
+        let result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1,
+        });
+
+        if (!result.cancelled) {
+
+            const imgReducida1 = await manipulateAsync(
+                result.uri,
+                [{ resize: { width: 700, height: 700 } }],
+                {
+                    compress: 1,
+                    format: SaveFormat.PNG,
+                    base64: true
+                }
+            )
+            setFoto(imgReducida1.uri)
+            /* El imagen.uri es la url que se debe guardar en base de datos */
+            formik.setFieldValue('image1', imgReducida1.uri)
+            formik.setFieldValue('image1_base64', imgReducida1.base64)
+        }
+    }
+    const pickImage2 = async () => {
+
+        let result2 = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1,
+        });
+
+        if (!result2.cancelled) {
+
+            const imgReducida2 = await manipulateAsync(
+                result2.uri,
+                [{ resize: { width: 700, height: 700 } }],
+                {
+                    compress: 1,
+                    format: SaveFormat.PNG,
+                    base64: true
+                }
+            )
+            setFoto2(imgReducida2.uri)
+            /* El imagen.uri es la url que se debe guardar en base de datos */
+            formik.setFieldValue('image2', imgReducida2.uri)
+            formik.setFieldValue('image2_base64', imgReducida2.base64)
+        }
+    }
 
     return (
         <View style={{ backgroundColor: "#FFF", flex: 1 }}>
             <Header />
             <View style={Styles.container}>
                 <ScrollView >
-                    <HeaderGrid title="Detalles de la Plantita" />
+                    <View style={{ flexDirection: 'row' }}>
+                        <Atras />
+                        <HeaderGrid title={item ? item : "Agregar Producto"} />
+                    </View>
                     <View style={{ marginBottom: 200 }}>
-                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            {item.image ?
-                                <Image mode='cover' source={{ uri: item.image }} style={{ width: 150, height: 150 }} />
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                            {foto ?
+                                <Image mode='cover' source={{ uri: foto }} style={{ width: 120, height: 120 }} />
                                 :
-                                <Text>Imagen no disponible</Text>
+                                <Text>Sin Imagen</Text>
                             }
-                            {item.image2 ?
-                                <Image mode='cover' source={{ uri: item.image2 }} style={{ width: 150, height: 150 }} />
+                            {foto2 ?
+                                <Image mode='cover' source={{ uri: foto2 }} style={{ width: 120, height: 120 }} />
                                 :
-                                <Text>Imagen no disponible</Text>
+                                <Text>Sin Imagen</Text>
                             }
+                        </View>
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+                            <Button onPress={pickImage1} mode='outlined' icon={'camera'} style={{ marginTop: 20, height: 40 }}>
+                                Foto 1
+                            </Button>
+                            <Button onPress={pickImage2} mode='outlined' icon={'image'} style={{ marginTop: 20, height: 40 }}>
+                                Foto 2
+                            </Button>
                         </View>
                     </View>
                     <View style={{ marginTop: -180 }}>
                         <TextInput
                             mode='outlined'
                             label="Nombre"
-                            value={item.name || ''}
+                            value={item?.name || ''}
+                        />
+
+                        <TextInput
+                            mode='outlined'
+                            label="Descripción"
+                            value={item?.description || ''}
                         />
 
                         <TextInput
                             mode='outlined'
                             label="Precio"
-                            value={item.price.toString() || '0'}
+                            value={item?.price.toString() || '0'}
                         />
 
                         <TextInput
                             mode='outlined'
                             label="Compartir"
-                            value={item.share === 1 ? 'Si' : 'No'}
+                            value={item?.share === 1 ? 'Si' : 'No'}
                         />
 
                         <DropList
@@ -90,7 +193,7 @@ export default function Index(props) {
                             placeholder='Categoría'
                             labelField={'name'}
                             data={categories}
-                            value={item.category_id || ''}
+                            value={item?.category_id || ''}
                         />
 
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>

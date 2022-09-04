@@ -28,6 +28,8 @@ const RootNavigation = () => {
         }
       }
     })()
+
+    return () => {}
   })
 
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : ''

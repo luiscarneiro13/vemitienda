@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Button, Dialog, Portal, TextInput } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
 import { addCategory, deleteCategory, updateCategory } from '../../redux/slices/categoriesSlice'
+import Atras from '../../components/Atras'
 
 export default function DetailScreen(item) {
 
@@ -80,7 +81,10 @@ export default function DetailScreen(item) {
         <View style={{ backgroundColor: "#FFF", flex: 1 }}>
             <Header />
             <View style={Styles.container}>
-                <HeaderGrid title={title} showButton={false} />
+                <View style={{ flexDirection: 'row' }}>
+                    <Atras />
+                    <HeaderGrid title={title} showButton={false} />
+                </View>
                 <View style={{ marginTop: 20, marginBottom: 50 }}>
                     <TextInput
                         mode='outlined'

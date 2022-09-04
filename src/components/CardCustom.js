@@ -14,6 +14,7 @@ export default function CardCustom({ data, onClick, compartir = false }) {
                 description={item.category?.name}
                 left={props => <Image mode='cover' source={{ uri: item?.images[0]?.url }} style={{ width: 70, height: 70 }} />}
                 right={props => <List.Icon {...props} icon="arrow-right" />}
+                onPress={() => onClick(item)}
             />
         )
     }
