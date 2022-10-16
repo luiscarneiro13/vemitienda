@@ -7,7 +7,6 @@ import SparatorFooter from '../../components/SparatorFooter'
 import { Styles } from '../../constants/Styles'
 import DropList from '../../components/DropDown'
 import { useSelector, useDispatch } from 'react-redux'
-import { deletePlant } from '../../redux/slices/plantsSlice'
 import { useNavigation } from '@react-navigation/native'
 import Atras from '../../components/Atras'
 import { useFormik } from 'formik'
@@ -16,6 +15,7 @@ import * as Func from './Functions'
 import * as ImagePicker from 'expo-image-picker'
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator'
 import * as MediaLibrary from 'expo-media-library'
+import MoneyComponent from '../../components/MoneyComponent'
 
 export default function Index(props) {
 
@@ -68,7 +68,6 @@ export default function Index(props) {
         try {
             const resp = await Func.handleDelete(item)
             if (resp.status && (resp.status === 200)) {
-                dispatch(deletePlant(resp.data))
                 navigator.navigate('Home')
                 Alert.alert("Excelente!", "Planta eliminada con éxito")
             } else {
@@ -167,25 +166,25 @@ export default function Index(props) {
                         <TextInput
                             mode='outlined'
                             label="Nombre"
-                            value={item?.name || ''}
+                            value={formik.values.name}
                         />
 
                         <TextInput
                             mode='outlined'
                             label="Descripción"
-                            value={item?.description || ''}
+                            value={formik.values.description}
                         />
 
-                        <TextInput
-                            mode='outlined'
-                            label="Precio"
-                            value={item?.price.toString() || '0'}
+                        <MoneyComponent
+                            label='Precio (Opcional)'
+                            value={formik.values.price.toString()}
+                            onChange={item => formik.setFieldValue('price', item)}
                         />
 
                         <TextInput
                             mode='outlined'
                             label="Compartir"
-                            value={item?.share === 1 ? 'Si' : 'No'}
+                            value={formik.values.share === 1 ? 'Si' : 'No'}
                         />
 
                         <DropList
@@ -193,7 +192,7 @@ export default function Index(props) {
                             placeholder='Categoría'
                             labelField={'name'}
                             data={categories}
-                            value={item?.category_id || ''}
+                            value={formik.values.category_id || ''}
                         />
 
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>

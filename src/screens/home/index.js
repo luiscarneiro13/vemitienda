@@ -20,18 +20,6 @@ export default function Index() {
     const userInfo = useSelector(state => state) || []
     const products = useSelector(state => state?.userInformation?.products) || []
 
-    useEffect(() => {
-        /** Esto es para que no dé error al cerrar sesión */
-        const unsubscribe = navigator.addListener('focus', () => { })
-        return unsubscribe
-    })
-
-    useEffect(() => {
-        (async () => {
-            const { status } = await Camera.requestCameraPermissionsAsync()
-            const mediaLibraryPermissions = await MediaLibrary.requestPermissionsAsync()
-        })()
-    }, [])
 
     const onClickCardCustom = (item) => {
         navigator.navigate('HomeDetails', { item })

@@ -37,14 +37,14 @@ export default function TabNavigator() {
                 }
             }}
         >
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="HomeNavigator"
                 component={NavigatorHome}
                 options={{
                     tabBarLabel: "",
                     tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'package-variant'} title='Productos' />
                 }}
-            />
+            /> */}
 
             <Tab.Screen
                 name="CategoriesNavigator"
@@ -55,7 +55,7 @@ export default function TabNavigator() {
                 }}
             />
 
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="ShareNavigator"
                 component={NavigatorShare}
                 options={{
@@ -71,7 +71,7 @@ export default function TabNavigator() {
                     tabBarLabel: "",
                     tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'store'} title='Tienda' />
                 }}
-            />
+            /> */}
 
         </Tab.Navigator >
     )

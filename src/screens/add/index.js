@@ -12,8 +12,6 @@ import DropList from '../../components/DropDown'
 import { useSelector, useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import * as Func from './Functions'
-import { addPlant } from '../../redux/slices/plantsSlice'
 import { useNavigation } from '@react-navigation/native'
 import MoneyComponent from '../../components/MoneyComponent'
 import SwitchComponent from '../../components/SwitchComponent'
@@ -32,24 +30,22 @@ export default function Index() {
 
 
     const formik = useFormik({
-        initialValues: Func.initialValues(),
-        validationSchema: Yup.object(Func.validationSchema()),
-        onSubmit: async (data) => { await sendForm(data) }
+        // initialValues: Func.initialValues(),
+        // validationSchema: Yup.object(Func.validationSchema()),
+        // onSubmit: async (data) => { await sendForm(data) }
     })
 
     const sendForm = async (data) => {
         setSending(true)
         try {
-            const resp = await Func.handleForm(data)
-            if (resp.status && (resp.status === 200)) {
-                dispatch(addPlant(resp.data))
-                // Func.defaultInputs.map((value, key) => { formik.setFieldValue(key, value) })
-                navigator.navigate('Home')
-                Alert.alert("Excelente!", "Plantita agregada con éxito")
-            } else {
-                Alert.alert('Error', resp.message)
-            }
-            setSending(false)
+            // const resp = await Func.handleForm(data)
+            // if (resp.status && (resp.status === 200)) {
+            //     navigator.navigate('Home')
+            //     Alert.alert("Excelente!", "Plantita agregada con éxito")
+            // } else {
+            //     Alert.alert('Error', resp.message)
+            // }
+            // setSending(false)
         } catch (error) {
             setSending(false)
             console.log("error: ", error)

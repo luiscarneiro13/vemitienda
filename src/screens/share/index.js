@@ -1,11 +1,9 @@
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useState } from 'react'
 import { View, ScrollView, Text } from 'react-native'
-import { Button, TextInput } from 'react-native-paper'
 import CardCustom from '../../components/CardCustom'
 import Header from '../../components/Header'
 import HeaderGrid from '../../components/HeaderGrid'
-import { selectDB } from '../../constants/DataBase'
 import { Styles } from '../../constants/Styles'
 import * as Print from 'expo-print'
 import * as Sharing from 'expo-sharing'
@@ -20,16 +18,6 @@ export default function Share() {
     const [plants, setPlants] = useState([])
     const title = 'Catálogo'
     const select = `Select plants.*, categories.name as category from plants INNER JOIN categories ON plants.category_id = categories.id where plants.share=1;`
-
-
-
-    useFocusEffect(
-        useCallback(() => {
-            selectDB(select, [], (rows) => {
-                setPlants(rows)
-            })
-        }, [])
-    )
 
     const generatePdf = async () => {
         setSending(true)
@@ -53,7 +41,7 @@ export default function Share() {
                 <View style={{ marginTop: -10, marginBottom: 10 }}>
                     <Text>A continuación se mostrarán los Productos a los que colocaste la opción de compartir</Text>
                 </View>
-                <CardCustom data={plants} onClick={onClickShare} compartir={true}/>
+                <CardCustom data={plants} onClick={onClickShare} compartir={true} />
             </View>
         </View>
     )

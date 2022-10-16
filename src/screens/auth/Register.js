@@ -6,7 +6,6 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 import SvgComponent from './Svg'
-import { BASE_URL } from '../../constants/Config'
 
 export default function Register() {
 
@@ -22,7 +21,7 @@ export default function Register() {
             (
                 async () => {
                     try {
-                        const response = await axios.post(`${BASE_URL}register`, data)
+                        const response = await axios.post(`register`, data)
                         const status = await response.data.status
 
                         if (status && status === 200) {

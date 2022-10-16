@@ -7,18 +7,14 @@ import Header from '../../components/Header'
 import HeaderGrid from '../../components/HeaderGrid'
 import SparatorFooter from '../../components/SparatorFooter'
 import { Styles } from '../../constants/Styles'
-import { deleteToken } from '../../redux/slices/tokenSlice'
 
 export default function Index() {
 
     const [sending, setSending] = useState(false)
-    const dispatch = useDispatch()
-
 
     const logout = async () => {
         setSending(true)
         await AsyncStorage.clear()
-        dispatch(deleteToken())
         setSending(false)
     }
 

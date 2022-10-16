@@ -1,19 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const todas = [{ id: 0, name: 'Todas' }]
-
-const categoriesSlice = createSlice({
+export const categoriesSlice = createSlice({
     name: 'categories',
-    initialState: [],
+    initialState: {
+        categories: [],
+        isLoading: false
+    },
     reducers: {
+        startLoadingCategories(state, action) {
+            state.isLoading = true
+        },
+        endLoadingCategories(state, action) {
+            state.isLoading = false
+        },
         addCategories(state, action) {
-            return action.payload
+            state.isLoading = false
+            state.categories = action.payload
         },
         addCategory(state, action) {
-            state.push(action.payload)
+            state.categories.push(action.payload)
         },
         updateCategory(state, action) {
-            return state.map(item => {
+            return state.categories.map(item => {
                 if (item.id === action.payload.id) {
                     item = action.payload
                 }
@@ -22,16 +30,16 @@ const categoriesSlice = createSlice({
         },
         deleteCategory(state, action) {
             const id = action.payload;
-            return state.filter(item => item.id !== id);
+            return state.categories.filter(item => item.id !== id);
         },
     },
 })
 
-// Se extraen los actions creator y el reducer
-const { actions, reducer } = categoriesSlice
-
-// Extrae y se exporta cada action creator por nombre
-export const { addCategories, addCategory, updateCategory, deleteCategory } = actions
-
-// Export the reducer, either as a default or named export
-export default reducer
+export const {
+    startLoadingCategories,
+    endLoadingCategories,
+    addCategories,
+    addCategory,
+    updateCategory,
+    deleteCategory
+} = categoriesSlice.actions

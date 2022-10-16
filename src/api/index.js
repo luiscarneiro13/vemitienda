@@ -1,17 +1,16 @@
 import axios from "axios"
-import { BASE_URL } from "../constants/Config"
 
 export async function getAll(url) {
     try {
-        return await axios.get(BASE_URL + url, params = null, headers = null)
+        return await axios.get(url, params = null, headers = null)
     } catch (error) {
         throw error
     }
 }
 
-export async function storeDB(url, params, headers = {}) {
+export async function postDB(url, params = null, headers = null) {
     try {
-        return await axios.post(BASE_URL + url, params = null, headers = null)
+        return await axios.post(url, params, headers)
     } catch (error) {
         throw error
     }
@@ -19,7 +18,7 @@ export async function storeDB(url, params, headers = {}) {
 
 export async function putDB(url, params) {
     try {
-        return await axios.put(BASE_URL + url, params)
+        return await axios.put(url, params)
     } catch (error) {
         throw error
     }
@@ -27,7 +26,7 @@ export async function putDB(url, params) {
 
 export async function deleteDB(url) {
     try {
-        return await axios.delete(BASE_URL + url)
+        return await axios.delete(url)
     } catch (error) {
         throw error
     }

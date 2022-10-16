@@ -1,1 +1,0 @@
-export const BASE_URL = "https://whale-app-gd46k.ondigitalocean.app/api/v1/"

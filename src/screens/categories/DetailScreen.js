@@ -5,7 +5,6 @@ import { Styles } from '../../constants/Styles'
 import HeaderGrid from '../../components/HeaderGrid'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import * as Func from './Functions'
 import { useNavigation } from '@react-navigation/native'
 import { Button, Dialog, Portal, TextInput } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
@@ -24,35 +23,35 @@ export default function DetailScreen(item) {
     const navigator = useNavigation()
     const dispatch = useDispatch()
 
-    const formik = useFormik({
-        initialValues: Func.initialValues(props),
-        validationSchema: Yup.object(Func.validationSchema()),
-        onSubmit: (data) => {
-            (
-                async () => {
-                    setSending(true)
-                    try {
-                        const resp = await Func.handleForm(data, accion, props)
-                        if (resp.status && (resp.status === 200)) {
-                            if (accion === 'Update') {
-                                dispatch(updateCategory(resp.data))
-                            } else {
-                                dispatch(addCategory(resp.data))
-                            }
-                            navigator.navigate('Categories')
-                            Alert.alert("Excelente!", "Categoría agregada con éxito")
-                        } else {
-                            Alert.alert('Error', resp.message)
-                        }
-                        setSending(false)
-                    } catch (error) {
-                        setSending(false)
-                        console.log("error: ", error)
-                    }
-                }
-            )()
-        }
-    })
+    // const formik = useFormik({
+    //     initialValues: Func.initialValues(props),
+    //     validationSchema: Yup.object(Func.validationSchema()),
+    //     onSubmit: (data) => {
+    //         (
+    //             async () => {
+    //                 setSending(true)
+    //                 try {
+    //                     const resp = await Func.handleForm(data, accion, props)
+    //                     if (resp.status && (resp.status === 200)) {
+    //                         if (accion === 'Update') {
+    //                             dispatch(updateCategory(resp.data))
+    //                         } else {
+    //                             dispatch(addCategory(resp.data))
+    //                         }
+    //                         navigator.navigate('Categories')
+    //                         Alert.alert("Excelente!", "Categoría agregada con éxito")
+    //                     } else {
+    //                         Alert.alert('Error', resp.message)
+    //                     }
+    //                     setSending(false)
+    //                 } catch (error) {
+    //                     setSending(false)
+    //                     console.log("error: ", error)
+    //                 }
+    //             }
+    //         )()
+    //     }
+    // })
 
     const hideDialog = () => setVisible(false)
 
@@ -62,15 +61,15 @@ export default function DetailScreen(item) {
         hideDialog()
         setSending(true)
         try {
-            const resp = await Func.handleDelete(props)
-            if (resp.status && (resp.status === 200)) {
-                dispatch(deleteCategory(resp.data))
-                navigator.navigate('Categories')
-                Alert.alert("Excelente!", "Categoría eliminada con éxito")
-            } else {
-                Alert.alert('Error', resp.message)
-            }
-            setSending(false)
+            // const resp = await Func.handleDelete(props)
+            // if (resp.status && (resp.status === 200)) {
+            //     dispatch(deleteCategory(resp.data))
+            //     navigator.navigate('Categories')
+            //     Alert.alert("Excelente!", "Categoría eliminada con éxito")
+            // } else {
+            //     Alert.alert('Error', resp.message)
+            // }
+            // setSending(false)
         } catch (error) {
             setSending(false)
             console.log("error: ", error)

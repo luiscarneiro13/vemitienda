@@ -7,69 +7,43 @@ import * as Yup from 'yup'
 import SvgComponent from './Svg'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { BASE_URL } from '../../constants/Config'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { addToken } from '../../redux/slices/tokenSlice'
-import { getAll } from '../../api/index.js'
-import { addUserInformation } from '../../redux/slices/userInformationSlice'
-import { addCategories } from '../../redux/slices/categoriesSlice'
-
+import { getToken } from '../../redux/thunks'
 
 export default function Login() {
 
     const [sending, setSending] = useState(false)
     const [showPass, setShowPass] = useState(true)
-    const userInfo = useSelector(state => state?.userInformation) || []
-    const categories = useSelector(state => state?.categories) || []
     const navigation = useNavigation()
     const dispatch = useDispatch()
+    const startLoadingToken = useSelector(state => state.token.isLoading)
 
     useEffect(() => {
-        /** Esto es para que no dé error al cerrar sesión */
-        const unsubscribe = navigator.addListener('focus', () => { })
-        return unsubscribe
-    })
+        const CancelToken = axios.CancelToken
+        const source = CancelToken.source()
+
+        return () => { source.cancel() }
+    }, [])
+
+    useEffect(() => {
+        const controller = new AbortController()
+
+        return () => { controller.abort() }
+    }, [])
 
 
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: Yup.object(validationSchema()),
-        onSubmit: async (data) => {
-            setSending(true)
-            try {
-                const response = await axios.post(`${BASE_URL}login`, data)
-                const status = await response?.data.status
-
-                if (status && status == 200) {
-
-                    const datos = await response?.data?.data
-                    await AsyncStorage.setItem('@token', datos.token)
-                    dispatch(addToken(datos.token))
-
-                    const response2 = await getAll('user-information')
-                    const status2 = await response2?.data.status
-
-                    if (status2 && status2 == 200) {
-                        const userInformation = await response2.data?.data
-                        dispatch(addUserInformation(userInformation))
-                    }
-
-                    const response3 = await getAll('categorias')
-                    const resp3 = await response3?.data?.data || []
-
-                    dispatch(addCategories(resp3))
-
-                } else if (status && status !== 400 && status !== 422) {
-
-                    setSending(false)
-                    Alert.alert('Error', response.data.message)
-
+        onSubmit: (data) => {
+            (async () => {
+                try {
+                    dispatch(getToken(data))
+                } catch (error) {
+                    console.log(error)
                 }
-            } catch (error) {
                 setSending(false)
-                console.log(error)
-            }
-            setSending(false)
+
+            })()
         }
     })
 
@@ -113,8 +87,8 @@ export default function Login() {
                         mode="contained"
                         onPress={formik.handleSubmit}
                         uppercase={false}
-                        loading={sending}
-                        disabled={sending}
+                        loading={startLoadingToken}
+                        disabled={startLoadingToken}
                     >
                         Iniciar Sesión
                     </Button>

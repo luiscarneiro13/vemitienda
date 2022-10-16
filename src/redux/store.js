@@ -1,18 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
+import { composeWithDevTools } from '@redux-devtools/extension'
 
-import categories from './slices/categoriesSlice'
-import plants from './slices/plantsSlice'
-import filtrados from './slices/filtradosSlice'
-import token from './slices/tokenSlice'
-import userInformation from './slices/userInformationSlice'
+import { categoriesSlice } from './slices/'
+import { tokenSlice } from './slices/tokenSlice'
 
 const combinedReducer = combineReducers({
-    categories,
-    plants,
-    filtrados,
-    token,
-    userInformation
+    categories: categoriesSlice.reducer,
+    token: tokenSlice.reducer,
 })
 
 const rootReducer = (state, action) => {
@@ -24,5 +19,6 @@ const rootReducer = (state, action) => {
 
 export default configureStore({
     reducer: rootReducer,
+    devTools: composeWithDevTools,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware() //Para cerrar sesión sin problemas
 })

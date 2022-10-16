@@ -1,25 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const initialState= ''
-
-const tokenSlice = createSlice({
+export const tokenSlice = createSlice({
     name: 'token',
-    initialState: initialState,
+    initialState: {
+        token: null,
+        isLoading: false
+    },
     reducers: {
         addToken(state, action) {
-            return action.payload
+            state.token = action.payload
         },
         deleteToken(state, action) {
-            return {...initialState}
+            state.token = null
         },
+        loadingToken(state, action) {
+            state.isLoading = action.payload
+        }
     },
 })
 
-// Se extraen los actions creator y el reducer
-const { actions, reducer } = tokenSlice
-
-// Extrae y se exporta cada action creator por nombre
-export const { addToken, deleteToken } = actions
-
-// Export the reducer, either as a default or named export
-export default reducer
+export const {
+    addToken,
+    deleteToken,
+    loadingToken,
+} = tokenSlice.actions

@@ -2,35 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { THEME } from './src/constants/Theme'
 import { Provider as PaperProvider } from 'react-native-paper'
-import { Provider, useDispatch, useSelector } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import TabNavigator from './src/navigations/TabNavigator'
 import store from './src/redux/store'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
-import { BASE_URL } from './src/constants/Config'
 import Loading from './src/components/Loading'
 import AuthNavigator from './src/navigations/AuthNavigator'
-import { addToken } from './src/redux/slices/tokenSlice'
 
 const RootNavigation = () => {
 
-  const token = useSelector(state => state.token) || ''
-  const dispatch = useDispatch()
+  const token = useSelector(state => state?.token.token) || null
 
-  useEffect(() => {
-    (async () => {
-      if (token.length === 0) {
-        const findToken = await AsyncStorage.getItem('@token')
-        if (findToken) {
-          dispatch(addToken(findToken))
-        } else {
-          await AsyncStorage.setItem('@token', '')
-        }
-      }
-    })()
-
-    return () => {}
-  })
+  axios.defaults.baseURL = 'https://whale-app-gd46k.ondigitalocean.app/api/v1/'
 
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : ''
 
@@ -50,11 +33,10 @@ const RootNavigation = () => {
   }, function (error) {
     /* Si hay un código diferente a 2xx, entonces busco a ver si es 403, de ser así lo envío al login */
     if (error?.response?.data?.status === 403 && token) {
-
       // dispatch(logoutUserInformation())
       // dispatch(deleteCargaInicial())
       // dispatch(logoutUsuario())
-      AsyncStorage.clear()
+      // AsyncStorage.clear()
     }
   })
 
@@ -62,7 +44,7 @@ const RootNavigation = () => {
     <PaperProvider theme={THEME}>
       <NavigationContainer>
         {
-          token.length > 0 ? <TabNavigator /> : <AuthNavigator />
+          token ? <TabNavigator /> : <AuthNavigator />
         }
       </NavigationContainer>
     </PaperProvider>

@@ -6,7 +6,6 @@ import axios from 'axios'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { styleView } from '../../constants/Styles'
-import { BASE_URL } from '../../constants/Config'
 import { useNavigation } from '@react-navigation/native'
 
 export default function ForgotPassword() {
@@ -21,7 +20,7 @@ export default function ForgotPassword() {
 
             setSending(true)
             try {
-                const response = await axios.post(`${BASE_URL}recover_password`, data)
+                const response = await axios.post(`recover_password`, data)
                 const resp = await response?.data
                 const status = resp.status
 
@@ -31,7 +30,7 @@ export default function ForgotPassword() {
                 } else if (status == 400) {
                     if (resp.errors.email[0]) {
                         Alert.alert('Ha ocurrido un error', resp.errors.email[0])
-                    } 
+                    }
                 } else {
                     Alert.alert('Ha ocurrido un error inesperado')
                 }
