@@ -10,6 +10,7 @@ import { Button, Dialog, Portal, TextInput } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
 import { addCategory, deleteCategory, updateCategory } from '../../redux/slices/categoriesSlice'
 import Atras from '../../components/Atras'
+import * as Func from './Functions'
 
 export default function DetailScreen(item) {
 
@@ -23,35 +24,42 @@ export default function DetailScreen(item) {
     const navigator = useNavigation()
     const dispatch = useDispatch()
 
-    // const formik = useFormik({
-    //     initialValues: Func.initialValues(props),
-    //     validationSchema: Yup.object(Func.validationSchema()),
-    //     onSubmit: (data) => {
-    //         (
-    //             async () => {
-    //                 setSending(true)
-    //                 try {
-    //                     const resp = await Func.handleForm(data, accion, props)
-    //                     if (resp.status && (resp.status === 200)) {
-    //                         if (accion === 'Update') {
-    //                             dispatch(updateCategory(resp.data))
-    //                         } else {
-    //                             dispatch(addCategory(resp.data))
-    //                         }
-    //                         navigator.navigate('Categories')
-    //                         Alert.alert("Excelente!", "Categoría agregada con éxito")
-    //                     } else {
-    //                         Alert.alert('Error', resp.message)
-    //                     }
-    //                     setSending(false)
-    //                 } catch (error) {
-    //                     setSending(false)
-    //                     console.log("error: ", error)
-    //                 }
-    //             }
-    //         )()
-    //     }
-    // })
+    const formik = useFormik({
+        initialValues: Func.initialValues(props),
+        validationSchema: Yup.object(Func.validationSchema()),
+        onSubmit: (data) => {
+            (
+                async () => {
+
+                    let resp = null
+
+                    try {
+                        if (accion === 'Update') {
+                            resp = await Func.handleFormUpdate(data, props)
+                        } else {
+                            resp = await Func.handleFormStore(data)
+                        }
+
+                        if (resp.status && (resp.status === 200)) {
+                            if (accion === 'Update') {
+                                dispatch(updateCategory(resp.data))
+                            } else {
+                                dispatch(addCategory(resp.data))
+                            }
+                            navigator.navigate('Categories')
+                            Alert.alert("Excelente!", "Categoría agregada con éxito")
+                        } else {
+                            Alert.alert('Error', resp.message)
+                        }
+                        setSending(false)
+                    } catch (error) {
+                        setSending(false)
+                        console.log("error: ", error)
+                    }
+                }
+            )()
+        }
+    })
 
     const hideDialog = () => setVisible(false)
 

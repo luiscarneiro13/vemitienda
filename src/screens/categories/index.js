@@ -16,7 +16,7 @@ export default function Index() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getCategories());
+        dispatch(getCategories())
     }, [])
 
     const goDetail = (item) => {

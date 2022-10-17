@@ -2,12 +2,12 @@ import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 import { composeWithDevTools } from '@redux-devtools/extension'
 
-import { categoriesSlice } from './slices/'
-import { tokenSlice } from './slices/tokenSlice'
+import { categoriesSlice, productsSlice, tokenSlice } from './slices/'
 
 const combinedReducer = combineReducers({
     categories: categoriesSlice.reducer,
     token: tokenSlice.reducer,
+    products: productsSlice.reducer,
 })
 
 const rootReducer = (state, action) => {

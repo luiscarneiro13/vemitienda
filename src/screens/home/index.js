@@ -5,21 +5,25 @@ import Search from '../../components/Search'
 import CardCustom from '../../components/CardCustom'
 import ScrollHorizontal from '../../components/ScrollHorizontal'
 import { Styles } from '../../constants/Styles'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import { Button } from 'react-native-paper'
 import { Camera } from 'expo-camera'
 import * as MediaLibrary from 'expo-media-library'
+import { getProducts } from '../../redux/thunks'
 
 
 export default function Index() {
 
     const [query, setQuery] = useState('')
     const navigator = useNavigation()
-    const categories = useSelector(state => state.categories) || []
-    const userInfo = useSelector(state => state) || []
-    const products = useSelector(state => state?.userInformation?.products) || []
+    const categories = useSelector(state => state.categories.categories) || []
+    const products = useSelector(state => state?.products.products) || []
+    const dispatch = useDispatch()
 
+    useEffect(() => {
+        dispatch(getProducts())
+    }, [])
 
     const onClickCardCustom = (item) => {
         navigator.navigate('HomeDetails', { item })

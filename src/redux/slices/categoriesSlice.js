@@ -7,11 +7,8 @@ export const categoriesSlice = createSlice({
         isLoading: false
     },
     reducers: {
-        startLoadingCategories(state, action) {
-            state.isLoading = true
-        },
-        endLoadingCategories(state, action) {
-            state.isLoading = false
+        loadingCategories(state, action) {
+            state.isLoading = action.payload
         },
         addCategories(state, action) {
             state.isLoading = false
@@ -36,8 +33,7 @@ export const categoriesSlice = createSlice({
 })
 
 export const {
-    startLoadingCategories,
-    endLoadingCategories,
+    loadingCategories,
     addCategories,
     addCategory,
     updateCategory,

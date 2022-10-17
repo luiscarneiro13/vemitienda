@@ -37,14 +37,14 @@ export default function TabNavigator() {
                 }
             }}
         >
-            {/* <Tab.Screen
+            <Tab.Screen
                 name="HomeNavigator"
                 component={NavigatorHome}
                 options={{
                     tabBarLabel: "",
                     tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'package-variant'} title='Productos' />
                 }}
-            /> */}
+            />
 
             <Tab.Screen
                 name="CategoriesNavigator"
