@@ -1,16 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import React, { useState } from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, ScrollView, Text, ActivityIndicator, Alert } from 'react-native'
 import { Button, TextInput } from 'react-native-paper'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Header from '../../components/Header'
 import HeaderGrid from '../../components/HeaderGrid'
 import SparatorFooter from '../../components/SparatorFooter'
 import { Styles } from '../../constants/Styles'
+import { getCompany } from '../../redux/thunks'
 
 export default function Index() {
 
     const [sending, setSending] = useState(false)
+    const dispatch = useDispatch()
+    const company = useSelector(state => state.company.company)
+    const isLoading = useSelector(state => state.company.isLoading)
 
     const logout = async () => {
         setSending(true)
@@ -18,6 +22,9 @@ export default function Index() {
         setSending(false)
     }
 
+    useEffect(() => {
+        dispatch(getCompany())
+    }, [])
 
 
     return (
@@ -27,45 +34,46 @@ export default function Index() {
                 <ScrollView >
                     <HeaderGrid sending={sending} onPress={logout} title="Mi Tienda" showButton={true} titleButton='Salir' iconButton='logout' />
                     <View style={{ marginTop: 10 }}>
-                        {/* <TextInput
-                            mode='outlined'
-                            label="Email"
-                            left={<TextInput.Icon name="mail" />}
-                            style={{ marginBottom: 15 }}
-                            value={formik.values.email}
-                            onChangeText={(text) => formik.setFieldValue('email', text)}
-                        />
-                        <Text style={styles.error}>{formik.errors.email}</Text> */}
-                        <Text>Ésta condiguración estará en el pdf que genera la App</Text>
+                        {!isLoading ?
 
-                        <TextInput
-                            mode='outlined'
-                            label="Nombre comercial"
-                            placeholder="Ingrese su nombre comercial aquí"
-                            style={{ marginBottom: 15 }}
-                        />
-                        <TextInput
-                            mode='outlined'
-                            label="Email"
-                            placeholder="Ingrese su email comercial aquí"
-                            style={{ marginBottom: 15 }}
-                        />
+                            <>
+                                <Text>Ésta condiguración estará en el pdf que genera la App</Text>
 
-                        <TextInput
-                            mode='outlined'
-                            label="Slogan o lema"
-                            placeholder="Ingrese su slogan o lema comercial aquí"
-                            style={{ marginBottom: 15 }}
-                        />
+                                <TextInput
+                                    mode='outlined'
+                                    label="Nombre comercial"
+                                    placeholder="Ingrese su nombre comercial aquí"
+                                    style={{ marginBottom: 15 }}
+                                    value={company.name || ''}
+                                />
+                                <TextInput
+                                    mode='outlined'
+                                    label="Email"
+                                    placeholder="Ingrese su email comercial aquí"
+                                    style={{ marginBottom: 15 }}
+                                    value={company.email || ''}
+                                />
 
-                        <TextInput
-                            mode='outlined'
-                            label="Teléfono"
-                            placeholder="Ingrese su teléfono comercial aquí"
-                            style={{ marginBottom: 15 }}
-                        />
+                                <TextInput
+                                    mode='outlined'
+                                    label="Slogan o lema"
+                                    placeholder="Ingrese su slogan o lema comercial aquí"
+                                    style={{ marginBottom: 15 }}
+                                    value={company.slogan || ''}
+                                />
 
-                        <SparatorFooter />
+                                <TextInput
+                                    mode='outlined'
+                                    label="Teléfono"
+                                    placeholder="Ingrese su teléfono comercial aquí"
+                                    style={{ marginBottom: 15 }}
+                                    value={company.phone || ''}
+                                />
+
+                                <SparatorFooter />
+                            </>
+
+                            : <ActivityIndicator />}
                     </View>
                 </ScrollView>
             </View>

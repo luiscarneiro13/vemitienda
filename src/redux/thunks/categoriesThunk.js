@@ -4,7 +4,7 @@ import { addCategories, loadingCategories } from '../slices'
 export const getCategories = (page = 0) => {
     return async (dispatch, getState) => {
         dispatch(loadingCategories(true))
-        const data = await API.getAll(`categorias`)
+        const data = await API.getAll(`categories`)
         const resp = await data.data.data
         dispatch(addCategories(resp))
         dispatch(loadingCategories(false))
