@@ -7,6 +7,7 @@ import Header from '../../components/Header'
 import HeaderGrid from '../../components/HeaderGrid'
 import SparatorFooter from '../../components/SparatorFooter'
 import { Styles } from '../../constants/Styles'
+import { deleteToken } from '../../redux/slices'
 import { getCompany } from '../../redux/thunks'
 
 export default function Index() {
@@ -17,9 +18,7 @@ export default function Index() {
     const isLoading = useSelector(state => state.company.isLoading)
 
     const logout = async () => {
-        setSending(true)
-        await AsyncStorage.clear()
-        setSending(false)
+        dispatch(deleteToken())
     }
 
     useEffect(() => {
