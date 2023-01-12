@@ -35,6 +35,10 @@ export const Styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    styleView:{}
+    styleView:{},
+    buttonPlus: {
+        borderRadius: 10,
+        height: 40
+    }
 })
 

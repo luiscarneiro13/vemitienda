@@ -22,9 +22,8 @@ export default function Index(props) {
     const item = props?.route?.params?.item || null
     const [foto, setFoto] = useState(null)
     const [foto2, setFoto2] = useState(null)
-    const [isSwitchOn, setIsSwitchOn] = useState(false)
     const [sending, setSending] = useState(false)
-    const categories = useSelector(state => state.categories)
+    const categories = useSelector(state => state.categories.categories)
     const [visible, setVisible] = useState(false)
     const dispatch = useDispatch()
     const navigator = useNavigation()
@@ -138,7 +137,7 @@ export default function Index(props) {
                 <ScrollView >
                     <View style={{ flexDirection: 'row' }}>
                         <Atras />
-                        <HeaderGrid title={item ? item : "Agregar Producto"} />
+                        <HeaderGrid title={item ? item.name : "Agregar Producto"} />
                     </View>
                     <View style={{ marginBottom: 200 }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>

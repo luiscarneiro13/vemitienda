@@ -2,7 +2,7 @@ import { Alert } from 'react-native'
 import * as API from '../../api'
 import { loadingCompany, addCompany } from '../slices'
 
-export const getCompany = (page = 0) => {
+export const getCompanyThunk = (page = 0) => {
     return async (dispatch, getState) => {
         dispatch(loadingCompany(true))
         const data = await API.getDB(`company-user`)
@@ -12,12 +12,12 @@ export const getCompany = (page = 0) => {
     }
 }
 
-export const storeCompany = (page = 0) => {
+export const storeCompanyThunk = (params) => {
     return async (dispatch, getState) => {
         dispatch(loadingCompany(true))
-        const data = await API.postDB(`company-user/store`)
-        const resp = await data.data
-        dispatch(addCompany(resp))
+        const data = await API.postDB(`company-user`, params)
+        const resp = await data?.data
+        dispatch(addCompany(resp?.data))
         dispatch(loadingCompany(false))
     }
 }

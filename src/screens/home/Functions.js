@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 export function initialValues(item = null) {
     return {
         name: item?.name || 'Prueba API 1',
-        image1: item?.images[0]?.url || 'Descripción 1',
+        image1: item?.image[0]?.url || 'Descripción 1',
         image1_base64: '',
         image2: '',
         image2_base64: '',
