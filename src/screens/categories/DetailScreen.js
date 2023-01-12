@@ -7,19 +7,20 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigation } from '@react-navigation/native'
 import { Button, Dialog, Portal, TextInput } from 'react-native-paper'
-import { useDispatch } from 'react-redux'
-import { addCategory, deleteCategory, updateCategory } from '../../redux/slices/categoriesSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { addCategory, loadingCategories } from '../../redux/slices/categoriesSlice'
 import Atras from '../../components/Atras'
 import * as Func from './Functions'
+import { destroyCategoryThunk, storeCategoryThunk, updateCategoryThunk } from '../../redux/thunks'
 
 export default function DetailScreen(item) {
 
+    const categories = useSelector(state => state?.categories)
     const params = item.route.params || null
     const props = item.route.params.item || null
     const title = params?.update ? 'Actualizar Categoría' : 'Agregar Categoría'
     const accion = params?.update ? 'Update' : 'Create'
 
-    const [sending, setSending] = useState(false)
     const [visible, setVisible] = useState(false)
     const navigator = useNavigation()
     const dispatch = useDispatch()
@@ -30,32 +31,13 @@ export default function DetailScreen(item) {
         onSubmit: (data) => {
             (
                 async () => {
-
-                    let resp = null
-
-                    try {
-                        if (accion === 'Update') {
-                            resp = await Func.handleFormUpdate(data, props)
-                        } else {
-                            resp = await Func.handleFormStore(data)
-                        }
-
-                        if (resp.status && (resp.status === 200)) {
-                            if (accion === 'Update') {
-                                dispatch(updateCategory(resp.data))
-                            } else {
-                                dispatch(addCategory(resp.data))
-                            }
-                            navigator.navigate('Categories')
-                            Alert.alert("Excelente!", "Categoría agregada con éxito")
-                        } else {
-                            Alert.alert('Error', resp.message)
-                        }
-                        setSending(false)
-                    } catch (error) {
-                        setSending(false)
-                        console.log("error: ", error)
+                    if (accion === 'Update') {
+                        data.id = props.id
+                        dispatch(updateCategoryThunk(data))
+                    } else {
+                        dispatch(storeCategoryThunk(data))
                     }
+                    navigator.navigate('Categories')
                 }
             )()
         }
@@ -67,21 +49,9 @@ export default function DetailScreen(item) {
 
     const handleDelete = async () => {
         hideDialog()
-        setSending(true)
-        try {
-            // const resp = await Func.handleDelete(props)
-            // if (resp.status && (resp.status === 200)) {
-            //     dispatch(deleteCategory(resp.data))
-            //     navigator.navigate('Categories')
-            //     Alert.alert("Excelente!", "Categoría eliminada con éxito")
-            // } else {
-            //     Alert.alert('Error', resp.message)
-            // }
-            // setSending(false)
-        } catch (error) {
-            setSending(false)
-            console.log("error: ", error)
-        }
+        dispatch(loadingCategories(true))
+        dispatch(destroyCategoryThunk(props.id))
+        navigator.navigate('Categories')
     }
 
     return (
@@ -101,33 +71,33 @@ export default function DetailScreen(item) {
                     />
                     {formik.errors.name && <Text style={Styles.error}>{formik.errors.name}</Text>}
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-
-                    <Button
-                        icon="content-save"
-                        mode="contained"
-                        uppercase={false}
-                        loading={sending}
-                        disabled={sending}
-                        style={{ marginTop: 25, height: 40 }}
-                        onPress={formik.handleSubmit}
-                    >
-                        Guardar
-                    </Button>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
 
                     {accion === 'Update' &&
                         <Button
                             icon="delete"
-                            mode="contained"
+                            mode="outlined"
                             uppercase={false}
-                            loading={sending}
-                            disabled={sending}
-                            style={{ marginTop: 25, height: 40, backgroundColor: '#EA5A28' }}
+                            loading={categories.isLoading}
+                            disabled={categories.isLoading}
+                            style={{ marginTop: 25, height: 40 }}
                             onPress={handleConfirm}
                         >
                             Eliminar
                         </Button>
                     }
+
+                    <Button
+                        icon="content-save"
+                        mode="contained"
+                        uppercase={false}
+                        loading={categories.isLoading}
+                        disabled={categories.isLoading}
+                        style={{ marginTop: 25, height: 40 }}
+                        onPress={formik.handleSubmit}
+                    >
+                        Guardar
+                    </Button>
 
                     <Portal>
                         <Dialog visible={visible} onDismiss={hideDialog}>

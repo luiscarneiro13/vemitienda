@@ -11,7 +11,3 @@ export function validationSchema() {
         name: Yup.string('Formato inválido').required('Ingrese el nombre de la Categoría').min(3, 'Mínimo 3 caracteres').max(90, 'Máximo 90 caracteres'),
     }
 }
-
-export async function handleFormUpdate(datos, detalle) {
-    
-}

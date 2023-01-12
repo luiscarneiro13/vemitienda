@@ -15,19 +15,15 @@ export const categoriesSlice = createSlice({
             state.categories = action.payload
         },
         addCategory(state, action) {
-            state.categories.push(action.payload)
+            state.categories.unshift(action.payload)
         },
         updateCategory(state, action) {
-            return state.categories.map(item => {
-                if (item.id === action.payload.id) {
-                    item = action.payload
-                }
-                return item
-            })
+            const index = state.categories.findIndex(item => item.id === action.payload.id)
+            state.categories[index] = action.payload
         },
         deleteCategory(state, action) {
             const id = action.payload;
-            return state.categories.filter(item => item.id !== id);
+            state.categories = state.categories.filter(item => item.id !== id);
         },
     },
 })

@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export async function getAll(url) {
+export async function getDB(url) {
     try {
         return await axios.get(url, params = null, headers = null)
     } catch (error) {

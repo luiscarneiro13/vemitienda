@@ -1,28 +1,65 @@
+import { Alert } from 'react-native'
 import * as API from '../../api'
-import { addCategories, loadingCategories } from '../slices'
+import { addCategories, loadingCategories, updateCategory, addCategory, deleteCategory, showCategory } from '../slices'
 
-export const getCategories = (page = 0) => {
+export const getCategoriesThunk = (page = 0) => {
     return async (dispatch, getState) => {
         dispatch(loadingCategories(true))
-        const data = await API.getAll(`categories`)
-        const resp = await data.data.data
+        const data = await API.getDB(`categories`)
+        const resp = await data?.data?.data
         dispatch(addCategories(resp))
         dispatch(loadingCategories(false))
     }
 }
 
-export const updateCategory = (page = 0) => {
-    // return async (dispatch, getState) => {
-    //     dispatch(startLoadingCategories())
-    //     const data = await API.putDB(`categorias`)
-    //     const resp = await data.data
-    // }
+export const getCategoryThunk = (id) => {
+    return async (dispatch, getState) => {
+        dispatch(loadingCategories(true))
+        const data = await API.getDB(`categories/+${id}`)
+        const resp = await data?.data?.data
+        dispatch(showCategory(resp))
+        dispatch(loadingCategories(false))
+    }
 }
 
-export const storeCategory = (page = 0) => {
-    // return async (dispatch, getState) => {
-    //     dispatch(startLoadingCategories())
-    //     const data = await API.putDB(`categorias`)
-    //     const resp = await data.data
-    // }
+export const updateCategoryThunk = (params) => {
+    return async (dispatch, getState) => {
+        let message = null
+        try {
+            dispatch(loadingCategories(true))
+            const data = await API.putDB(`categories/${params.id}`, params)
+            const resp = await data?.data
+            message = resp?.message
+            dispatch(updateCategory(resp.data))
+            dispatch(loadingCategories(false))
+        } catch (error) {
+            message = 'Ocurrió un error inesperado!'
+        }
+        message ? Alert.alert('Mensaje', message) : null
+    }
+}
+
+export const storeCategoryThunk = (params) => {
+    return async (dispatch, getState) => {
+        dispatch(loadingCategories(true))
+        const data = await API.postDB(`categories`, params)
+        const resp = await data?.data?.data
+        dispatch(addCategory(resp))
+        dispatch(loadingCategories(false))
+    }
+}
+
+export const destroyCategoryThunk = (id) => {
+    return async (dispatch, getState) => {
+        let message = null
+        try {
+            dispatch(loadingCategories(true))
+            await API.deleteDB(`categories/${id}`)
+            dispatch(deleteCategory(id))
+            dispatch(loadingCategories(false))
+        } catch (error) {
+            message = 'Ocurrió un error inesperado!'
+        }
+        message ? Alert.alert('Mensaje', message) : null
+    }
 }

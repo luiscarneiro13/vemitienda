@@ -7,7 +7,7 @@ import List from '../../components/List'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { ActivityIndicator } from 'react-native-paper'
-import { getCategories } from '../../redux/thunks'
+import { getCategoriesThunk } from '../../redux/thunks'
 
 export default function Index() {
 
@@ -16,7 +16,7 @@ export default function Index() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getCategories())
+        dispatch(getCategoriesThunk())
     }, [])
 
     const goDetail = (item) => {
