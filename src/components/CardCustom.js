@@ -1,7 +1,7 @@
 import { View, Text, FlatList, Alert, TouchableOpacity, Image } from 'react-native'
 import React, { useRef } from 'react'
 import { Card, Title, Paragraph, Button, List, Avatar } from 'react-native-paper'
-
+import { DIGITALOCEAN } from '../constants/Data'
 
 export default function CardCustom({ data, onClick, compartir = false }) {
 
@@ -12,7 +12,7 @@ export default function CardCustom({ data, onClick, compartir = false }) {
             <List.Item
                 title={item.name}
                 description={item.category?.name}
-                left={props => <Image mode='cover' source={{ uri: item?.images[0]?.url }} style={{ width: 70, height: 70 }} />}
+                left={props => item?.image ? <Image mode='cover' source={{ uri: DIGITALOCEAN + item?.image?.url }} style={{ width: 70, height: 70 }} /> : <Text></Text>}
                 right={props => <List.Icon {...props} icon="arrow-right" />}
                 onPress={() => onClick(item)}
             />

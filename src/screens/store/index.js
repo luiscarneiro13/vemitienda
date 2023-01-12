@@ -14,8 +14,8 @@ export default function Index() {
 
     const [sending, setSending] = useState(false)
     const dispatch = useDispatch()
-    const company = useSelector(state => state.company.company)
-    const isLoading = useSelector(state => state.company.isLoading)
+    const company = useSelector(state => state.company?.company)
+    const isLoading = useSelector(state => state.company?.isLoading)
 
     const logout = async () => {
         dispatch(deleteToken())
@@ -43,14 +43,14 @@ export default function Index() {
                                     label="Nombre comercial"
                                     placeholder="Ingrese su nombre comercial aquí"
                                     style={{ marginBottom: 15 }}
-                                    value={company.name || ''}
+                                    value={company?.name || ''}
                                 />
                                 <TextInput
                                     mode='outlined'
                                     label="Email"
                                     placeholder="Ingrese su email comercial aquí"
                                     style={{ marginBottom: 15 }}
-                                    value={company.email || ''}
+                                    value={company?.email || ''}
                                 />
 
                                 <TextInput
@@ -58,7 +58,7 @@ export default function Index() {
                                     label="Slogan o lema"
                                     placeholder="Ingrese su slogan o lema comercial aquí"
                                     style={{ marginBottom: 15 }}
-                                    value={company.slogan || ''}
+                                    value={company?.slogan || ''}
                                 />
 
                                 <TextInput
@@ -66,7 +66,7 @@ export default function Index() {
                                     label="Teléfono"
                                     placeholder="Ingrese su teléfono comercial aquí"
                                     style={{ marginBottom: 15 }}
-                                    value={company.phone || ''}
+                                    value={company?.phone || ''}
                                 />
 
                                 <SparatorFooter />
