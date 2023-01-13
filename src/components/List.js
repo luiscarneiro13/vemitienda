@@ -6,16 +6,16 @@ export default function List({ data, style, onClick }) {
 
     const inputEl = useRef(null)
 
-    const renderItem = ({ item }) => (
-        <TouchableOpacity onPress={() => onClick(item)} style={{ backgroundColor: '#F6F6F6', marginBottom: 2 }}>
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
-                <Text style={{ fontSize: 20, marginTop: 5 }}>{item.name}</Text>
-                <Button icon="magnify" mode="text">
-                    Ver
-                </Button>
-            </View>
-        </TouchableOpacity>
-    );
+    const renderItem = ({ item }) => {
+        return (
+            <TouchableOpacity onPress={() => onClick(item)} style={{ backgroundColor: '#F6F6F6', marginBottom: 5, height: 60, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 20, marginTop: 5, marginLeft: 10 }}>{item.name}</Text>
+                    <Button icon="magnify" mode="text"></Button>
+                </View>
+            </TouchableOpacity>
+        )
+    }
 
     return (
         <FlatList

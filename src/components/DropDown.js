@@ -16,7 +16,7 @@ export const DropList = (items) => {
                     <Text style={[styles.labelFondo, { color: 'white' }]}>
                         {label}
                     </Text>
-                    <Text style={[styles.label, isFocus && { color: '#EA5A28' }]}>
+                    <Text style={[styles.label, isFocus && { color: '#0c77c3' }]}>
                         {label}
                     </Text>
                 </View>
@@ -29,7 +29,7 @@ export const DropList = (items) => {
         <View style={styles.container}>
             {renderLabel()}
             <Dropdown
-                style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                style={[styles.dropdown, isFocus && { borderColor: '#0c77c3', borderWidth:2 }]}
                 placeholderStyle={iconName ? styles.placeholderStyle : { ...styles.placeholderStyle, marginLeft: 4 }}
                 selectedTextStyle={iconName ? styles.selectedTextStyle : null}
                 inputSearchStyle={styles.inputSearchStyle}
@@ -46,6 +46,7 @@ export const DropList = (items) => {
                 onBlur={() => setIsFocus(false)}
                 onChange={item => { onChange(item) }}
                 renderLeftIcon={() => iconName ? <TextInput.Icon name={iconName} /> : null}
+                backgroundColor='rgba(52, 52, 52, 0.8)'
             />
 
         </View>

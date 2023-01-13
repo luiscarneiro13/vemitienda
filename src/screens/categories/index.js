@@ -15,10 +15,6 @@ export default function Index() {
     const navigator = useNavigation()
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getCategoriesThunk())
-    }, [])
-
     const goDetail = (item) => {
         navigator.navigate('CategoriesDetails', { item: { ...item }, update: true })
     }

@@ -80,7 +80,7 @@ export default function DetailScreen(item) {
                             uppercase={false}
                             loading={categories.isLoading}
                             disabled={categories.isLoading}
-                            style={{ marginTop: 25, height: 40 }}
+                            style={Styles.buttonPlus}
                             onPress={handleConfirm}
                         >
                             Eliminar
@@ -93,7 +93,7 @@ export default function DetailScreen(item) {
                         uppercase={false}
                         loading={categories.isLoading}
                         disabled={categories.isLoading}
-                        style={{ marginTop: 25, height: 40 }}
+                        style={Styles.buttonPlus}
                         onPress={formik.handleSubmit}
                     >
                         Guardar

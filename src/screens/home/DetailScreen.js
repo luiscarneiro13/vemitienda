@@ -16,10 +16,13 @@ import * as ImagePicker from 'expo-image-picker'
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator'
 import * as MediaLibrary from 'expo-media-library'
 import MoneyComponent from '../../components/MoneyComponent'
+import SwitchSelector from "react-native-switch-selector"
+
 
 export default function Index(props) {
 
     const item = props?.route?.params?.item || null
+    const accion = item?.update ? 'Update' : 'Create'
     const [foto, setFoto] = useState(null)
     const [foto2, setFoto2] = useState(null)
     const [sending, setSending] = useState(false)
@@ -140,24 +143,16 @@ export default function Index(props) {
                         <HeaderGrid title={item ? item.name : "Agregar Producto"} />
                     </View>
                     <View style={{ marginBottom: 200 }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             {foto ?
                                 <Image mode='cover' source={{ uri: foto }} style={{ width: 120, height: 120 }} />
                                 :
                                 <Text>Sin Imagen</Text>
                             }
-                            {foto2 ?
-                                <Image mode='cover' source={{ uri: foto2 }} style={{ width: 120, height: 120 }} />
-                                :
-                                <Text>Sin Imagen</Text>
-                            }
                         </View>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop:10 }}>
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
                             <Button onPress={pickImage1} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
-                                Foto 1
-                            </Button>
-                            <Button onPress={pickImage2} mode='outlined' icon={'image'} style={Styles.buttonPlus}>
-                                Foto 2
+                                Foto
                             </Button>
                         </View>
                     </View>
@@ -180,33 +175,52 @@ export default function Index(props) {
                             onChange={item => formik.setFieldValue('price', item)}
                         />
 
-                        <TextInput
-                            mode='outlined'
-                            label="Compartir"
-                            value={formik.values.share === 1 ? 'Si' : 'No'}
-                        />
-
                         <DropList
                             label='Categoría'
                             placeholder='Categoría'
+                            searchPlaceholder='Escriba aquí para buscar ...'
                             labelField={'name'}
                             data={categories}
                             value={formik.values.category_id || ''}
+                            backgroundColor='#000'
                         />
+
+                        <View style={{ margin: 20, flexDirection: 'row', justifyContent: 'space-around' }}>
+                            <View style={{ width: '50%' }}>
+                                <Text style={{ marginTop: 7 }}>Compartir en Catálogo</Text>
+                            </View>
+                            <View style={{ width: '50%' }}>
+                                <SwitchSelector
+                                    options={[
+                                        { label: "No", value: "0" },
+                                        { label: "Si", value: "1" }
+                                    ]}
+                                    initial={1}
+                                    buttonColor={'#0c77c3'}
+                                    borderColor='#000'
+                                    borderWidth={1}
+                                    backgroundColor={'#EEEEEE'}
+                                    accessibilityLabel="gender-switch-selector"
+                                    onPress={value => console.log(`Call onPress with value: ${value}`)}
+                                />
+                            </View>
+                        </View>
 
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
 
-                            <Button
-                                icon="delete"
-                                mode="outlined"
-                                uppercase={false}
-                                loading={sending}
-                                disabled={sending}
-                                onPress={handleConfirm}
-                                style={Styles.buttonPlus}
-                            >
-                                Eliminar
-                            </Button>
+                            {accion === 'Update' &&
+                                <Button
+                                    icon="delete"
+                                    mode="outlined"
+                                    uppercase={false}
+                                    loading={sending}
+                                    disabled={sending}
+                                    onPress={handleConfirm}
+                                    style={Styles.buttonPlus}
+                                >
+                                    Eliminar
+                                </Button>
+                            }
 
                             <Button
                                 icon="content-save"

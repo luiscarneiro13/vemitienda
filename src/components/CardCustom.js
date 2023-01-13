@@ -8,13 +8,14 @@ export default function CardCustom({ data, onClick, compartir = false }) {
     const inputEl = useRef(null)
 
     const RenderItem = ({ item }) => {
+        const size = 80
         return (
             <List.Item
                 title={item.name}
                 description={item.category?.name}
-                left={props => item?.image ? <Image mode='cover' source={{ uri: DIGITALOCEAN + item?.image[0]?.url }} style={{ width: 70, height: 70 }} /> : <Text></Text>}
-                right={props => <List.Icon {...props} icon="arrow-right" />}
+                left={props => item?.image ? <Image mode='cover' source={{ uri: DIGITALOCEAN + item?.image[0]?.url }} style={{ width: size, height: size }} /> : <Text></Text>}
                 onPress={() => onClick(item)}
+                style={{ backgroundColor:'#F9F9F9', marginTop:5 }}
             />
         )
     }
