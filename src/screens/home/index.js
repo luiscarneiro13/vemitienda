@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Button } from 'react-native-paper'
 import { Camera } from 'expo-camera'
 import * as MediaLibrary from 'expo-media-library'
-import { getProducts } from '../../redux/thunks'
+import { getCompanyThunk, getProducts } from '../../redux/thunks'
 
 
 export default function Index() {
@@ -23,6 +23,7 @@ export default function Index() {
 
     useEffect(() => {
         dispatch(getProducts())
+        dispatch(getCompanyThunk())
     }, [])
 
     const onClickCardCustom = (item) => {

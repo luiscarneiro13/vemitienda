@@ -39,6 +39,10 @@ export const Styles = StyleSheet.create({
     buttonPlus: {
         borderRadius: 10,
         height: 40
+    },
+    buttonDelete: {
+        borderRadius: 10,
+        height: 40,
     }
 })
 

@@ -9,7 +9,7 @@ import HeaderGrid from '../../components/HeaderGrid'
 import SparatorFooter from '../../components/SparatorFooter'
 import { Styles } from '../../constants/Styles'
 import { deleteToken } from '../../redux/slices'
-import {  getCompanyThunk, storeCompanyThunk } from '../../redux/thunks'
+import { getCompanyThunk, storeCompanyThunk } from '../../redux/thunks'
 import * as Func from './Functions'
 import * as Yup from 'yup'
 
@@ -38,7 +38,6 @@ export default function Index() {
     })
 
     useEffect(() => {
-        dispatch(getCompanyThunk())
         formik.setValues(company)
     }, [])
 

@@ -152,11 +152,11 @@ export default function Index(props) {
                                 <Text>Sin Imagen</Text>
                             }
                         </View>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-                            <Button onPress={pickImage1} mode='outlined' icon={'camera'} style={{ marginTop: 20, height: 40 }}>
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop:10 }}>
+                            <Button onPress={pickImage1} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
                                 Foto 1
                             </Button>
-                            <Button onPress={pickImage2} mode='outlined' icon={'image'} style={{ marginTop: 20, height: 40 }}>
+                            <Button onPress={pickImage2} mode='outlined' icon={'image'} style={Styles.buttonPlus}>
                                 Foto 2
                             </Button>
                         </View>
@@ -198,14 +198,26 @@ export default function Index(props) {
 
                             <Button
                                 icon="delete"
+                                mode="outlined"
+                                uppercase={false}
+                                loading={sending}
+                                disabled={sending}
+                                onPress={handleConfirm}
+                                style={Styles.buttonPlus}
+                            >
+                                Eliminar
+                            </Button>
+
+                            <Button
+                                icon="content-save"
                                 mode="contained"
                                 uppercase={false}
                                 loading={sending}
                                 disabled={sending}
-                                style={{ marginTop: 25, height: 40, backgroundColor: '#EA5A28' }}
                                 onPress={handleConfirm}
+                                style={Styles.buttonPlus}
                             >
-                                Eliminar
+                                Guardar
                             </Button>
 
                             <Portal>
