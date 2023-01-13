@@ -17,7 +17,7 @@ export default function DetailScreen(item) {
 
     const categories = useSelector(state => state?.categories)
     const params = item.route.params || null
-    const props = item.route.params.item || null
+    const props = params.item || null
     const title = params?.update ? 'Actualizar Categoría' : 'Agregar Categoría'
     const accion = params?.update ? 'Update' : 'Create'
 

@@ -2,23 +2,22 @@ import * as Yup from 'yup'
 
 export function initialValues(item = null) {
     return {
-        name: item?.name || 'Prueba API 1',
-        image1: item?.image[0]?.url || 'Descripción 1',
+        name: item?.name || 'Prueba API 2',
+        description: item?.description || 'Descripción 1',
+        image1: item?.image[0]?.url || '',
         image1_base64: '',
-        image2: '',
-        image2_base64: '',
-        price: '0',
-        category_id: 0,
-        share: 0,
+        price: item?.price || 0, // Debe ser entero AJURO
+        category_id: item?.category_id || 0,
+        share: item?.share || 1
     }
 }
 
 export function validationSchema() {
     return {
-        name: Yup.string('Formato inválido').required('Ingrese el nombre de la Plantita').min(3, 'Mínimo 3 caracteres').max(90, 'Máximo 90 caracteres'),
-        image1: Yup.string('Formato inválido').required('Por favor, Tome una foto de la Plantita'),
-        image2: Yup.string('Formato inválido'),
-        category_id: Yup.number().min(1, 'Seleccione una Categoría'),
+        name: Yup.string('Formato inválido').required('Ingrese el nombre').min(3, 'Mínimo 3 caracteres').max(90, 'Máximo 90 caracteres'),
+        description: Yup.string('Formato inválido').required('Ingrese la descripción').min(3, 'Mínimo 3 caracteres').max(90, 'Máximo 90 caracteres'),
+        // image1: Yup.string('Formato inválido').required('Por favor, Tome una foto'),
+        // category_id: Yup.number().min(1, 'Seleccione una Categoría')
     }
 }
 

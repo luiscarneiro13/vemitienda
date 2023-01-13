@@ -8,6 +8,7 @@ import SvgComponent from './Svg'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { getToken } from '../../redux/thunks'
+import { Styles } from '../../constants/Styles'
 
 export default function Login() {
 
@@ -89,6 +90,7 @@ export default function Login() {
                         uppercase={false}
                         loading={startLoadingToken}
                         disabled={startLoadingToken}
+                        style={Styles.buttonPlus}
                     >
                         Iniciar Sesión
                     </Button>
@@ -96,14 +98,17 @@ export default function Login() {
                 <Card.Actions style={{ paddingTop: 50 }}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
                         <Button
+                            mode='outline'
                             onPress={() => navigation.navigate('Register')}
                             uppercase={false}
+                            style={Styles.buttonPlus}
                         >
                             Registro
                         </Button>
                         <Button
                             onPress={() => navigation.navigate('ForgotPassword')}
                             uppercase={false}
+                            style={Styles.buttonPlus}
                         >
                             Recuperar Contraseña
                         </Button>

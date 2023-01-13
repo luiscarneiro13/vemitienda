@@ -6,6 +6,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
 import SvgComponent from './Svg'
+import { Styles } from '../../constants/Styles'
 
 export default function Register() {
 
@@ -101,6 +102,7 @@ export default function Register() {
                         mode="contained"
                         onPress={formik.handleSubmit}
                         uppercase={false}
+                        style={Styles.buttonPlus}
                     >
                         Registrarme
                     </Button>
@@ -111,12 +113,14 @@ export default function Register() {
                         <Button
                             onPress={() => navigation.navigate('Login')}
                             uppercase={false}
+                            style={Styles.buttonPlus}
                         >
                             Iniciar Sesión
                         </Button>
                         <Button
                             onPress={() => navigation.navigate('ForgotPassword')}
                             uppercase={false}
+                            style={Styles.buttonPlus}
                         >
                             Recuperar Contraseña
                         </Button>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView, Image, Alert } from 'react-native'
-import { Button, TextInput, Switch, Portal, Dialog, IconButton } from 'react-native-paper'
+import { Button, TextInput, Portal, Dialog } from 'react-native-paper'
 import Header from '../../components/Header'
 import HeaderGrid from '../../components/HeaderGrid'
 import SparatorFooter from '../../components/SparatorFooter'
@@ -19,12 +19,14 @@ import MoneyComponent from '../../components/MoneyComponent'
 import SwitchSelector from "react-native-switch-selector"
 
 
-export default function Index(props) {
+export default function Index(prop) {
 
-    const item = props?.route?.params?.item || null
-    const accion = item?.update ? 'Update' : 'Create'
+    const params = prop.route.params || null
+    const props = params?.item || null
+    const title = params?.update ? 'Actualizar Producto o Servicio' : 'Agregar Producto o Servicio'
+    const accion = params?.update ? 'Update' : 'Create'
+
     const [foto, setFoto] = useState(null)
-    const [foto2, setFoto2] = useState(null)
     const [sending, setSending] = useState(false)
     const categories = useSelector(state => state.categories.categories)
     const [visible, setVisible] = useState(false)
@@ -35,51 +37,46 @@ export default function Index(props) {
     const handleConfirm = () => { setVisible(true) }
 
     const formik = useFormik({
-        initialValues: Func.initialValues(item),
+        initialValues: Func.initialValues(props),
         validationSchema: Yup.object(Func.validationSchema()),
         onSubmit: (data) => {
             (
                 async () => {
-                    setSending(true)
-                    try {
-                        const resp = await Func.handleForm(data, accion, props)
-                        if (resp.status && (resp.status === 200)) {
-                            if (accion === 'Update') {
-                                dispatch(updateCategory(resp.data))
-                            } else {
-                                dispatch(addCategory(resp.data))
-                            }
-                            navigator.navigate('Categories')
-                            Alert.alert("Excelente!", "Categoría agregada con éxito")
-                        } else {
-                            Alert.alert('Error', resp.message)
-                        }
-                        setSending(false)
-                    } catch (error) {
-                        setSending(false)
-                        console.log("error: ", error)
+                    if (accion === 'Update') {
+                        Alert.alert(accion)
+                        // data.id = props.id
+                        // dispatch(updateCategoryThunk(data))
+                    } else {
+                        Alert.alert(accion)
+                        // dispatch(storeCategoryThunk(data))
                     }
+                    navigator.navigate('Categories')
                 }
             )()
         }
     })
 
+    console.log("formik", formik)
+    // const formik = useFormik({
+    //     initialValues: Func.initialValues(props),
+    //     validationSchema: Yup.object(Func.validationSchema()),
+    //     onSubmit: (data) => {
+    //         (
+    //             async () => {
+    //                 setSending(true)
+    //                 try {
+    //                     Alert.alert("HOLA")
+    //                 } catch (error) {
+    //                     setSending(false)
+    //                     console.log("error: ", error)
+    //                 }
+    //             }
+    //         )()
+    //     }
+    // })
+
     const handleDelete = async () => {
-        hideDialog()
-        setSending(true)
-        try {
-            const resp = await Func.handleDelete(item)
-            if (resp.status && (resp.status === 200)) {
-                navigator.navigate('Home')
-                Alert.alert("Excelente!", "Planta eliminada con éxito")
-            } else {
-                Alert.alert('Error', resp.message)
-            }
-            setSending(false)
-        } catch (error) {
-            setSending(false)
-            console.log("error: ", error)
-        }
+
     }
 
     const pickImage1 = async () => {
@@ -107,31 +104,6 @@ export default function Index(props) {
             formik.setFieldValue('image1_base64', imgReducida1.base64)
         }
     }
-    const pickImage2 = async () => {
-
-        let result2 = await ImagePicker.launchCameraAsync({
-            allowsEditing: true,
-            aspect: [4, 4],
-            quality: 1,
-        });
-
-        if (!result2.cancelled) {
-
-            const imgReducida2 = await manipulateAsync(
-                result2.uri,
-                [{ resize: { width: 700, height: 700 } }],
-                {
-                    compress: 1,
-                    format: SaveFormat.PNG,
-                    base64: true
-                }
-            )
-            setFoto2(imgReducida2.uri)
-            /* El imagen.uri es la url que se debe guardar en base de datos */
-            formik.setFieldValue('image2', imgReducida2.uri)
-            formik.setFieldValue('image2_base64', imgReducida2.base64)
-        }
-    }
 
     return (
         <View style={{ backgroundColor: "#FFF", flex: 1 }}>
@@ -140,7 +112,7 @@ export default function Index(props) {
                 <ScrollView >
                     <View style={{ flexDirection: 'row' }}>
                         <Atras />
-                        <HeaderGrid title={item ? item.name : "Agregar Producto"} />
+                        <HeaderGrid title={title} />
                     </View>
                     <View style={{ marginBottom: 200 }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -155,6 +127,7 @@ export default function Index(props) {
                                 Foto
                             </Button>
                         </View>
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>{formik.errors.image1 && <Text style={Styles.error}>{formik.errors.image1}</Text>}</View>
                     </View>
                     <View style={{ marginTop: -180 }}>
                         <TextInput
@@ -162,18 +135,21 @@ export default function Index(props) {
                             label="Nombre"
                             value={formik.values.name}
                         />
+                        {formik.errors.name && <Text style={Styles.error}>{formik.errors.name}</Text>}
 
                         <TextInput
                             mode='outlined'
                             label="Descripción"
                             value={formik.values.description}
                         />
+                        {formik.errors.description && <Text style={Styles.error}>{formik.errors.description}</Text>}
 
                         <MoneyComponent
                             label='Precio (Opcional)'
                             value={formik.values.price.toString()}
-                            onChange={item => formik.setFieldValue('price', item)}
+                            onChange={value => formik.setFieldValue('price', value)}
                         />
+                        {formik.errors.price && <Text style={Styles.error}>{formik.errors.price}</Text>}
 
                         <DropList
                             label='Categoría'
@@ -184,6 +160,7 @@ export default function Index(props) {
                             value={formik.values.category_id || ''}
                             backgroundColor='#000'
                         />
+                        {formik.errors.category_id && <Text style={Styles.error}>{formik.errors.category_id}</Text>}
 
                         <View style={{ margin: 20, flexDirection: 'row', justifyContent: 'space-around' }}>
                             <View style={{ width: '50%' }}>
@@ -195,13 +172,13 @@ export default function Index(props) {
                                         { label: "No", value: "0" },
                                         { label: "Si", value: "1" }
                                     ]}
-                                    initial={1}
+                                    initial={formik.values.share}
                                     buttonColor={'#0c77c3'}
                                     borderColor='#000'
                                     borderWidth={1}
                                     backgroundColor={'#EEEEEE'}
                                     accessibilityLabel="gender-switch-selector"
-                                    onPress={value => console.log(`Call onPress with value: ${value}`)}
+                                    onPress={value => formik.setFieldValue('share', value)}
                                 />
                             </View>
                         </View>
@@ -228,8 +205,8 @@ export default function Index(props) {
                                 uppercase={false}
                                 loading={sending}
                                 disabled={sending}
-                                onPress={handleConfirm}
                                 style={Styles.buttonPlus}
+                                onPress={formik.handleSubmit}
                             >
                                 Guardar
                             </Button>

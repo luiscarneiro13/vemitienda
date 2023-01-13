@@ -28,7 +28,7 @@ export default function Index() {
     }, [])
 
     const onClickCardCustom = (item) => {
-        navigator.navigate('HomeDetails', { item })
+        navigator.navigate('HomeDetails', { item: { ...item }, update: true })
     }
 
     const goAdd = () => {

@@ -5,7 +5,7 @@ import SvgComponent from './Svg'
 import axios from 'axios'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { styleView } from '../../constants/Styles'
+import { Styles } from '../../constants/Styles'
 import { useNavigation } from '@react-navigation/native'
 
 export default function ForgotPassword() {
@@ -58,7 +58,7 @@ export default function ForgotPassword() {
                         value={formik.values.email}
                         onChangeText={(text) => formik.setFieldValue('email', text)}
                     />
-                    <Text style={styleView.error}>{formik.errors.email}</Text>
+                    <Text style={Styles.error}>{formik.errors.email}</Text>
 
                     <Button
                         icon="account"
@@ -67,6 +67,7 @@ export default function ForgotPassword() {
                         uppercase={false}
                         loading={sending}
                         disabled={sending}
+                        style={Styles.buttonPlus}
                     >
                         Recuperar
                     </Button>
@@ -77,12 +78,14 @@ export default function ForgotPassword() {
                         <Button
                             onPress={() => navigator.navigate('Register')}
                             uppercase={false}
+                            style={Styles.buttonPlus}
                         >
                             Registro
                         </Button>
                         <Button
                             onPress={() => navigator.navigate('Login')}
                             uppercase={false}
+                            style={Styles.buttonPlus}
                         >
                             Iniciar Sesión
                         </Button>
