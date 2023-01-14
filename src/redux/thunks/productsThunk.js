@@ -1,3 +1,4 @@
+import { Alert } from 'react-native'
 import * as API from '../../api'
 import { addProduct, addProducts, deleteProduct, loadingProducts, updateProduct } from '../slices'
 
@@ -13,13 +14,18 @@ export const getProducts = (page = 0) => {
 
 export const storeProductThunk = (params) => {
     return async (dispatch, getState) => {
-        console.log("Params", params)
-        dispatch(loadingProducts(true))
-        const data = await API.postDB(`products-user`, params)
-        const resp = await data?.data
-        console.log("Resp Store", resp?.data)
-        dispatch(addProduct(resp?.data))
-        dispatch(loadingProducts(false))
+        let message = null
+        try {
+            dispatch(loadingProducts(true))
+            const data = await API.postDB(`products-user`, params)
+            const resp = await data?.data
+            message = resp?.message
+            dispatch(addProduct(resp?.data))
+            dispatch(loadingProducts(false))
+        } catch (error) {
+            message = 'Ocurrió un error inesperado!'
+        }
+        message ? Alert.alert('Mensaje', message) : null
     }
 }
 

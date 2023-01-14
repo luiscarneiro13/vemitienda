@@ -41,11 +41,18 @@ export const updateCategoryThunk = (params) => {
 
 export const storeCategoryThunk = (params) => {
     return async (dispatch, getState) => {
-        dispatch(loadingCategories(true))
-        const data = await API.postDB(`categories`, params)
-        const resp = await data?.data?.data
-        dispatch(addCategory(resp))
-        dispatch(loadingCategories(false))
+        let message = null
+        try {
+            dispatch(loadingCategories(true))
+            const data = await API.postDB(`categories`, params)
+            const resp = await data?.data
+            message = resp?.message
+            dispatch(addCategory(resp.data))
+            dispatch(loadingCategories(false))
+        } catch (error) {
+            message = 'Ocurrió un error inesperado!'
+        }
+        message ? Alert.alert('Mensaje', message) : null
     }
 }
 
