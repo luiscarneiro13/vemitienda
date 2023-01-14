@@ -22,8 +22,8 @@ export const categoriesSlice = createSlice({
             state.categories[index] = action.payload
         },
         deleteCategory(state, action) {
-            const id = action.payload;
-            state.categories = state.categories.filter(item => item.id !== id);
+            const id = action.payload
+            state.categories = state.categories.filter(item => item.id !== id)
         },
     },
 })

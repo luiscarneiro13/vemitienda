@@ -15,19 +15,15 @@ export const productsSlice = createSlice({
             state.products = action.payload
         },
         addProduct(state, action) {
-            state.products.push(action.payload)
+            state.products.unshift(action.payload)
         },
         updateProduct(state, action) {
-            return state.products.map(item => {
-                if (item.id === action.payload.id) {
-                    item = action.payload
-                }
-                return item
-            })
+            const index = state.products.findIndex(item => item.id === action.payload.id)
+            state.products[index] = action.payload
         },
         deleteProduct(state, action) {
-            const id = action.payload;
-            return state.products.filter(item => item.id !== id);
+            const id = action.payload
+            state.products = state.products.filter(item => item.id !== id)
         },
     },
 })

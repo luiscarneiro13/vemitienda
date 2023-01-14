@@ -15,7 +15,7 @@ export default function CardCustom({ data, onClick, compartir = false }) {
                 description={item.category?.name}
                 left={props => item?.image ? <Image mode='cover' source={{ uri: DIGITALOCEAN + item?.image[0]?.url }} style={{ width: size, height: size }} /> : <Text></Text>}
                 onPress={() => onClick(item)}
-                style={{ backgroundColor:'#F9F9F9', marginTop:5 }}
+                style={{ backgroundColor: '#F9F9F9', marginTop: 5 }}
             />
         )
     }

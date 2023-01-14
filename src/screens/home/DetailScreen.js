@@ -17,6 +17,8 @@ import { manipulateAsync, SaveFormat } from 'expo-image-manipulator'
 import * as MediaLibrary from 'expo-media-library'
 import MoneyComponent from '../../components/MoneyComponent'
 import SwitchSelector from "react-native-switch-selector"
+import { destroyProductThunk, storeProductThunk, updateProductThunk } from '../../redux/thunks/productsThunk'
+import { loadingProducts } from '../../redux/slices'
 
 
 export default function Index(prop) {
@@ -29,6 +31,7 @@ export default function Index(prop) {
     const [foto, setFoto] = useState(null)
     const [sending, setSending] = useState(false)
     const categories = useSelector(state => state.categories.categories)
+    const isLoading = useSelector(state => state.categories.isLoading)
     const [visible, setVisible] = useState(false)
     const dispatch = useDispatch()
     const navigator = useNavigation()
@@ -43,40 +46,22 @@ export default function Index(prop) {
             (
                 async () => {
                     if (accion === 'Update') {
-                        Alert.alert(accion)
-                        // data.id = props.id
-                        // dispatch(updateCategoryThunk(data))
+                        data.id = props.id
+                        dispatch(updateProductThunk(data))
                     } else {
-                        Alert.alert(accion)
-                        // dispatch(storeCategoryThunk(data))
+                        dispatch(storeProductThunk(data))
                     }
-                    navigator.navigate('Categories')
+                    navigator.navigate('Home')
                 }
             )()
         }
     })
 
-    console.log("formik", formik)
-    // const formik = useFormik({
-    //     initialValues: Func.initialValues(props),
-    //     validationSchema: Yup.object(Func.validationSchema()),
-    //     onSubmit: (data) => {
-    //         (
-    //             async () => {
-    //                 setSending(true)
-    //                 try {
-    //                     Alert.alert("HOLA")
-    //                 } catch (error) {
-    //                     setSending(false)
-    //                     console.log("error: ", error)
-    //                 }
-    //             }
-    //         )()
-    //     }
-    // })
 
     const handleDelete = async () => {
-
+        dispatch(loadingProducts(true))
+        dispatch(destroyProductThunk(props.id))
+        navigator.navigate('Home')
     }
 
     const pickImage1 = async () => {
@@ -100,8 +85,8 @@ export default function Index(prop) {
             )
             setFoto(imgReducida1.uri)
             /* El imagen.uri es la url que se debe guardar en base de datos */
-            formik.setFieldValue('image1', imgReducida1.uri)
-            formik.setFieldValue('image1_base64', imgReducida1.base64)
+            formik.setFieldValue('image', imgReducida1.uri)
+            // formik.setFieldValue('image1_base64', imgReducida1.base64)
         }
     }
 
@@ -134,6 +119,7 @@ export default function Index(prop) {
                             mode='outlined'
                             label="Nombre"
                             value={formik.values.name}
+                            onChangeText={(text) => formik.setFieldValue('name', text)}
                         />
                         {formik.errors.name && <Text style={Styles.error}>{formik.errors.name}</Text>}
 
@@ -141,6 +127,7 @@ export default function Index(prop) {
                             mode='outlined'
                             label="Descripción"
                             value={formik.values.description}
+                            onChangeText={(text) => formik.setFieldValue('description', text)}
                         />
                         {formik.errors.description && <Text style={Styles.error}>{formik.errors.description}</Text>}
 
@@ -159,6 +146,7 @@ export default function Index(prop) {
                             data={categories}
                             value={formik.values.category_id || ''}
                             backgroundColor='#000'
+                            onChange={value => formik.setFieldValue('category_id', value.id)}
                         />
                         {formik.errors.category_id && <Text style={Styles.error}>{formik.errors.category_id}</Text>}
 
@@ -190,8 +178,8 @@ export default function Index(prop) {
                                     icon="delete"
                                     mode="outlined"
                                     uppercase={false}
-                                    loading={sending}
-                                    disabled={sending}
+                                    loading={isLoading}
+                                    disabled={isLoading}
                                     onPress={handleConfirm}
                                     style={Styles.buttonPlus}
                                 >
@@ -203,8 +191,8 @@ export default function Index(prop) {
                                 icon="content-save"
                                 mode="contained"
                                 uppercase={false}
-                                loading={sending}
-                                disabled={sending}
+                                loading={isLoading}
+                                disabled={isLoading}
                                 style={Styles.buttonPlus}
                                 onPress={formik.handleSubmit}
                             >

@@ -8,12 +8,13 @@ import store from './src/redux/store'
 import axios from 'axios'
 import Loading from './src/components/Loading'
 import AuthNavigator from './src/navigations/AuthNavigator'
+import { URL_LOCAL, URL_PRODUCTION } from './src/constants/Data'
 
 const RootNavigation = () => {
 
   const token = useSelector(state => state?.token.token) || null
 
-  axios.defaults.baseURL = 'https://whale-app-gd46k.ondigitalocean.app/api/v1/'
+  axios.defaults.baseURL = URL_PRODUCTION
 
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : ''
 
