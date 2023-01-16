@@ -14,8 +14,8 @@ export const getCompanyThunk = (page = 0) => {
             dispatch(loadingCompany(false))
         } catch (error) {
             message = 'Ocurrió un error inesperado!'
+            Alert.alert('Mensaje Tienda', message)
         }
-        message ? Alert.alert('Mensaje', message) : null
     }
 }
 
@@ -26,12 +26,14 @@ export const storeCompanyThunk = (params) => {
             dispatch(loadingCompany(true))
             const data = await API.postDB(`company-user`, params)
             const resp = await data?.data
-            message = resp?.message
-            dispatch(addCompany(resp?.data))
-            dispatch(loadingCompany(false))
+            if (resp?.data) {
+                dispatch(addCompany(resp?.data))
+                dispatch(loadingCompany(false))
+                Alert.alert('Mensaje Tienda', resp?.message)
+            }
         } catch (error) {
             message = 'Ocurrió un error inesperado!'
+            Alert.alert('Mensaje Tienda', message)
         }
-        message ? Alert.alert('Mensaje', message) : null
     }
 }

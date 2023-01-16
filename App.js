@@ -9,6 +9,7 @@ import axios from 'axios'
 import Loading from './src/components/Loading'
 import AuthNavigator from './src/navigations/AuthNavigator'
 import { URL_LOCAL, URL_PRODUCTION } from './src/constants/Data'
+import { Alert } from 'react-native'
 
 const RootNavigation = () => {
 
@@ -27,7 +28,7 @@ const RootNavigation = () => {
   axios.interceptors.response.use(function (response) {
     /* Si todo va bien, se devuelve todo tal cual */
     if (response?.data?.errors) {
-      Alert.alert("Error", Object.values(response.data.errors)[0][0]);
+      Alert.alert(response?.data?.errors?.message[0], response?.data?.errors?.name[0]);
     } else {
       return response
     }
@@ -39,6 +40,10 @@ const RootNavigation = () => {
       // dispatch(logoutUsuario())
       // AsyncStorage.clear()
     }
+    // if (error?.response?.data?.status === 400 && response?.data?.errors) {
+    //   Alert.alert(response?.data?.errors?.message[0], response?.data?.errors?.name[0]);
+    // }
+    // throw error
   })
 
   return (

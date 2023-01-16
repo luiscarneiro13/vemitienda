@@ -19,6 +19,7 @@ import MoneyComponent from '../../components/MoneyComponent'
 import SwitchSelector from "react-native-switch-selector"
 import { destroyProductThunk, storeProductThunk, updateProductThunk } from '../../redux/thunks/productsThunk'
 import { loadingProducts } from '../../redux/slices'
+import { DIGITALOCEAN } from '../../constants/Data'
 
 
 export default function Index(prop) {
@@ -29,12 +30,21 @@ export default function Index(prop) {
     const accion = params?.update ? 'Update' : 'Create'
 
     const [foto, setFoto] = useState(null)
-    const [sending, setSending] = useState(false)
+    const [labelFoto, setLabelFoto] = useState('Tomar Foto')
     const categories = useSelector(state => state.categories.categories)
-    const isLoading = useSelector(state => state.categories.isLoading)
+    const isLoading = useSelector(state => state.products.isLoading)
     const [visible, setVisible] = useState(false)
     const dispatch = useDispatch()
     const navigator = useNavigation()
+
+    useEffect(() => {
+        if (props) {
+            if (!foto) {
+                setFoto(DIGITALOCEAN + props.image[0].url)
+            }
+            setLabelFoto('Cambiar Foto')
+        }
+    })
 
     const hideDialog = () => setVisible(false)
     const handleConfirm = () => { setVisible(true) }
@@ -45,13 +55,16 @@ export default function Index(prop) {
         onSubmit: (data) => {
             (
                 async () => {
-                    if (accion === 'Update') {
-                        data.id = props.id
-                        dispatch(updateProductThunk(data))
-                    } else {
-                        dispatch(storeProductThunk(data))
+                    try {
+                        if (accion === 'Update') {
+                            data.id = props.id
+                            dispatch(updateProductThunk(data, navigator))
+                        } else {
+                            dispatch(storeProductThunk(data, navigator))
+                        }
+                    } catch (error) {
+                        console.log("ERROR CAPTURADO AL ENVIAR")
                     }
-                    navigator.navigate('Home')
                 }
             )()
         }
@@ -64,8 +77,8 @@ export default function Index(prop) {
         navigator.navigate('Home')
     }
 
-    const pickImage1 = async () => {
-
+    const pickImage = async () => {
+        dispatch(loadingProducts(true))
         let result = await ImagePicker.launchCameraAsync({
             allowsEditing: true,
             aspect: [4, 4],
@@ -74,7 +87,7 @@ export default function Index(prop) {
 
         if (!result.cancelled) {
 
-            const imgReducida1 = await manipulateAsync(
+            const imgReducida = await manipulateAsync(
                 result.uri,
                 [{ resize: { width: 700, height: 700 } }],
                 {
@@ -83,10 +96,17 @@ export default function Index(prop) {
                     base64: true
                 }
             )
-            setFoto(imgReducida1.uri)
+
+            setFoto(imgReducida.uri)
+
             /* El imagen.uri es la url que se debe guardar en base de datos */
-            formik.setFieldValue('image', imgReducida1.uri)
-            // formik.setFieldValue('image1_base64', imgReducida1.base64)
+            formik.setFieldValue('image', {
+                uri: imgReducida.uri,
+                name: 'imageNombre',
+                type: 'image/png',
+            }).then(() => {
+                dispatch(loadingProducts(false))
+            })
         }
     }
 
@@ -100,6 +120,7 @@ export default function Index(prop) {
                         <HeaderGrid title={title} />
                     </View>
                     <View style={{ marginBottom: 200 }}>
+                        {/* <Text>{JSON.stringify(foto)}</Text> */}
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             {foto ?
                                 <Image mode='cover' source={{ uri: foto }} style={{ width: 120, height: 120 }} />
@@ -108,8 +129,8 @@ export default function Index(prop) {
                             }
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
-                            <Button onPress={pickImage1} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
-                                Foto
+                            <Button onPress={pickImage} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
+                                {labelFoto}
                             </Button>
                         </View>
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>{formik.errors.image1 && <Text style={Styles.error}>{formik.errors.image1}</Text>}</View>

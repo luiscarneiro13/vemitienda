@@ -16,8 +16,9 @@ export const Styles = StyleSheet.create({
         height: 30
     },
     title: {
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: 'bold',
+        paddingTop:3
     },
     titleBtn: {
         flex: 1,

@@ -25,7 +25,11 @@ export const productsSlice = createSlice({
             const id = action.payload
             state.products = state.products.filter(item => item.id !== id)
         },
-    },
+        updateImageProduct(state, action) {
+            const index = state.products.findIndex(item => item.id === action.payload.product_id)
+            state.products[index].image = [action.payload]
+        }
+    }
 })
 
 export const {
@@ -33,5 +37,6 @@ export const {
     addProducts,
     addProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    updateImageProduct
 } = productsSlice.actions

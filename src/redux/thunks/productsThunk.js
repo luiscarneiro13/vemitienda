@@ -1,6 +1,7 @@
 import { Alert } from 'react-native'
 import * as API from '../../api'
 import { addProduct, addProducts, deleteProduct, loadingProducts, updateProduct } from '../slices'
+import { storeImageProductThunk } from './imagesThunk'
 
 export const getProducts = (page = 0) => {
     return async (dispatch, getState) => {
@@ -12,37 +13,53 @@ export const getProducts = (page = 0) => {
     }
 }
 
-export const storeProductThunk = (params) => {
+export const storeProductThunk = (params, navigator) => {
     return async (dispatch, getState) => {
         let message = null
         try {
             dispatch(loadingProducts(true))
             const data = await API.postDB(`products-user`, params)
             const resp = await data?.data
-            message = resp?.message
-            dispatch(addProduct(resp?.data))
-            dispatch(loadingProducts(false))
+
+            if (resp?.data) {
+                message = resp?.message
+                params.product_id = resp?.data?.id
+                dispatch(addProduct(resp?.data))
+                dispatch(storeImageProductThunk(params)).then(() => {
+                    dispatch(loadingProducts(false))
+                    navigator.navigate('Home')
+                    Alert.alert('Mensaje Productos', message)
+                })
+            } else {
+                throw new Error();
+            }
         } catch (error) {
-            message = 'Ocurrió un error inesperado!'
+            console.log("Entró el error")
+            dispatch(loadingProducts(false))
         }
-        message ? Alert.alert('Mensaje', message) : null
     }
 }
 
-export const updateProductThunk = (params) => {
+export const updateProductThunk = (params, navigator) => {
     return async (dispatch, getState) => {
         let message = null
         try {
             dispatch(loadingProducts(true))
             const data = await API.putDB(`products-user/${params.id}`, params)
             const resp = await data?.data
-            message = resp?.message
-            dispatch(updateProduct(resp?.data))
-            dispatch(loadingProducts(false))
+            if (resp?.data) {
+                message = resp?.message
+                params.product_id = resp?.data?.id
+                dispatch(updateProduct(resp?.data))
+                dispatch(storeImageProductThunk(params)).then(() => {
+                    dispatch(loadingProducts(false))
+                    navigator.navigate('Home')
+                    Alert.alert('Mensaje Productos', message)
+                })
+            }
         } catch (error) {
-            message = 'Ocurrió un error inesperado!'
+            dispatch(loadingProducts(false))
         }
-        message ? Alert.alert('Mensaje', message) : null
     }
 }
 
@@ -57,6 +74,6 @@ export const destroyProductThunk = (id) => {
         } catch (error) {
             message = 'Ocurrió un error inesperado!'
         }
-        message ? Alert.alert('Mensaje', message) : null
+        message ? Alert.alert('Mensaje Productos', message) : null
     }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import Header from '../../components/Header'
 import Search from '../../components/Search'
 import CardCustom from '../../components/CardCustom'
@@ -55,6 +55,7 @@ export default function Index() {
                     <ScrollHorizontal categories={categories} filterCategory={(item) => console.log("")} />
                 </View>
                 <CardCustom data={products} onClick={onClickCardCustom} />
+                {/* <Text>{JSON.stringify(products)}</Text> */}
             </View>
         </View>
     )
