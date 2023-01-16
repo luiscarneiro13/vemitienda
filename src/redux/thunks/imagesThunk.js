@@ -27,8 +27,6 @@ export const storeImageProductThunk = (params) => {
                 dispatch(updateImageProduct(datos))
             }
 
-            dispatch(loadingProducts(false))
-
         } catch (error) {
             dispatch(loadingProducts(false))
         }
@@ -58,8 +56,6 @@ export const updateImageProductThunk = (params) => {
                 const datos = resp?.data
                 dispatch(updateImageProduct(datos))
             }
-
-            dispatch(loadingProducts(false))
 
         } catch (error) {
             dispatch(loadingProducts(false))

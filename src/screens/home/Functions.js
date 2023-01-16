@@ -1,6 +1,7 @@
 import * as Yup from 'yup'
 
 export function initialValues(item = null) {
+    console.log("Share", item)
     return {
         name: item?.name || 'Prueba API 2',
         description: item?.description || 'Descripción 1',
@@ -8,7 +9,7 @@ export function initialValues(item = null) {
         image1_base64: '',
         price: item?.price || 0, // Debe ser entero AJURO
         category_id: item?.category_id || 0,
-        share: item?.share || 1
+        share: item?.share ? 1 : 0
     }
 }
 

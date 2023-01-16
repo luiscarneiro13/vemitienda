@@ -39,7 +39,7 @@ export default function Index(prop) {
 
     useEffect(() => {
         if (props) {
-            if (!foto) {
+            if (!foto && props?.image?.length) {
                 setFoto(DIGITALOCEAN + props.image[0].url)
             }
             setLabelFoto('Cambiar Foto')
@@ -176,12 +176,13 @@ export default function Index(prop) {
                                 <Text style={{ marginTop: 7 }}>Compartir en Catálogo</Text>
                             </View>
                             <View style={{ width: '50%' }}>
+                                <Text>Share {formik.values.share}</Text>
                                 <SwitchSelector
                                     options={[
-                                        { label: "No", value: "0" },
-                                        { label: "Si", value: "1" }
+                                        { label: "No", value: 0 },
+                                        { label: "Si", value: 1 }
                                     ]}
-                                    initial={formik.values.share}
+                                    initial={parseInt(formik.values.share)}
                                     buttonColor={'#0c77c3'}
                                     borderColor='#000'
                                     borderWidth={1}

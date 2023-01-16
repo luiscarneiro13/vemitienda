@@ -1,6 +1,6 @@
 import { Alert } from 'react-native'
 import * as API from '../../api'
-import { addProduct, addProducts, deleteProduct, loadingProducts, updateProduct } from '../slices'
+import { addProduct, addProducts, deleteProduct, imageLoading, loadingProducts, updateProduct } from '../slices'
 import { storeImageProductThunk } from './imagesThunk'
 
 export const getProducts = (page = 0) => {
@@ -23,12 +23,15 @@ export const storeProductThunk = (params, navigator) => {
 
             if (resp?.data) {
                 message = resp?.message
-                params.product_id = resp?.data?.id
+                const product_id = resp?.data?.id
+                params.product_id = product_id
                 dispatch(addProduct(resp?.data))
                 dispatch(storeImageProductThunk(params)).then(() => {
-                    dispatch(loadingProducts(false))
-                    navigator.navigate('Home')
-                    Alert.alert('Mensaje Productos', message)
+                    setTimeout(() => {
+                        dispatch(loadingProducts(false))
+                        navigator.navigate('Home')
+                        Alert.alert('Mensaje Productos', message)
+                    }, 2000);
                 })
             } else {
                 throw new Error();
@@ -49,13 +52,19 @@ export const updateProductThunk = (params, navigator) => {
             const resp = await data?.data
             if (resp?.data) {
                 message = resp?.message
-                params.product_id = resp?.data?.id
+                const product_id = resp?.data?.id
+                params.product_id = product_id
                 dispatch(updateProduct(resp?.data))
                 dispatch(storeImageProductThunk(params)).then(() => {
-                    dispatch(loadingProducts(false))
-                    navigator.navigate('Home')
-                    Alert.alert('Mensaje Productos', message)
+                    setTimeout(() => {
+                        dispatch(loadingProducts(false))
+                        navigator.navigate('Home')
+                        Alert.alert('Mensaje Productos', message)
+                    }, 2000);
                 })
+            } else {
+                dispatch(loadingProducts(false))
+                dispatch(imageLoading({ product_id: 0, loading: false }))
             }
         } catch (error) {
             dispatch(loadingProducts(false))
