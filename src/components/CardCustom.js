@@ -4,38 +4,67 @@ import { Card, Title, Paragraph, Button, List, Avatar, ActivityIndicator } from 
 import { DIGITALOCEAN } from '../constants/Data'
 import { useSelector } from 'react-redux'
 
-export default function CardCustom({ data, onClick, compartir = false }) {
+export default function CardCustom({ onClick, share }) {
 
     const inputEl = useRef(null)
     const products = useSelector(state => state?.products.products) || []
-    const imageLoading = useSelector(state => state?.products.imageLoading) || []
+    const productsFilters = useSelector(state => state?.products.productsFilters) || []
 
     const RenderItem = ({ item }) => {
         const index = products.findIndex(value => value.id === item.id)
         const size = 80
-        return (
-            <List.Item
-                title={products[index].name}
-                description={products[index].category?.name}
-                left={props =>
-                    products[index]?.image ?
-                        <>
-                            <Image mode='cover' source={{ uri: DIGITALOCEAN + products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex:3 }} />
-                        </>
-                        :
-                        <Text></Text>
-                }
-                onPress={() => onClick(products[index])}
-                style={{ backgroundColor: '#F9F9F9', marginTop: 5 }}
-            />
-        )
+        if (share) {
+            if (products[index]?.share === 1) {
+                return (
+                    <List.Item
+                        title={products[index].name}
+                        description={products[index].category?.name}
+                        left={props =>
+                            products[index]?.image ?
+                                <>
+                                    <Image mode='cover' source={{ uri: DIGITALOCEAN + products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
+                                </>
+                                :
+                                <Text></Text>
+                        }
+                        onPress={() => onClick(products[index])}
+                        style={{ backgroundColor: '#F9F9F9', marginTop: 5 }}
+                    />
+                )
+            }
+        } else {
+            if (products[index]) {
+                return (
+                    <List.Item
+                        title={products[index].name}
+                        description={products[index].category?.name}
+                        left={props =>
+                            products[index]?.image ?
+                                <>
+                                    <Image mode='cover' source={{ uri: DIGITALOCEAN + products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
+                                </>
+                                :
+                                <Text></Text>
+                        }
+                        onPress={() => onClick(products[index])}
+                        style={{ backgroundColor: '#F9F9F9', marginTop: 5 }}
+                    />
+                )
+            }
+        }
     }
 
     return (
-        <FlatList
-            data={data}
-            renderItem={(item) => RenderItem(item)}
-            keyExtractor={item => item.id || inputEl}
-        />
+        <>
+            {productsFilters.length ?
+                <FlatList
+                    data={productsFilters}
+                    renderItem={(item) => RenderItem(item)}
+                    keyExtractor={item => item.id || inputEl}
+                />
+                :
+                <View style={{ justifyContents: 'center', alignItems: 'center', marginTop: 'auto', marginBottom: 'auto' }}><Text>No hay datos disponibles</Text></View>
+            }
+        </>
     )
 }

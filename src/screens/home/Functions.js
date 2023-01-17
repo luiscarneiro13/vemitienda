@@ -1,7 +1,6 @@
 import * as Yup from 'yup'
 
 export function initialValues(item = null) {
-    console.log("Share", item)
     return {
         name: item?.name || 'Prueba API 2',
         description: item?.description || 'Descripción 1',

@@ -1,7 +1,7 @@
 import { Alert } from 'react-native'
 import * as API from '../../api'
-import { addProduct, addProducts, deleteProduct, imageLoading, loadingProducts, updateProduct } from '../slices'
-import { storeImageProductThunk } from './imagesThunk'
+import { addProduct, addProducts, deleteProduct, imageLoading, loadingProducts, productsFilters, updateProduct } from '../slices'
+import { storeImageProductThunk, updateImageProductThunk } from './imagesThunk'
 
 export const getProducts = (page = 0) => {
     return async (dispatch, getState) => {
@@ -9,6 +9,7 @@ export const getProducts = (page = 0) => {
         const data = await API.getDB(`products-user`)
         const resp = await data.data.data
         dispatch(addProducts(resp))
+        dispatch(productsFilters(resp))
         dispatch(loadingProducts(false))
     }
 }
@@ -55,7 +56,7 @@ export const updateProductThunk = (params, navigator) => {
                 const product_id = resp?.data?.id
                 params.product_id = product_id
                 dispatch(updateProduct(resp?.data))
-                dispatch(storeImageProductThunk(params)).then(() => {
+                dispatch(updateImageProductThunk(params)).then(() => {
                     setTimeout(() => {
                         dispatch(loadingProducts(false))
                         navigator.navigate('Home')

@@ -6,19 +6,22 @@ import CardCustom from '../../components/CardCustom'
 import ScrollHorizontal from '../../components/ScrollHorizontal'
 import { Styles } from '../../constants/Styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigation } from '@react-navigation/native'
-import { Button } from 'react-native-paper'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { ActivityIndicator, Button } from 'react-native-paper'
 import { Camera } from 'expo-camera'
 import * as MediaLibrary from 'expo-media-library'
 import { getCategoriesThunk, getCompanyThunk, getProducts } from '../../redux/thunks'
+import { productsFilters } from '../../redux/slices'
 
 
 export default function Index() {
 
+    const [products, setProducts] = useState([])
     const [query, setQuery] = useState('')
     const navigator = useNavigation()
     const categories = useSelector(state => state.categories.categories) || []
-    const products = useSelector(state => state?.products.products) || []
+    const productsStore = useSelector(state => state?.products.products) || []
+    const loading = useSelector(state => state?.products.isLoading) || []
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -26,6 +29,10 @@ export default function Index() {
         dispatch(getCompanyThunk())
         dispatch(getCategoriesThunk())
     }, [])
+
+    useFocusEffect(() => {
+        changeSearch(query)
+    })
 
     const onClickCardCustom = (item) => {
         navigator.navigate('HomeDetails', { item: { ...item }, update: true })
@@ -35,12 +42,35 @@ export default function Index() {
         navigator.navigate('HomeDetails', { update: false })
     }
 
+    const changeSearch = (query) => {
+
+        setQuery(query)
+
+        if (query.length) {
+
+            const filtrado = productsStore.filter(item => {
+                if (item.name.includes(query) || item.category.name.includes(query) || item.description.includes(query)) {
+                    return item
+                }
+            })
+
+            dispatch(productsFilters(filtrado))
+        } else {
+            dispatch(productsFilters(productsStore))
+        }
+    }
+
+    const filterCategory = (query) => {
+        changeSearch(query)
+    }
+
     return (
         <View style={{ backgroundColor: "#FFF", flex: 1 }}>
             <Header />
+
             <View style={Styles.container}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Search query={query} onChange={(item) => console.log("")} />
+                    <Search query={query} onChange={(item) => changeSearch(item)} />
                     <Button
                         icon={'plus'}
                         mode="contained"
@@ -52,10 +82,9 @@ export default function Index() {
                     </Button>
                 </View>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                    <ScrollHorizontal categories={categories} filterCategory={(item) => console.log("")} />
+                    <ScrollHorizontal categories={categories} filterCategory={(item) => filterCategory(item)} />
                 </View>
-                <CardCustom data={products} onClick={onClickCardCustom} />
-                {/* <Text>{JSON.stringify(products)}</Text> */}
+                <CardCustom onClick={onClickCardCustom} share={false} />
             </View>
         </View>
     )

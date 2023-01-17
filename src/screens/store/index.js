@@ -1,6 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFormik } from 'formik'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { View, ScrollView, Text, ActivityIndicator, Alert } from 'react-native'
 import { Button, TextInput } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,10 +11,11 @@ import { deleteToken } from '../../redux/slices'
 import { getCompanyThunk, storeCompanyThunk } from '../../redux/thunks'
 import * as Func from './Functions'
 import * as Yup from 'yup'
-
+import { ColorPicker } from 'react-native-color-picker'
 
 export default function Index() {
 
+    const [color, setColor] = useState('#FFFF00')
     const [sending, setSending] = useState(false)
     const dispatch = useDispatch()
     const company = useSelector(state => state.company?.company)
@@ -92,6 +92,16 @@ export default function Index() {
                                     onChangeText={(text) => formik.setFieldValue('phone', text)}
                                 />
                                 {formik.errors.phone && <Text style={Styles.error}>{formik.errors.phone}</Text>}
+
+                                <TextInput
+                                    mode='outlined'
+                                    label="Color de fondo del Catálogo"
+                                    placeholder="Ejemplo: #FFFFFF"
+                                    style={{ marginTop: 15 }}
+                                    value={formik.values?.background_color_catalog || ''}
+                                    onChangeText={(text) => formik.setFieldValue('background_color_catalog', text)}
+                                />
+                                {formik.errors.background_color_catalog && <Text style={Styles.error}>{formik.errors.background_color_catalog}</Text>}
 
                                 <View style={{ marginTop: 15 }}></View>
                                 <Button

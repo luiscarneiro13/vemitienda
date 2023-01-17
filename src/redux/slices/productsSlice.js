@@ -8,7 +8,8 @@ export const productsSlice = createSlice({
         imageLoading: {
             product_id: 0,
             loading: false
-        }
+        },
+        productsFilters: []
     },
     reducers: {
         loadingProducts(state, action) {
@@ -35,7 +36,10 @@ export const productsSlice = createSlice({
         },
         imageLoading(state, action) {
             state.imageLoading = action.payload
-        }
+        },
+        productsFilters(state, action) {
+            state.productsFilters = action.payload
+        },
     }
 })
 
@@ -46,5 +50,6 @@ export const {
     updateProduct,
     deleteProduct,
     updateImageProduct,
-    imageLoading
+    imageLoading,
+    productsFilters
 } = productsSlice.actions

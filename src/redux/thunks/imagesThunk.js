@@ -4,12 +4,9 @@ import { addProduct, addProducts, deleteProduct, loadingProducts, updateImagePro
 
 export const storeImageProductThunk = (params) => {
     return async (dispatch, getState) => {
-        let message = null
         try {
             dispatch(loadingProducts(true))
-
             const formData = new FormData()
-
             formData.append('folder', 'images')
             formData.append('image', params.image)
 
@@ -35,12 +32,9 @@ export const storeImageProductThunk = (params) => {
 
 export const updateImageProductThunk = (params) => {
     return async (dispatch, getState) => {
-        let message = null
         try {
             dispatch(loadingProducts(true))
-
             const formData = new FormData()
-
             formData.append('folder', 'images')
             formData.append('image', params.image)
 
