@@ -37,22 +37,29 @@ export const getTemplatesThunk = (page = 0) => {
     }
 }
 
-export const storeCompanyThunk = (params) => {
+export const storeCompanyThunk = (params, navigator) => {
     return async (dispatch, getState) => {
         try {
+
             dispatch(loadingCompany(true))
             const data = await API.postDB(`company-user`, params)
             const resp = await data?.data
-            if (resp?.data) {
-                dispatch(addCompany(resp?.data))
+            const message = await resp.message
+            const datos = resp?.data
+
+            if (datos) {
+                
+                if (params?.thumbnail?.uri) {
+                    dispatch(storeLogoThunk(params))
+                    datos.logo.thumbnail = params?.thumbnail?.uri
+                }
+
+                dispatch(addCompany(datos))
+
                 dispatch(loadingCompany(false))
-                dispatch(storeLogoThunk(params)).then(() => {
-                    setTimeout(() => {
-                        dispatch(loadingCompany(false))
-                        navigator.navigate('Store')
-                        Alert.alert('Mensaje Tienda', resp?.message)
-                    }, 3000);
-                })
+                navigator.navigate('Home')
+                Alert.alert('Mensaje Tienda', message)
+
             } else {
                 throw new Error();
             }

@@ -18,6 +18,7 @@ export const storeProductThunk = (params, navigator) => {
     return async (dispatch, getState) => {
         let message = null
         try {
+            
             dispatch(loadingProducts(true))
             const data = await API.postDB(`products-user`, params)
             const resp = await data?.data

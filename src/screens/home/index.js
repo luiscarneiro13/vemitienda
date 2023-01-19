@@ -16,12 +16,10 @@ import { productsFilters } from '../../redux/slices'
 
 export default function Index() {
 
-    const [products, setProducts] = useState([])
     const [query, setQuery] = useState('')
     const navigator = useNavigation()
     const categories = useSelector(state => state.categories.categories) || []
     const productsStore = useSelector(state => state?.products.products) || []
-    const loading = useSelector(state => state?.products.isLoading) || []
     const dispatch = useDispatch()
 
     useEffect(() => {

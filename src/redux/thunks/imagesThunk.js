@@ -1,6 +1,6 @@
 import { Alert } from 'react-native'
 import * as API from '../../api'
-import { addProduct, addProducts, deleteProduct, loadingProducts, updateImageProduct, updateProduct } from '../slices'
+import { addProduct, addProducts, deleteProduct, loadingCompany, loadingProducts, updateImageProduct, updateProduct } from '../slices'
 
 export const storeImageProductThunk = (params) => {
     return async (dispatch, getState) => {
@@ -18,7 +18,6 @@ export const storeImageProductThunk = (params) => {
             }).then((resp) => {
                 console.log("Se guardó la imagen")
             })
-
 
         } catch (error) {
             dispatch(loadingProducts(false))
@@ -63,24 +62,22 @@ export const destroyImageProductThunk = (id) => {
 export const storeLogoThunk = (params) => {
     return async (dispatch, getState) => {
         try {
+            dispatch(loadingCompany(true))
             const formData = new FormData()
             formData.append('folder', 'logos')
             formData.append('image', params.image)
+            formData.append('thumbnail', params.thumbnail)
 
             const data = await API.postDB(`storeLogo`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
+            }).then((resp) => {
+                console.log("Guardó el logo")
             })
 
-            const resp = await data?.data
-
-            if (resp?.data) {
-                dispatch(updateLogo(resp?.data))
-            }
-
         } catch (error) {
-            dispatch(loadingProducts(false))
+            dispatch(loadingCompany(false))
         }
     }
 }
