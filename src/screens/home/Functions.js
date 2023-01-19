@@ -16,7 +16,7 @@ export function validationSchema() {
     return {
         name: Yup.string('Formato inválido').required('Ingrese el nombre').min(3, 'Mínimo 3 caracteres').max(90, 'Máximo 90 caracteres'),
         description: Yup.string('Formato inválido').required('Ingrese la descripción').min(3, 'Mínimo 3 caracteres').max(90, 'Máximo 90 caracteres'),
-        // image1: Yup.string('Formato inválido').required('Por favor, Tome una foto'),
+        image: Yup.object('').required('Por favor, Tome o seleccione una foto'),
         category_id: Yup.number().min(1, 'Seleccione una Categoría')
     }
 }

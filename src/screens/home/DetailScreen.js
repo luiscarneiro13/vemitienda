@@ -207,7 +207,6 @@ export default function Index(prop) {
                                 <Text style={{ marginTop: 7 }}>Compartir en Catálogo</Text>
                             </View>
                             <View style={{ width: '50%' }}>
-                                <Text>Share {formik.values.share}</Text>
                                 <SwitchSelector
                                     options={[
                                         { label: "No", value: 0 },
