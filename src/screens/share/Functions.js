@@ -1,120 +1,6 @@
 import { DIGITALOCEAN } from "../../constants/Data"
 
 export const MakePdf = (data, company) => {
-
-  let cadena =
-    `
-        <!DOCTYPE html>
-        <html lang="es">
-
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Mis Plantitas</title>
-            <style>
-                .marca-de-agua {
-                    background-image: url("https://luiscarneiro.com/wp-content/uploads/2022/08/marcadeagua-300x300.png");
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    width: 100%;
-                    height: auto;
-                    margin: auto;
-                }
-                .marca-de-agua img {
-                    padding: 0;
-                    width: 100%;
-                    height: auto;
-                    opacity: 0.7;
-                }
-            </style>
-        </head>
-
-        <body>
-        `
-
-  cadena = cadena + `
-        <header>
-            <table width="100%">
-                <tr>
-                    <td width="50%" valign="middle">
-                        <image width="150px" height="150px" src="${DIGITALOCEAN + company.logo.url}" />
-                    </td>
-                    <td width="50%" valign="middle" style="padding-left: 20px;">
-                        <h1>Mis Plantitas</h2>
-                    </td>
-                </tr>
-            </table>
-            <hr />
-            </header>
-        <table width="100%">
-    `
-
-  data.map((item, index) => {
-    cadena = cadena + `<tr width="100%">
-            <td style="padding-top:10px">
-            <center>
-
-            <table width="70%">
-                <tr>
-                <td colspan="2">
-                
-                </td>
-                </tr>
-                <tr>
-                    <td>`
-    if (index % 2 === 0) {
-      cadena = cadena + `
-                <center><image width="150" height="150" src="${DIGITALOCEAN + item?.image[0].url}" /></center>
-            `
-      cadena = cadena + `
-            <center><span style="font-size:22px">${item?.name}</span><br/></center>
-            <center><span style="font-size:16px">${item?.description}</span><br/></center>
-            `
-
-      if (item.price) {
-        cadena = cadena + `<center><span style="font-size:16px"><strong>Precio: $${item?.price}</strong></span></center>`
-      }
-    }
-
-    cadena = cadena + `</td>
-                    <td>`
-    if (index % 2 != 0) {
-      cadena = cadena + `
-                <center><image width="150" height="150" src="${DIGITALOCEAN + item?.image[0].url}" /></center>
-            `
-      cadena = cadena + `
-            <center><span style="font-size:22px">${item?.name}</span><br/></center>
-            <center><span style="font-size:16px">${item?.description}</span><br/></center>
-            `
-
-      if (item.price) {
-        cadena = cadena + `<center><span style="font-size:16px"><strong>Precio: $${item?.price}</strong></span></center>`
-      }
-    }
-
-    cadena = cadena + `</td>
-                </tr>
-                <tr>
-                <td colspan="2">
-                `
-
-    cadena = cadena + `<br/><br/></td>
-                </tr>
-            </table>
-
-            </center>
-            </td>
-        </tr>
-        <tr width="100%"><td><hr/></td></tr>
-        `
-  })
-  cadena = cadena + ` </table></body></html>`
-
-  return cadena
-}
-
-export const MakePdfPrueba = (data, company) => {
   let cadena = `
     
     <!DOCTYPE html>
@@ -186,17 +72,16 @@ export const MakePdfPrueba = (data, company) => {
 
     cadena = cadena +
       `<div class="col-${col} p-1">
-      Template catalog id: ${company.template_catalog_id}<br/>
-      Col: ${col}<br/>
-      ${JSON.stringify(item.image)}
-        <image
-          class="img-fluid"
-          src="${DIGITALOCEAN + item.image[0].url}"
-        />
+        <div class="text-center">
+          <image
+            class="img-fluid"
+            src="${DIGITALOCEAN + item.image[0].url}"
+          />
+        </div>
         <p class="text-center pt-1">
           <span style="font-weight: bold; font-size: 16px">${item.name}</span
           ><br />
-          <span style="font-weight: bold; font-size: 20px">${item.price}</span><br />
+          <span style="font-weight: bold; font-size: 20px">$${item.price}</span><br />
         </p>
       </div>`
   })

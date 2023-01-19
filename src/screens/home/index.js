@@ -10,7 +10,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { ActivityIndicator, Button } from 'react-native-paper'
 import { Camera } from 'expo-camera'
 import * as MediaLibrary from 'expo-media-library'
-import { getCategoriesThunk, getCompanyThunk, getProducts } from '../../redux/thunks'
+import { getCategoriesThunk, getCompanyThunk, getProducts, getTemplatesThunk } from '../../redux/thunks'
 import { productsFilters } from '../../redux/slices'
 
 
@@ -28,6 +28,7 @@ export default function Index() {
         dispatch(getProducts())
         dispatch(getCompanyThunk())
         dispatch(getCategoriesThunk())
+        dispatch(getTemplatesThunk())
     }, [])
 
     useFocusEffect(() => {

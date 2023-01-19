@@ -22,7 +22,11 @@ export default function CardCustom({ onClick, share }) {
                         left={props =>
                             products[index]?.image ?
                                 <>
-                                    <Image mode='cover' source={{ uri: DIGITALOCEAN + products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
+                                    {products[index]?.image[0].thumbnail.includes('file:') ?
+                                        <Image mode='cover' source={{ uri: products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
+                                        :
+                                        <Image mode='cover' source={{ uri: DIGITALOCEAN + products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
+                                    }
                                 </>
                                 :
                                 <Text></Text>
@@ -41,7 +45,11 @@ export default function CardCustom({ onClick, share }) {
                         left={props =>
                             products[index]?.image ?
                                 <>
-                                    <Image mode='cover' source={{ uri: DIGITALOCEAN + products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
+                                    {products[index]?.image[0].thumbnail.includes('file') ?
+                                        <Image mode='cover' source={{ uri: products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
+                                        :
+                                        <Image mode='cover' source={{ uri: DIGITALOCEAN + products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
+                                    }
                                 </>
                                 :
                                 <Text></Text>

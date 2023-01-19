@@ -31,6 +31,7 @@ export default function Index(prop) {
 
     const [foto, setFoto] = useState(null)
     const [labelFoto, setLabelFoto] = useState('Tomar Foto')
+    const [labelLibrary, setLabelLibrary] = useState('Galería')
     const categories = useSelector(state => state.categories.categories)
     const isLoading = useSelector(state => state.products.isLoading)
     const [visible, setVisible] = useState(false)
@@ -40,9 +41,12 @@ export default function Index(prop) {
     useEffect(() => {
         if (props) {
             if (!foto && props?.image?.length) {
-                setFoto(DIGITALOCEAN + props.image[0].url)
+                if (props.image[0].thumbnail.includes('file:')) {
+                    setFoto(props.image[0].thumbnail)
+                } else {
+                    setFoto(DIGITALOCEAN + props.image[0].thumbnail)
+                }
             }
-            setLabelFoto('Cambiar Foto')
         }
     })
 
@@ -79,34 +83,59 @@ export default function Index(prop) {
 
     const pickImage = async () => {
         dispatch(loadingProducts(true))
-        let result = await ImagePicker.launchCameraAsync({
-            allowsEditing: true,
-            aspect: [4, 4],
-            quality: 1,
-        });
+        let result = await ImagePicker.launchCameraAsync({ allowsEditing: true, aspect: [4, 4], quality: 1 });
 
         if (!result.cancelled) {
 
             const imgReducida = await manipulateAsync(
                 result.uri,
                 [{ resize: { width: 700, height: 700 } }],
-                {
-                    compress: 1,
-                    format: SaveFormat.PNG,
-                    base64: true
-                }
+                { compress: 1, format: SaveFormat.PNG, base64: true }
             )
 
-            setFoto(imgReducida.uri)
-
             /* El imagen.uri es la url que se debe guardar en base de datos */
-            formik.setFieldValue('image', {
-                uri: imgReducida.uri,
-                name: 'imageNombre',
-                type: 'image/png',
-            }).then(() => {
+            formik.setFieldValue('image', { uri: imgReducida.uri, name: 'imageNombre', type: 'image/png' })
+
+            const thumbnail = await manipulateAsync(
+                result.uri,
+                [{ resize: { width: 250, height: 250 } }],
+                { compress: 1, format: SaveFormat.PNG, base64: true }
+            )
+
+            setFoto(thumbnail.uri)
+
+            formik.setFieldValue('thumbnail', { uri: thumbnail.uri, name: 'imageNombre', type: 'image/png' }).then(() => {
                 dispatch(loadingProducts(false))
             })
+        }
+    }
+
+    const pickImageLibrary = async () => {
+        dispatch(loadingProducts(true))
+        let result = await ImagePicker.launchImageLibraryAsync({ allowsEditing: true, aspect: [4, 4], quality: 1 })
+
+        if (!result.cancelled) {
+
+            const imgReducida = await manipulateAsync(
+                result.uri,
+                [{ resize: { width: 700, height: 700 } }],
+                { format: SaveFormat.PNG, base64: true }
+            )
+
+            formik.setFieldValue('image', { uri: imgReducida.uri, name: 'imageNombre', type: 'image/png' })
+
+            const thumbnail = await manipulateAsync(
+                result.uri,
+                [{ resize: { width: 250, height: 250 } }],
+                { format: SaveFormat.PNG, base64: true }
+            )
+
+            setFoto(thumbnail.uri)
+
+            formik.setFieldValue('thumbnail', { uri: thumbnail.uri, name: 'imageNombre', type: 'image/png' }).then(() => {
+                dispatch(loadingProducts(false))
+            })
+
         }
     }
 
@@ -120,20 +149,22 @@ export default function Index(prop) {
                         <HeaderGrid title={title} />
                     </View>
                     <View style={{ marginBottom: 200 }}>
-                        {/* <Text>{JSON.stringify(foto)}</Text> */}
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                             {foto ?
-                                <Image mode='cover' source={{ uri: foto }} style={{ width: 120, height: 120 }} />
+                                <Image mode='cover' source={{ uri: foto }} style={{ width: 100, height: 100 }} />
                                 :
                                 <Text>Sin Imagen</Text>
                             }
                         </View>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
                             <Button onPress={pickImage} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
                                 {labelFoto}
                             </Button>
+                            <Button onPress={pickImageLibrary} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
+                                {labelLibrary}
+                            </Button>
                         </View>
-                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>{formik.errors.image1 && <Text style={Styles.error}>{formik.errors.image1}</Text>}</View>
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>{formik.errors.image && <Text style={Styles.error}>{formik.errors.image}</Text>}</View>
                     </View>
                     <View style={{ marginTop: -180 }}>
                         <TextInput

@@ -9,6 +9,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { getToken } from '../../redux/thunks'
 import { Styles } from '../../constants/Styles'
+import { deleteToken } from '../../redux/slices'
 
 export default function Login() {
 
@@ -19,9 +20,9 @@ export default function Login() {
     const startLoadingToken = useSelector(state => state.token.isLoading)
 
     useEffect(() => {
+        dispatch(deleteToken())
         const CancelToken = axios.CancelToken
         const source = CancelToken.source()
-
         return () => { source.cancel() }
     }, [])
 

@@ -1,24 +1,28 @@
 import { useFormik } from 'formik'
 import React, { useEffect, useRef, useState } from 'react'
-import { View, ScrollView, Text, ActivityIndicator, Alert } from 'react-native'
+import { View, ScrollView, Text, ActivityIndicator, Alert, Image } from 'react-native'
 import { Button, TextInput } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import Header from '../../components/Header'
 import HeaderGrid from '../../components/HeaderGrid'
 import SparatorFooter from '../../components/SparatorFooter'
 import { Styles } from '../../constants/Styles'
-import { deleteToken } from '../../redux/slices'
-import { getCompanyThunk, storeCompanyThunk } from '../../redux/thunks'
+import { deleteToken, loadingProducts } from '../../redux/slices'
+import { storeCompanyThunk } from '../../redux/thunks'
 import * as Func from './Functions'
 import * as Yup from 'yup'
-import { ColorPicker } from 'react-native-color-picker'
+import * as ImagePicker from 'expo-image-picker'
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator'
+import DropList from '../../components/DropDown'
 
 export default function Index() {
 
-    const [color, setColor] = useState('#FFFF00')
+    const [foto, setFoto] = useState(null)
+    const [labelFoto, setLabelFoto] = useState('Tomar Foto')
+    const [labelLibrary, setLabelLibrary] = useState('Galería')
     const [sending, setSending] = useState(false)
     const dispatch = useDispatch()
-    const company = useSelector(state => state.company?.company)
+    const company = useSelector(state => state.company)
     const isLoading = useSelector(state => state.company?.isLoading)
 
     const logout = async () => {
@@ -26,20 +30,66 @@ export default function Index() {
     }
 
     const formik = useFormik({
-        initialValues: Func.initialValues(company),
+        initialValues: Func.initialValues(company.company),
         validationSchema: Yup.object(Func.validationSchema()),
         onSubmit: (data) => {
             (
                 async () => {
-                    dispatch(storeCompanyThunk(data))
+                    try {
+                        dispatch(storeCompanyThunk(data, navigator))
+                    } catch (error) {
+                        console.log("ERROR CAPTURADO AL ENVIAR")
+                    }
                 }
             )()
         }
     })
 
     useEffect(() => {
-        formik.setValues(company)
+        formik.setValues(company.company)
     }, [])
+
+    const pickImage = async () => {
+        dispatch(loadingProducts(true))
+        let result = await ImagePicker.launchCameraAsync({ allowsEditing: true, aspect: [4, 4], quality: 1 });
+
+        if (!result.cancelled) {
+
+            const imgReducida = await manipulateAsync(
+                result.uri,
+                [{ resize: { width: 700, height: 700 } }],
+                { compress: 1, format: SaveFormat.PNG, base64: true }
+            )
+
+            setFoto(imgReducida.uri)
+
+            /* El imagen.uri es la url que se debe guardar en base de datos */
+            formik.setFieldValue('image', { uri: imgReducida.uri, name: 'imageNombre', type: 'image/png' }).then(() => {
+                dispatch(loadingProducts(false))
+            })
+        }
+    }
+
+    const pickImageLibrary = async () => {
+        dispatch(loadingProducts(true))
+        let result = await ImagePicker.launchImageLibraryAsync({ allowsEditing: true, aspect: [4, 4], quality: 1 })
+
+        if (!result.cancelled) {
+
+            const imgReducida = await manipulateAsync(
+                result.uri,
+                [{ resize: { width: 700, height: 700 } }],
+                { compress: 1, format: SaveFormat.PNG, base64: true }
+            )
+
+            setFoto(imgReducida.uri)
+
+            formik.setFieldValue('image', { uri: imgReducida.uri, name: 'imageNombre', type: 'image/png' }).then(() => {
+                dispatch(loadingProducts(false))
+            })
+
+        }
+    }
 
     return (
         <View style={{ backgroundColor: "#FFF", flex: 1 }}>
@@ -47,6 +97,25 @@ export default function Index() {
             <View style={Styles.container}>
                 <ScrollView >
                     <HeaderGrid sending={sending} onPress={logout} title="Mi Tienda" showButton={true} titleButton='Salir' iconButton='logout' />
+                    <View style={{ marginBottom: 20 }}>
+                        {/* <Text>{JSON.stringify(foto)}</Text> */}
+                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                            {foto ?
+                                <Image mode='cover' source={{ uri: foto }} style={{ width: 120, height: 120 }} />
+                                :
+                                <Text>Sin Imagen</Text>
+                            }
+                        </View>
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
+                            <Button onPress={pickImage} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
+                                {labelFoto}
+                            </Button>
+                            <Button onPress={pickImageLibrary} mode='outlined' icon={'image'} style={Styles.buttonPlus}>
+                                {labelLibrary}
+                            </Button>
+                        </View>
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>{formik.errors.image1 && <Text style={Styles.error}>{formik.errors.image1}</Text>}</View>
+                    </View>
                     <View style={{ marginTop: 10 }}>
                         {!isLoading ?
 
@@ -92,6 +161,18 @@ export default function Index() {
                                     onChangeText={(text) => formik.setFieldValue('phone', text)}
                                 />
                                 {formik.errors.phone && <Text style={Styles.error}>{formik.errors.phone}</Text>}
+
+                                <DropList
+                                    label='Plantilla de Catálogo'
+                                    placeholder='Seleccione el tipo de plantilla'
+                                    searchPlaceholder='Escriba aquí para buscar ...'
+                                    labelField={'name'}
+                                    data={company.templates}
+                                    value={formik.values.template_catalog_id || ''}
+                                    backgroundColor='#000'
+                                    onChange={value => formik.setFieldValue('template_catalog_id', value.id)}
+                                />
+                                {formik.errors.template_catalog_id && <Text style={Styles.error}>{formik.errors.template_catalog_id}</Text>}
 
                                 <TextInput
                                     mode='outlined'

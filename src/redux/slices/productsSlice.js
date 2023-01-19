@@ -31,8 +31,10 @@ export const productsSlice = createSlice({
             state.products = state.products.filter(item => item.id !== id)
         },
         updateImageProduct(state, action) {
-            const index = state.products.findIndex(item => item.id === action.payload.product_id)
-            state.products[index].image = [action.payload]
+            if (state.products) {
+                const index = state.products.findIndex(item => item.id === action.payload.product_id)
+                state.products[index].image = [action.payload]
+            }
         },
         imageLoading(state, action) {
             state.imageLoading = action.payload

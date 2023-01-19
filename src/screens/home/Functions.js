@@ -4,11 +4,11 @@ export function initialValues(item = null) {
     return {
         name: item?.name || 'Prueba API 2',
         description: item?.description || 'Descripción 1',
-        image1: item?.image ? item?.image[0]?.url : '',
-        image1_base64: '',
+        image: item?.image ? item?.image[0]?.url : '',
         price: item?.price || 0, // Debe ser entero AJURO
         category_id: item?.category_id || 0,
-        share: item?.share ? 1 : 0
+        share: item?.share ? 1 : 0,
+        thumbnail:''
     }
 }
 

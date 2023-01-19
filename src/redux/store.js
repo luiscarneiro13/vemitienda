@@ -12,8 +12,35 @@ const combinedReducer = combineReducers({
 })
 
 const rootReducer = (state, action) => {
-    if (action.type === 'logout') {
-        state = undefined
+    if (action.type === 'deleteToken') {
+        state = {
+            categories: {
+                categories: [],
+                isLoading: false
+            },
+            company: {
+                company: {},
+                isLoading: true,
+                templates: []
+            },
+            products: {
+                products: [],
+                isLoading: false,
+                imageLoading: {
+                    product_id: 0,
+                    loading: false
+                },
+                productsFilters: []
+            },
+            userInfo: {
+                userInfo: {},
+                isLoading: false
+            },
+            token: {
+                token: null,
+                isLoading: false
+            }
+        }
     }
     return combinedReducer(state, action);
 };

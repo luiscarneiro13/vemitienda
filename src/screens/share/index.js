@@ -26,8 +26,7 @@ export default function Share() {
 
     const generatePdf = async () => {
         setSending(true)
-        // const result = MakePdf(productsFilters, company)
-        const result = MakePdfPrueba(productsFilters, company)
+        const result = MakePdf(productsFilters, company)
         const file = await Print.printToFileAsync({
             html: result,
             base64: false

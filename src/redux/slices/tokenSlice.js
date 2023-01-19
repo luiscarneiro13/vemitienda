@@ -15,7 +15,7 @@ export const tokenSlice = createSlice({
         },
         loadingToken(state, action) {
             state.isLoading = action.payload
-        }
+        },
     },
 })
 

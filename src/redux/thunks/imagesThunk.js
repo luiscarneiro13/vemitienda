@@ -9,20 +9,16 @@ export const storeImageProductThunk = (params) => {
             const formData = new FormData()
             formData.append('folder', 'images')
             formData.append('image', params.image)
+            formData.append('thumbnail', params.thumbnail)
 
-            const data = await API.postDB(`storeImageProduct/${params.product_id}`, formData, {
+            await API.postDB(`storeImageProduct/${params.product_id}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
+            }).then((resp) => {
+                console.log("Se guardó la imagen")
             })
 
-            const resp = await data?.data
-
-            if (resp?.data) {
-                const datos = resp?.data
-                datos.product_id = params.product_id
-                dispatch(updateImageProduct(datos))
-            }
 
         } catch (error) {
             dispatch(loadingProducts(false))
@@ -33,23 +29,16 @@ export const storeImageProductThunk = (params) => {
 export const updateImageProductThunk = (params) => {
     return async (dispatch, getState) => {
         try {
-            dispatch(loadingProducts(true))
             const formData = new FormData()
             formData.append('folder', 'images')
             formData.append('image', params.image)
+            formData.append('thumbnail', params.thumbnail)
 
-            const data = await API.postDB(`updateImageProduct/${params.product_id}`, formData, {
+            await API.postDB(`updateImageProduct/${params.product_id}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             })
-
-            const resp = await data?.data
-
-            if (resp?.data) {
-                const datos = resp?.data
-                dispatch(updateImageProduct(datos))
-            }
 
         } catch (error) {
             dispatch(loadingProducts(false))
@@ -61,7 +50,6 @@ export const destroyImageProductThunk = (id) => {
     return async (dispatch, getState) => {
         let message = null
         try {
-            dispatch(loadingProducts(true))
             await API.deleteDB(`products-user/${id}`)
             dispatch(deleteProduct(id))
         } catch (error) {
@@ -69,5 +57,30 @@ export const destroyImageProductThunk = (id) => {
         }
         dispatch(loadingProducts(false))
         message ? Alert.alert('Mensaje Imágenes', message) : null
+    }
+}
+
+export const storeLogoThunk = (params) => {
+    return async (dispatch, getState) => {
+        try {
+            const formData = new FormData()
+            formData.append('folder', 'logos')
+            formData.append('image', params.image)
+
+            const data = await API.postDB(`storeLogo`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+
+            const resp = await data?.data
+
+            if (resp?.data) {
+                dispatch(updateLogo(resp?.data))
+            }
+
+        } catch (error) {
+            dispatch(loadingProducts(false))
+        }
     }
 }
