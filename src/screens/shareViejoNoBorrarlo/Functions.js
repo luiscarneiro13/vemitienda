@@ -28,7 +28,7 @@ export const MakePdf = (data, company) => {
   </head>
   <body class="container" style="background-color: ${company.background_color_catalog}">
     <div class="row">
-      <div class="col-4 text-rigth">
+      <div class="col-4 text-center">
         <image
           class="img-fluid"
           src="${DIGITALOCEAN + company?.logo?.url}"
@@ -74,14 +74,14 @@ export const MakePdf = (data, company) => {
       `<div class="col-${col} p-1">
         <div class="text-center">
           <image
-            class="img-fluid"
+          class="img-fluid"
             src="${DIGITALOCEAN + item.image[0].url}"
           />
         </div>
-        <p class="text-center pt-1">
-          <span style="font-weight: bold; font-size: 16px">${item.name}</span
+        <p class="text-center">
+          <span style="font-weight: bold; font-size: 14px">${item.name}</span
           ><br />
-          <span style="font-weight: bold; font-size: 20px">$${item.price}</span><br />
+          <span style="font-weight: bold; font-size: 16px">$${item.price}</span><br />
         </p>
       </div>`
   })

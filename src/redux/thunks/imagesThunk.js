@@ -33,7 +33,7 @@ export const updateImageProductThunk = (params) => {
             formData.append('image', params.image)
             formData.append('thumbnail', params.thumbnail)
 
-            await API.postDB(`updateImageProduct/${params.product_id}`, formData, {
+            await API.postDB(`updateImageProduct/${params.image_id}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

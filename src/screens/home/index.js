@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Header from '../../components/Header'
 import Search from '../../components/Search'
 import CardCustom from '../../components/CardCustom'
@@ -18,6 +18,7 @@ export default function Index() {
 
     const [query, setQuery] = useState('')
     const navigator = useNavigation()
+    const company = useSelector(state => state.company.company) || []
     const categories = useSelector(state => state.categories.categories) || []
     const productsStore = useSelector(state => state?.products.products) || []
     const dispatch = useDispatch()
@@ -63,6 +64,12 @@ export default function Index() {
         changeSearch(query)
     }
 
+    const clickHandlerShare = async () => {
+        await Share.share({
+            message: company.url_tienda
+        });
+    }
+
     return (
         <View style={{ backgroundColor: "#FFF", flex: 1 }}>
             <Header />
@@ -84,6 +91,23 @@ export default function Index() {
                     <ScrollHorizontal categories={categories} filterCategory={(item) => filterCategory(item)} />
                 </View>
                 <CardCustom onClick={onClickCardCustom} share={false} />
+
+                <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={clickHandlerShare}
+                    style={styles.touchableOpacityStyle}>
+                    <Image
+                        //We are making FAB using TouchableOpacity with an image
+                        //We are using online image here
+                        // source={{
+                        //     uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/plus_icon.png',
+                        // }}
+                        //You can use you project image Example below
+                        source={require('../../assets/share.png')}
+                        style={styles.floatingButtonStyle}
+                    />
+                </TouchableOpacity>
+
             </View>
         </View>
     )
@@ -93,5 +117,20 @@ const styles = StyleSheet.create({
     buttonPlus: {
         borderRadius: 10,
         height: 40
-    }
+    },
+    touchableOpacityStyle: {
+        position: 'absolute',
+        width: 50,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        right: 30,
+        bottom: 30,
+    },
+    floatingButtonStyle: {
+        resizeMode: 'contain',
+        width: 50,
+        height: 50,
+        //backgroundColor:'black'
+    },
 })

@@ -20,6 +20,7 @@ import { DIGITALOCEAN } from '../../constants/Data'
 export default function Index() {
 
     const [foto, setFoto] = useState(null)
+    const [imagenCargada, setImagenCargada] = useState(false)
     const [labelFoto, setLabelFoto] = useState('Tomar Foto')
     const [labelLibrary, setLabelLibrary] = useState('Galería')
     const [sending, setSending] = useState(false)
@@ -27,18 +28,16 @@ export default function Index() {
     const company = useSelector(state => state.company)
     const isLoading = useSelector(state => state.company?.isLoading)
     const navigator = useNavigation()
-      
+
     useEffect(() => {
         if (company?.company?.logo?.thumbnail) {
             if (company.company.logo.thumbnail.includes('file:')) {
                 setFoto(company.company.logo.thumbnail)
-                console.log("Entro en logo file")
             } else {
                 setFoto(DIGITALOCEAN + company.company.logo.thumbnail)
-                console.log("Entro en logo digitalocean")
             }
         }
-    },[])
+    }, [])
 
     const logout = async () => {
         dispatch(deleteToken())
@@ -46,10 +45,12 @@ export default function Index() {
 
     const formik = useFormik({
         initialValues: Func.initialValues(company.company),
-        validationSchema: Yup.object(Func.validationSchema()),
+        validationSchema: Yup.object(Func.validationSchema({ imagenCargada, foto })),
         onSubmit: (data) => {
             (
                 async () => {
+                    data.imagenCargada = imagenCargada
+                    data.foto = foto
                     try {
                         dispatch(storeCompanyThunk(data, navigator))
                     } catch (error) {
@@ -61,10 +62,10 @@ export default function Index() {
     })
 
     const pickImage = async () => {
-        dispatch(loadingCompany(true))
         let result = await ImagePicker.launchCameraAsync({ allowsEditing: true, aspect: [4, 4], quality: 1 });
 
         if (!result.cancelled) {
+            dispatch(loadingCompany(true))
 
             const imgReducida = await manipulateAsync(
                 result.uri,
@@ -82,7 +83,7 @@ export default function Index() {
             )
 
             setFoto(thumbnail.uri)
-
+            setImagenCargada(true)
             formik.setFieldValue('thumbnail', { uri: thumbnail.uri, name: 'imageNombre', type: 'image/png' }).then(() => {
                 dispatch(loadingCompany(false))
             })
@@ -90,10 +91,10 @@ export default function Index() {
     }
 
     const pickImageLibrary = async () => {
-        dispatch(loadingCompany(true))
         let result = await ImagePicker.launchImageLibraryAsync({ allowsEditing: true, aspect: [4, 4], quality: 1 })
 
         if (!result.cancelled) {
+            dispatch(loadingCompany(true))
 
             const imgReducida = await manipulateAsync(
                 result.uri,
@@ -110,6 +111,7 @@ export default function Index() {
             )
 
             setFoto(thumbnail.uri)
+            setImagenCargada(true)
 
             formik.setFieldValue('thumbnail', { uri: thumbnail.uri, name: 'imageNombre', type: 'image/png' }).then(() => {
                 dispatch(loadingCompany(false))
@@ -141,7 +143,9 @@ export default function Index() {
                                 {labelLibrary}
                             </Button>
                         </View>
-                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>{formik.errors.image1 && <Text style={Styles.error}>{formik.errors.image1}</Text>}</View>
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            {formik.errors.image && <Text style={Styles.error}> {formik.errors.image}</Text>}
+                        </View>
                     </View>
                     <View style={{ marginTop: 10 }}>
                         <>
@@ -186,18 +190,6 @@ export default function Index() {
                                 onChangeText={(text) => formik.setFieldValue('phone', text)}
                             />
                             {formik.errors.phone && <Text style={Styles.error}>{formik.errors.phone}</Text>}
-
-                            <DropList
-                                label='Plantilla de Catálogo'
-                                placeholder='Seleccione el tipo de plantilla'
-                                searchPlaceholder='Escriba aquí para buscar ...'
-                                labelField={'name'}
-                                data={company.templates}
-                                value={formik.values.template_catalog_id || ''}
-                                backgroundColor='#000'
-                                onChange={value => formik.setFieldValue('template_catalog_id', value.id)}
-                            />
-                            {formik.errors.template_catalog_id && <Text style={Styles.error}>{formik.errors.template_catalog_id}</Text>}
 
                             <TextInput
                                 mode='outlined'

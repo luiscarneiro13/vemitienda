@@ -55,14 +55,14 @@ export default function TabNavigator() {
                 }}
             />
 
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="ShareNavigator"
                 component={NavigatorShare}
                 options={{
                     tabBarLabel: "",
                     tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'share-variant'} title='Compartir' />
                 }}
-            />
+            /> */}
 
             <Tab.Screen
                 name="StoreNavigator"

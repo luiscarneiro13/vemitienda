@@ -1,6 +1,6 @@
 import { Alert } from 'react-native'
 import * as API from '../../api'
-import { loadingCompany, addCompany, addTemplates } from '../slices'
+import { loadingCompany, addCompany } from '../slices'
 import { storeLogoThunk } from './imagesThunk'
 
 export const getCompanyThunk = (page = 0) => {
@@ -28,7 +28,6 @@ export const getTemplatesThunk = (page = 0) => {
             const data = await API.getDB(`templates`)
             const resp = await data?.data
             message = resp?.message
-            dispatch(addTemplates(resp?.data))
             dispatch(loadingCompany(false))
         } catch (error) {
             message = 'Ocurrió un error inesperado!'
@@ -49,16 +48,21 @@ export const storeCompanyThunk = (params, navigator) => {
 
             if (datos) {
                 
-                if (params?.thumbnail?.uri) {
-                    dispatch(storeLogoThunk(params))
-                    datos.logo.thumbnail = params?.thumbnail?.uri
+                if(params.imagenCargada){
+                    dispatch(storeLogoThunk(params)).then(()=>{
+                        dispatch(getCompanyThunk()).then(() => {
+                            dispatch(loadingCompany(false))
+                            navigator.navigate('Home')
+                            Alert.alert('Mensaje datos de la Tienda', message)
+                        })
+                    })
+                }else{
+                    dispatch(getCompanyThunk()).then(() => {
+                        dispatch(loadingCompany(false))
+                        navigator.navigate('Home')
+                        Alert.alert('Mensaje datos de la Tienda', message)
+                    })
                 }
-
-                dispatch(addCompany(datos))
-
-                dispatch(loadingCompany(false))
-                navigator.navigate('Home')
-                Alert.alert('Mensaje Tienda', message)
 
             } else {
                 throw new Error();

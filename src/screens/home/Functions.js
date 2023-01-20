@@ -4,19 +4,24 @@ export function initialValues(item = null) {
     return {
         name: item?.name || 'Prueba API 2',
         description: item?.description || 'Descripción 1',
-        image: item?.image ? item?.image[0]?.url : '',
+        image: item?.image ? item?.image[0]?.thumbnail : '',
         price: item?.price || 0, // Debe ser entero AJURO
         category_id: item?.category_id || 0,
-        share: item?.share ? 1 : 0,
-        thumbnail:''
+        share: item?.share ? item?.share : 1,
+        thumbnail: ''
     }
 }
 
-export function validationSchema() {
-    return {
+export function validationSchema({ imagenCargada }) {
+    const data = {
         name: Yup.string('Formato inválido').required('Ingrese el nombre').min(3, 'Mínimo 3 caracteres').max(90, 'Máximo 90 caracteres'),
         description: Yup.string('Formato inválido').required('Ingrese la descripción').min(3, 'Mínimo 3 caracteres').max(90, 'Máximo 90 caracteres'),
-        image: Yup.object('').required('Por favor, Tome o seleccione una foto'),
         category_id: Yup.number().min(1, 'Seleccione una Categoría')
     }
+
+    if (imagenCargada) {
+        data.image = Yup.object('').required('Por favor, Tome o seleccione una foto')
+    }
+
+    return data
 }

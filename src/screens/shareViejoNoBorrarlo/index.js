@@ -25,14 +25,18 @@ export default function Share() {
     }, [])
 
     const generatePdf = async () => {
-        setSending(true)
-        const result = MakePdf(productsFilters, company)
-        const file = await Print.printToFileAsync({
-            html: result,
-            base64: false
-        })
-        await Sharing.shareAsync(file.uri)
-        setSending(false)
+        if (!company || (Object?.keys(company) > 0)) {
+            alert("Por favor llene los datos de su tienda para publicar su catálogo")
+        } else {
+            setSending(true)
+            const result = MakePdf(productsFilters, company)
+            const file = await Print.printToFileAsync({
+                html: result,
+                base64: false
+            })
+            await Sharing.shareAsync(file.uri)
+            setSending(false)
+        }
     }
 
     const onClickShare = (item) => { }

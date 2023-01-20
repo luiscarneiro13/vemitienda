@@ -30,6 +30,7 @@ export default function Index(prop) {
     const accion = params?.update ? 'Update' : 'Create'
 
     const [foto, setFoto] = useState(null)
+    const [imagenCargada, setImagenCargada] = useState(false)
     const [labelFoto, setLabelFoto] = useState('Tomar Foto')
     const [labelLibrary, setLabelLibrary] = useState('Galería')
     const categories = useSelector(state => state.categories.categories)
@@ -55,13 +56,15 @@ export default function Index(prop) {
 
     const formik = useFormik({
         initialValues: Func.initialValues(props),
-        validationSchema: Yup.object(Func.validationSchema()),
+        validationSchema: Yup.object(Func.validationSchema({ imagenCargada })),
         onSubmit: (data) => {
             (
                 async () => {
                     try {
+                        data.imagenCargada = imagenCargada
                         if (accion === 'Update') {
                             data.id = props.id
+                            data.image_id = props?.image[0]?.id
                             dispatch(updateProductThunk(data, navigator))
                         } else {
                             dispatch(storeProductThunk(data, navigator))
@@ -82,15 +85,15 @@ export default function Index(prop) {
     }
 
     const pickImage = async () => {
-        dispatch(loadingProducts(true))
         let result = await ImagePicker.launchCameraAsync({ allowsEditing: true, aspect: [4, 4], quality: 1 });
 
         if (!result.cancelled) {
+            dispatch(loadingProducts(true))
 
             const imgReducida = await manipulateAsync(
                 result.uri,
                 [{ resize: { width: 700, height: 700 } }],
-                { compress: 1, format: SaveFormat.PNG, base64: true }
+                { compress: 1, format: SaveFormat.PNG }
             )
 
             /* El imagen.uri es la url que se debe guardar en base de datos */
@@ -99,11 +102,11 @@ export default function Index(prop) {
             const thumbnail = await manipulateAsync(
                 result.uri,
                 [{ resize: { width: 250, height: 250 } }],
-                { compress: 1, format: SaveFormat.PNG, base64: true }
+                { compress: 1, format: SaveFormat.PNG }
             )
 
             setFoto(thumbnail.uri)
-
+            setImagenCargada(true)
             formik.setFieldValue('thumbnail', { uri: thumbnail.uri, name: 'imageNombre', type: 'image/png' }).then(() => {
                 dispatch(loadingProducts(false))
             })
@@ -111,15 +114,15 @@ export default function Index(prop) {
     }
 
     const pickImageLibrary = async () => {
-        dispatch(loadingProducts(true))
         let result = await ImagePicker.launchImageLibraryAsync({ allowsEditing: true, aspect: [4, 4], quality: 1 })
 
         if (!result.cancelled) {
+            dispatch(loadingProducts(true))
 
             const imgReducida = await manipulateAsync(
                 result.uri,
                 [{ resize: { width: 700, height: 700 } }],
-                { format: SaveFormat.PNG, base64: true }
+                { compress: 1, format: SaveFormat.PNG }
             )
 
             formik.setFieldValue('image', { uri: imgReducida.uri, name: 'imageNombre', type: 'image/png' })
@@ -127,10 +130,11 @@ export default function Index(prop) {
             const thumbnail = await manipulateAsync(
                 result.uri,
                 [{ resize: { width: 250, height: 250 } }],
-                { format: SaveFormat.PNG, base64: true }
+                { compress: 1, format: SaveFormat.PNG }
             )
 
             setFoto(thumbnail.uri)
+            setImagenCargada(true)
 
             formik.setFieldValue('thumbnail', { uri: thumbnail.uri, name: 'imageNombre', type: 'image/png' }).then(() => {
                 dispatch(loadingProducts(false))
@@ -148,25 +152,7 @@ export default function Index(prop) {
                         <Atras />
                         <HeaderGrid title={title} />
                     </View>
-                    <View style={{ marginBottom: 200 }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                            {foto ?
-                                <Image mode='cover' source={{ uri: foto }} style={{ width: 100, height: 100 }} />
-                                :
-                                <Text>Sin Imagen</Text>
-                            }
-                        </View>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
-                            <Button onPress={pickImage} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
-                                {labelFoto}
-                            </Button>
-                            <Button onPress={pickImageLibrary} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
-                                {labelLibrary}
-                            </Button>
-                        </View>
-                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>{formik.errors.image && <Text style={Styles.error}>{formik.errors.image}</Text>}</View>
-                    </View>
-                    <View style={{ marginTop: -180 }}>
+                    <View style={{ marginTop: 10 }}>
                         <TextInput
                             mode='outlined'
                             label="Nombre"
@@ -223,7 +209,28 @@ export default function Index(prop) {
                             </View>
                         </View>
 
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
+                        <View style={{ marginBottom: 50 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20, marginBottom: 20 }}>
+                                {foto ?
+                                    <Image mode='cover' source={{ uri: foto }} style={{ width: 100, height: 100 }} />
+                                    :
+                                    <Text>Agregar Imagen</Text>
+                                }
+                            </View>
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+                                <Button onPress={pickImage} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
+                                    {labelFoto}
+                                </Button>
+                                <Button onPress={pickImageLibrary} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
+                                    {labelLibrary}
+                                </Button>
+                            </View>
+                            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                {formik.errors.image && <Text style={Styles.error}>{formik.errors.image}</Text>}
+                            </View>
+                        </View>
+
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
 
                             {accion === 'Update' &&
                                 <Button

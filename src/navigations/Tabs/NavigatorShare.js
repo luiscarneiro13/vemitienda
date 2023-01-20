@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { createStackNavigator } from "@react-navigation/stack"
-import Share from '../../screens/share'
+// import Share from '../../screens/share'
 
 const Stack = createStackNavigator()
 
