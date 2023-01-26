@@ -7,44 +7,30 @@ import * as Yup from 'yup'
 import axios from 'axios'
 import SvgComponent from './Svg'
 import { Styles } from '../../constants/Styles'
+import { useDispatch, useSelector } from 'react-redux'
+import { storeRegister } from '../../redux/thunks/registerThunk'
 
 export default function Register() {
 
     const [showPass1, setShowPass1] = useState(true)
     const [showPass2, setShowPass2] = useState(true)
+    const startLoading = useSelector(state => state.register.isLoading)
 
     const navigation = useNavigation()
+    const dispatch = useDispatch()
 
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: Yup.object(validationSchema()),
         onSubmit: (data) => {
-            (
-                async () => {
-                    try {
-                        const response = await axios.post(`register`, data)
-                        const status = await response.data.status
-
-                        if (status && status === 200) {
-
-                            Alert.alert("Excelente!", response.data.message)
-                            navigation.navigate('Login')
-
-                        } else if (status && status === 201) {
-
-                            Alert.alert(response.data.message, "Por favor active la cuenta mediante el enlace que hemos enviado a su correo")
-                            navigation.navigate('Login')
-
-                        } else if (status && status !== 400 && status !== 422) {
-
-                            Alert.alert('Error', response.data.message)
-
-                        }
-                    } catch (error) {
-                        console.log("error")
-                    }
+            (async () => {
+                try {
+                    dispatch(storeRegister(data, navigation))
+                } catch (error) {
+                    console.log(error)
                 }
-            )()
+
+            })()
         }
     })
 
@@ -65,6 +51,15 @@ export default function Register() {
             <Card style={{ width: '90%', marginTop: -205, borderRadius: 10 }}>
                 <Card.Title title="Registro" />
                 <Card.Content>
+                    <TextInput
+                        mode='outlined'
+                        label="Nombre y Apellido"
+                        left={<TextInput.Icon name="account" />}
+                        value={formik.values.name}
+                        onChangeText={(text) => formik.setFieldValue('name', text)}
+                    />
+                    {formik.errors.name && <Text style={styles.error}>{formik.errors.name}</Text>}
+
                     <TextInput
                         mode='outlined'
                         label="Email"
@@ -103,6 +98,8 @@ export default function Register() {
                         onPress={formik.handleSubmit}
                         uppercase={false}
                         style={Styles.buttonPlus}
+                        disabled={startLoading}
+                        loading={startLoading}
                     >
                         Registrarme
                     </Button>
@@ -133,16 +130,19 @@ export default function Register() {
 
 function initialValues() {
     return {
-        email: '',
-        password: '',
-        password_confirmation: '',
-        estado_id: 0,
-        ciudad_id: '',
+        name: 'Luis Carneiro',
+        email: 'carneiroluis3@gmail.com',
+        password: '123456',
+        password_confirmation: '123456',
     }
 }
 
 function validationSchema() {
     return {
+        name: Yup.string('Formato inválido')
+            .required('Se requiere su nombre y apellido')
+            .max(90, 'Máximo 90 caracteres'),
+
         email: Yup.string('Formato inválido')
             .required('Email requerido')
             .email('Email inválido')
@@ -157,9 +157,7 @@ function validationSchema() {
             .required('Confirmación requerida')
             .oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden')
             .min(3, 'Mínimo 3 caracteres')
-            .max(20, 'Máximo 20 caracteres'),
-        estado_id: Yup.number().min(1, 'Seleccione un estado'),
-        ciudad_id: Yup.string().required('Seleccione un una ciudad')
+            .max(20, 'Máximo 20 caracteres')
     }
 }
 

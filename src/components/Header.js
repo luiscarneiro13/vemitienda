@@ -18,6 +18,9 @@ export default function Header() {
                     />
                     <Text style={styles.title}>Ve mi Tienda</Text>
                 </View>
+                <View style={{ marginTop: -10 }}>
+                    <Text style={{ color:'white' }}><Text style={{ fontWeight: 'bold' }}>Contáctanos: </Text>info@vemitienda.online</Text>
+                </View>
             </View>
         </>
     )

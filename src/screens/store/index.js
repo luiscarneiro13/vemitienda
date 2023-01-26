@@ -124,6 +124,7 @@ export default function Index() {
         <View style={{ backgroundColor: "#FFF", flex: 1 }}>
             <Header />
             <View style={Styles.container}>
+
                 <ScrollView >
                     <HeaderGrid sending={sending} onPress={logout} title="Mi Tienda" showButton={true} titleButton='Salir' iconButton='logout' />
                     <View style={{ marginBottom: 20 }}>

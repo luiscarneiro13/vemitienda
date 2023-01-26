@@ -8,7 +8,7 @@ import store from './src/redux/store'
 import axios from 'axios'
 import Loading from './src/components/Loading'
 import AuthNavigator from './src/navigations/AuthNavigator'
-import { URL_LOCAL, URL_PRODUCTION } from './src/constants/Data'
+import { URL_PRODUCTION } from './src/constants/Data'
 import { Alert } from 'react-native'
 
 const RootNavigation = () => {
@@ -28,7 +28,9 @@ const RootNavigation = () => {
   axios.interceptors.response.use(function (response) {
     /* Si todo va bien, se devuelve todo tal cual */
     if (response?.data?.errors) {
-      Alert.alert(response?.data?.errors?.message[0], response?.data?.errors?.name[0]);
+      const key = Object.keys(response.data.errors)[0]
+      const message = response?.data?.errors[key][0]
+      Alert.alert(response?.data?.errors?.message[0], message);
     } else {
       return response
     }
