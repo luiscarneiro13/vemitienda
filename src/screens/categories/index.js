@@ -28,7 +28,19 @@ export default function Index() {
             <Header />
             <View style={Styles.container}>
                 <HeaderGrid title="Categorías" showButton={true} onPress={() => goAdd()} />
-                {!state.isLoading ? <List title="Lista" data={state.categories} onClick={goDetail} /> : <ActivityIndicator />}
+                {!state.isLoading ?
+                    <>
+                        {state.categories.length ?
+                            <List title="Lista" data={state.categories} onClick={goDetail} />
+                            :
+                            <View style={{ justifyContents: 'center', alignItems: 'center', marginTop: 'auto', marginBottom: 'auto' }}>
+                                <Text>No hay datos disponibles</Text>
+                            </View>
+                        }
+                    </>
+                    :
+                    <ActivityIndicator />
+                }
             </View>
         </View>
     )

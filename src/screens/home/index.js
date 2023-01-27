@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Header from '../../components/Header'
 import Search from '../../components/Search'
 import CardCustom from '../../components/CardCustom'
@@ -21,6 +21,7 @@ export default function Index() {
     const company = useSelector(state => state.company.company) || []
     const categories = useSelector(state => state.categories.categories) || []
     const productsStore = useSelector(state => state?.products.products) || []
+    const planId = useSelector(state => state?.token.planId) || []
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -65,9 +66,13 @@ export default function Index() {
     }
 
     const clickHandlerShare = async () => {
-        await Share.share({
-            message: company.url_tienda
-        });
+        if (planId === 2) {
+            await Share.share({
+                message: company.url_tienda
+            })
+        } else {
+            Alert.alert('Mensaje', 'Debe activar el plan premium para compartir su Catálogo')
+        }
     }
 
     return (

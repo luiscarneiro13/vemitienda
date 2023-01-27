@@ -70,8 +70,8 @@ export default function CardCustom({ onClick, share }) {
                     style={{ padding: 0, width: 100, height: 100 }}
                     source={{ uri: DIGITALOCEAN + item.image[0].thumbnail }}
                 />
-                <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize:10 }}>{item.name}</Text>
-                <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize:12 }}>${item.price}</Text>
+                <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 10 }}>{item.name}</Text>
+                <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 12 }}>${item.price}</Text>
             </Card>
         )
     }
@@ -96,7 +96,9 @@ export default function CardCustom({ onClick, share }) {
                     }
                 </>
                 :
-                <View style={{ justifyContents: 'center', alignItems: 'center', marginTop: 'auto', marginBottom: 'auto' }}><Text>No hay datos disponibles</Text></View>
+                <View style={{ justifyContents: 'center', alignItems: 'center', marginTop: 'auto', marginBottom: 'auto' }}>
+                    <Text>No hay datos disponibles</Text>
+                </View>
             }
         </>
     )
