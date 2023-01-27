@@ -123,10 +123,10 @@ export default function Register() {
 
 function initialValues() {
     return {
-        name: 'Luis Carneiro',
-        email: 'carneiroluis3@gmail.com',
-        password: '123456',
-        password_confirmation: '123456',
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
     }
 }
 

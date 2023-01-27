@@ -2,8 +2,8 @@ import * as Yup from 'yup'
 
 export function initialValues(item = null) {
     return {
-        name: item?.name || 'Prueba API 2',
-        description: item?.description || 'Descripción 1',
+        name: item?.name || '',
+        description: item?.description || '',
         image: item?.image ? item?.image[0]?.thumbnail : '',
         price: item?.price || 0, // Debe ser entero AJURO
         category_id: item?.category_id || 0,

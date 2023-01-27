@@ -92,7 +92,7 @@ function validationSchema() {
 
 function initialValues() {
     return {
-        email: 'carneiroluis3@gmail.com'
+        email: ''
     }
 }
 
