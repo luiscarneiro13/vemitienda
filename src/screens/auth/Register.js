@@ -108,18 +108,11 @@ export default function Register() {
                 <Card.Actions style={{ paddingTop: 50 }}>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
                         <Button
-                            onPress={() => navigation.navigate('Login')}
+                            onPress={() => navigation.goBack()}
                             uppercase={false}
                             style={Styles.buttonPlus}
                         >
-                            Iniciar Sesión
-                        </Button>
-                        <Button
-                            onPress={() => navigation.navigate('ForgotPassword')}
-                            uppercase={false}
-                            style={Styles.buttonPlus}
-                        >
-                            Recuperar Contraseña
+                            Cancelar
                         </Button>
                     </View>
                 </Card.Actions>
