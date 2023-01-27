@@ -125,8 +125,8 @@ export default function Login() {
 
 function initialValues() {
     return {
-        email: 'administrador@gmail.com',
-        password: '123456'
+        email: '',
+        password: ''
     }
 }
 
