@@ -17,7 +17,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Permitir a $(PRODUCT_NAME) acceder a tus fotos.",
+        "NSPhotoLibraryAddUsageDescription": "Permitir a $(PRODUCT_NAME) guardar fotos."
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -32,7 +36,10 @@
         "CAMERA_ROLL",
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE",
-        "NOTIFICATIONS"
+        "NOTIFICATIONS",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
       ],
       "package": "com.vemitienda.online",
       "versionCode": 1
@@ -46,6 +53,11 @@
           "isAccessMediaLocationEnabled": true
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7439d9f0-9c57-4f5f-bd72-b44bbb243a7a"
+      }
+    }
   }
 }
