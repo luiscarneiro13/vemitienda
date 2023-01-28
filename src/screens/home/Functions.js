@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 export function initialValues(item = null) {
     return {
         name: item?.name || '',
-        description: item?.description || '',
+        description: '',
         image: item?.image ? item?.image[0]?.thumbnail : '',
         price: item?.price || 0, // Debe ser entero AJURO
         category_id: item?.category_id || 0,
@@ -15,7 +15,6 @@ export function initialValues(item = null) {
 export function validationSchema({ imagenCargada }) {
     const data = {
         name: Yup.string('Formato inválido').required('Ingrese el nombre').min(3, 'Mínimo 3 caracteres').max(90, 'Máximo 90 caracteres'),
-        description: Yup.string('Formato inválido').required('Ingrese la descripción').min(3, 'Mínimo 3 caracteres').max(90, 'Máximo 90 caracteres'),
         category_id: Yup.number().min(1, 'Seleccione una Categoría')
     }
 

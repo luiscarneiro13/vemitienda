@@ -161,14 +161,6 @@ export default function Index(prop) {
                         />
                         {formik.errors.name && <Text style={Styles.error}>{formik.errors.name}</Text>}
 
-                        <TextInput
-                            mode='outlined'
-                            label="Descripción"
-                            value={formik.values.description}
-                            onChangeText={(text) => formik.setFieldValue('description', text)}
-                        />
-                        {formik.errors.description && <Text style={Styles.error}>{formik.errors.description}</Text>}
-
                         <MoneyComponent
                             label='Precio (Opcional)'
                             value={formik.values.price.toString()}
