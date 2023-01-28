@@ -1,47 +1,57 @@
 import { View, Text, StyleSheet, Image, StatusBar } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
+import { useTheme } from 'react-native-paper'
 
 export default function Header() {
 
-    const colors = ["rgba(412,119,195,1)", "transparent"]
+    const theme = useTheme()
 
     return (
         <>
-            <StatusBar translucent backgroundColor="transparent" />
-            <LinearGradient colors={["rgba(412,119,195,1)", "transparent"]} style={styles.gradient} />
-            <View style={styles.header}>
-                <View style={styles.headerTitle}>
-                    <Image
-                        source={require('../images/icon.png')}
-                        style={styles.image}
-                    />
-                    <Text style={styles.title}>Ve mi Tienda</Text>
+            <StatusBar translucent backgroundColor="#053e66" />
+            <LinearGradient colors={['#F3F3F3', '#F3F3F3']}
+                style={styles.gradient} >
+                <View style={styles.header}>
+                    <View style={styles.headerTitle}>
+                        <Image
+                            source={require('../images/icon.png')}
+                            style={styles.image}
+                        />
+                        {/* <Text style={{ ...styles.title, color: 'white' }}>Ve mi Tienda</Text> */}
+                    </View>
+                    <View style={{ marginTop: -10 }}>
+                        <Text style={{ color: 'white' }}>
+                            {/* <Text style={{ fontWeight: 'bold' }}>
+                                Contáctanos: </Text>
+                            info@vemitienda.online */}
+                        </Text>
+                    </View>
                 </View>
-                <View style={{ marginTop: -10 }}>
-                    <Text style={{ color:'white' }}><Text style={{ fontWeight: 'bold' }}>Contáctanos: </Text>info@vemitienda.online</Text>
-                </View>
-            </View>
+            </LinearGradient>
         </>
     )
 }
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: "#0c77c3",
-        height: "24%",
+        // backgroundColor: "#f3f3f3",
+        height: "30%",
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
         paddingHorizontal: 20,
+        paddingTop: 60
     },
     headerTitle: {
-        flexDirection: "row",
-        marginTop: 45,
-        width: "100%",
+        // flexDirection: "row",
+        // marginTop: 0,
+        // width: "100%",
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     image: {
-        height: 80,
-        width: 80,
+        height: 150,
+        width: 150,
         marginTop: '-5%',
     },
     title: {

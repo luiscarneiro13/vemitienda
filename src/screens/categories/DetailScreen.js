@@ -6,7 +6,7 @@ import HeaderGrid from '../../components/HeaderGrid'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigation } from '@react-navigation/native'
-import { Button, Dialog, Portal, TextInput } from 'react-native-paper'
+import { Button, Dialog, Portal, TextInput, useTheme } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import { addCategory, loadingCategories } from '../../redux/slices/categoriesSlice'
 import Atras from '../../components/Atras'
@@ -24,6 +24,7 @@ export default function DetailScreen(item) {
     const [visible, setVisible] = useState(false)
     const navigator = useNavigation()
     const dispatch = useDispatch()
+    const theme = useTheme()
 
     const formik = useFormik({
         initialValues: Func.initialValues(props),
@@ -64,10 +65,14 @@ export default function DetailScreen(item) {
                 </View>
                 <View style={{ marginTop: 20, marginBottom: 50 }}>
                     <TextInput
-                        mode='outlined'
+                        mode='flat'
                         label="Nombre de la Categoría"
                         value={formik.values.name}
                         onChangeText={(text) => formik.setFieldValue('name', text)}
+                        outlineColor={theme.colors.primary}
+                        color={theme.colors.primary}
+                        theme={{ colors: { text: theme.colors.primary } }}
+                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                     />
                     {formik.errors.name && <Text style={Styles.error}>{formik.errors.name}</Text>}
                 </View>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Image, Text, Alert, StyleSheet, Linking } from 'react-native'
-import { TextInput, Button, Card } from 'react-native-paper'
+import { TextInput, Button, Card, useTheme } from 'react-native-paper'
 import SvgComponent from './Svg'
 import axios from 'axios'
 import { useFormik } from 'formik'
@@ -13,6 +13,7 @@ import { searchEmail } from '../../redux/thunks/resetPasswordThunk'
 
 export default function ForgotPassword() {
 
+    const theme = useTheme()
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const resetPasswordLoading = useSelector(state => state.resetPassword.isLoading)
@@ -43,12 +44,15 @@ export default function ForgotPassword() {
                 <Card.Title title="Recuperar de Contraseña" />
                 <Card.Content>
                     <TextInput
-                        mode='outlined'
+                        mode='flat'
                         label="Ingrese su Email"
-                        left={<TextInput.Icon name="email" />}
-                        style={{ marginBottom: 15 }}
+                        left={<TextInput.Icon name="email" color={theme.colors.primary} />}
                         value={formik.values.email}
                         onChangeText={(text) => formik.setFieldValue('email', text)}
+                        outlineColor={theme.colors.primary}
+                        color={theme.colors.primary}
+                        theme={{ colors: { text: theme.colors.primary } }}
+                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                     />
                     <Text style={styles.error}>{formik.errors.email}</Text>
 
@@ -98,7 +102,7 @@ function initialValues() {
 
 const styles = StyleSheet.create({
     error: {
-        color: 'red',
+        color: '#f9672e',
         marginBottom: 20,
         marginTop: -15
     }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Image, StyleSheet, Text, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { TextInput, Button, Card } from 'react-native-paper'
+import { TextInput, Button, Card, useTheme } from 'react-native-paper'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios'
@@ -12,6 +12,7 @@ import { storeRegister } from '../../redux/thunks/registerThunk'
 
 export default function Register() {
 
+    const theme = useTheme()
     const [showPass1, setShowPass1] = useState(true)
     const [showPass2, setShowPass2] = useState(true)
     const startLoading = useSelector(state => state.register.isLoading)
@@ -49,45 +50,61 @@ export default function Register() {
                 <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -310 }} />
             </View>
             <Card style={{ width: '90%', marginTop: -205, borderRadius: 10 }}>
-                <Card.Title title="Registro" />
+                <Card.Title title="Registro" titleStyle={{ color: theme.colors.primary }} />
                 <Card.Content>
                     <TextInput
-                        mode='outlined'
+                        mode='flat'
                         label="Nombre y Apellido"
-                        left={<TextInput.Icon name="account" />}
+                        left={<TextInput.Icon name="account" color={theme.colors.primary} />}
                         value={formik.values.name}
                         onChangeText={(text) => formik.setFieldValue('name', text)}
+                        outlineColor={theme.colors.primary}
+                        color={theme.colors.primary}
+                        theme={{ colors: { text: theme.colors.primary } }}
+                        style={{ marginBottom: 10, backgroundColor:'#FFF' }}
                     />
                     {formik.errors.name && <Text style={styles.error}>{formik.errors.name}</Text>}
 
                     <TextInput
-                        mode='outlined'
+                        mode='flat'
                         label="Email"
-                        left={<TextInput.Icon name="mail" />}
+                        left={<TextInput.Icon name="mail" color={theme.colors.primary} />}
                         value={formik.values.email}
                         onChangeText={(text) => formik.setFieldValue('email', text)}
+                        outlineColor={theme.colors.primary}
+                        color={theme.colors.primary}
+                        theme={{ colors: { text: theme.colors.primary } }}
+                        style={{ marginBottom: 10, backgroundColor:'#FFF' }}
                     />
                     {formik.errors.email && <Text style={styles.error}>{formik.errors.email}</Text>}
 
                     <TextInput
-                        mode='outlined'
+                        mode='flat'
                         label="Contraseña"
                         secureTextEntry={showPass1}
-                        left={<TextInput.Icon name="lock" />}
-                        right={<TextInput.Icon name="eye" onPress={() => showingPass1()} />}
+                        left={<TextInput.Icon name="lock" color={theme.colors.primary} />}
+                        right={<TextInput.Icon name="eye" color={theme.colors.primary} onPress={() => showingPass1()} />}
                         value={formik.values.password}
                         onChangeText={(text) => formik.setFieldValue('password', text)}
+                        outlineColor={theme.colors.primary}
+                        color={theme.colors.primary}
+                        theme={{ colors: { text: theme.colors.primary } }}
+                        style={{ marginBottom: 10, backgroundColor:'#FFF' }}
                     />
                     {formik.errors.password && <Text style={styles.error}>{formik.errors.password}</Text>}
 
                     <TextInput
-                        mode='outlined'
+                        mode='flat'
                         label="Repita la contraseña"
                         secureTextEntry={showPass2}
-                        left={<TextInput.Icon name="lock" />}
-                        right={<TextInput.Icon name="eye" onPress={() => showingPass2()} />}
+                        left={<TextInput.Icon name="lock" color={theme.colors.primary} />}
+                        right={<TextInput.Icon name="eye" color={theme.colors.primary} onPress={() => showingPass2()} />}
                         value={formik.values.password_confirmation}
                         onChangeText={(text) => formik.setFieldValue('password_confirmation', text)}
+                        outlineColor={theme.colors.primary}
+                        color={theme.colors.primary}
+                        theme={{ colors: { text: theme.colors.primary } }}
+                        style={{ marginBottom: 10, backgroundColor:'#FFF' }}
                     />
                     {formik.errors.password_confirmation && <Text style={styles.error}>{formik.errors.password_confirmation}</Text>}
 
@@ -156,7 +173,7 @@ function validationSchema() {
 
 const styles = StyleSheet.create({
     error: {
-        color: 'red',
+        color: '#f9672e',
         marginBottom: 10,
     },
 })

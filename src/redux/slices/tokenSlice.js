@@ -12,7 +12,7 @@ export const tokenSlice = createSlice({
             state.token = action.payload
         },
         addPlanId(state, action) {
-            state.token = action.payload
+            state.plan_id = action.payload
         },
         deleteToken(state, action) {
             state.token = null

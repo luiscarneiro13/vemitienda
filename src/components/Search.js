@@ -7,10 +7,10 @@ MIcon.loadFont()
 export default function Search({ query, onChange }) {
     return (
         <View style={styles.container}>
-            <MIcon name={'magnify'} size={30} color={'#888888'} />
+            <MIcon name={'magnify'} size={30} color={'#b8d5e9'} />
             <TextInput
                 placeholder="Buscar..."
-                placeholderTextColor="#888888"
+                placeholderTextColor="#b8d5e9"
                 style={styles.text}
                 value={query || ''}
                 onChangeText={(text) => onChange(text)}
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 18,
         marginTop: -3,
-        color: '#333'
+        color: '#053e66'
     },
     image: { height: 20, width: 20 }
 })

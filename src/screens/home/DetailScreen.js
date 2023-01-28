@@ -56,7 +56,7 @@ export default function Index(prop) {
 
     const formik = useFormik({
         initialValues: Func.initialValues(props),
-        validationSchema: Yup.object(Func.validationSchema({ imagenCargada })),
+        validationSchema: Yup.object(Func.validationSchema({ imagenCargada, foto })),
         onSubmit: (data) => {
             (
                 async () => {

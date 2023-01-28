@@ -12,7 +12,7 @@ export const Styles = StyleSheet.create({
         paddingBottom: 0,
         borderTopStartRadius: 15,
         borderTopEndRadius: 15,
-        marginTop: '-15%',
+        marginTop: '-30%',
         height: 30
     },
     title: {
@@ -39,7 +39,8 @@ export const Styles = StyleSheet.create({
     styleView:{},
     buttonPlus: {
         borderRadius: 10,
-        height: 40
+        height: 40,
+        borderColor: '#053e66',
     },
     buttonDelete: {
         borderRadius: 10,

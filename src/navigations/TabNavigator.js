@@ -1,12 +1,13 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Image, StyleSheet, Text } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import NavigatorHome from './Tabs/NavigatorHome'
 import NavigatorAdd from './Tabs/NavigatorAdd'
 import NavigatorCategories from './Tabs/NavigatorCategories'
 import NavigatorShare from './Tabs/NavigatorShare'
 import NavigatorStore from './Tabs/NavigatorStore'
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { useTheme } from 'react-native-paper'
 
 MIcon.loadFont()
 
@@ -14,7 +15,8 @@ const Tab = createBottomTabNavigator()
 
 export default function TabNavigator() {
 
-    const textColorGlobal = '#FFFFFF'
+    const theme = useTheme()
+    const textColorGlobal = theme.colors.primary
 
     const Header = ({ icon, title, textColor }) => {
         return (
@@ -26,36 +28,37 @@ export default function TabNavigator() {
     }
 
     return (
-        <Tab.Navigator
-            screenOptions={{
-                headerShown: false,
-                headerTransparent: true,
-                tabBarStyle: {
-                    backgroundColor: "#0c77c3",
-                    height: 70,
-                    marginBottom: -10
-                }
-            }}
-        >
-            <Tab.Screen
-                name="HomeNavigator"
-                component={NavigatorHome}
-                options={{
-                    tabBarLabel: "",
-                    tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'package-variant'} title='Productos' />
+        <>
+            <Tab.Navigator
+                screenOptions={{
+                    headerShown: false,
+                    headerTransparent: true,
+                    tabBarStyle: {
+                        backgroundColor: "#F3F3F3",
+                        height: 70,
+                        marginBottom: -10
+                    }
                 }}
-            />
+            >
+                <Tab.Screen
+                    name="HomeNavigator"
+                    component={NavigatorHome}
+                    options={{
+                        tabBarLabel: "",
+                        tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'package-variant'} title='Productos' />
+                    }}
+                />
 
-            <Tab.Screen
-                name="CategoriesNavigator"
-                component={NavigatorCategories}
-                options={{
-                    tabBarLabel: "",
-                    tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'shape'} title='Categorías' />
-                }}
-            />
+                <Tab.Screen
+                    name="CategoriesNavigator"
+                    component={NavigatorCategories}
+                    options={{
+                        tabBarLabel: "",
+                        tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'shape'} title='Categorías' />
+                    }}
+                />
 
-            {/* <Tab.Screen
+                {/* <Tab.Screen
                 name="ShareNavigator"
                 component={NavigatorShare}
                 options={{
@@ -64,15 +67,19 @@ export default function TabNavigator() {
                 }}
             /> */}
 
-            <Tab.Screen
-                name="StoreNavigator"
-                component={NavigatorStore}
-                options={{
-                    tabBarLabel: "",
-                    tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'store'} title='Tienda' />
-                }}
-            />
+                <Tab.Screen
+                    name="StoreNavigator"
+                    component={NavigatorStore}
+                    options={{
+                        tabBarLabel: "",
+                        tabBarIcon: ({ color, size }) => <Header textColor={textColorGlobal} icon={'store'} title='Tienda' />
+                    }}
+                />
 
-        </Tab.Navigator >
+            </Tab.Navigator >
+            <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F3F3' }}>
+                <Text style={{ color: '#04304f', fontSize:10 }}>info@vemitienda.online</Text>
+            </View>
+        </>
     )
 }

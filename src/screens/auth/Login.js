@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Image, StyleSheet, Text, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { TextInput, Button, Card } from 'react-native-paper'
+import { TextInput, Button, Card, useTheme } from 'react-native-paper'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import SvgComponent from './Svg'
@@ -15,6 +15,7 @@ export default function Login() {
 
     const [sending, setSending] = useState(false)
     const [showPass, setShowPass] = useState(true)
+    const theme = useTheme()
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const startLoadingToken = useSelector(state => state.token.isLoading)
@@ -60,27 +61,34 @@ export default function Login() {
                 <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -310 }} />
             </View>
             <Card style={{ width: '90%', marginTop: -205, borderRadius: 10 }}>
-                <Card.Title title="Inicio de Sesión" />
+                <Card.Title title="Inicio de Sesión" titleStyle={{ color: theme.colors.primary }} />
                 <Card.Content>
                     <TextInput
-                        mode='outlined'
+                        mode='flat'
                         label="Email"
-                        left={<TextInput.Icon name="mail" />}
-                        style={{ marginBottom: 15 }}
+                        left={<TextInput.Icon name="mail" color={theme.colors.primary} />}
+                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                         value={formik.values.email}
                         onChangeText={(text) => formik.setFieldValue('email', text)}
+                        outlineColor={theme.colors.primary}
+                        color={theme.colors.primary}
+                        theme={{ colors: { text: theme.colors.primary } }}
+
                     />
                     <Text style={styles.error}>{formik.errors.email}</Text>
 
                     <TextInput
-                        mode='outlined'
+                        mode='flat'
                         label="Contraseña"
                         secureTextEntry={showPass}
-                        left={<TextInput.Icon name="lock" />}
-                        right={<TextInput.Icon name="eye" onPress={() => showingPass()} />}
-                        style={{ marginBottom: 15 }}
+                        left={<TextInput.Icon name="lock" color={theme.colors.primary} />}
+                        right={<TextInput.Icon name="eye" color={theme.colors.primary} onPress={() => showingPass()} />}
+                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                         value={formik.values.password}
                         onChangeText={(text) => formik.setFieldValue('password', text)}
+                        outlineColor={theme.colors.primary}
+                        color={theme.colors.primary}
+                        theme={{ colors: { text: theme.colors.primary } }}
                     />
                     <Text style={styles.error}>{formik.errors.password}</Text>
 
@@ -103,6 +111,7 @@ export default function Login() {
                             onPress={() => navigation.navigate('Register')}
                             uppercase={false}
                             style={Styles.buttonPlus}
+                            color={theme.colors.primary}
                         >
                             Registro
                         </Button>
@@ -110,6 +119,7 @@ export default function Login() {
                             onPress={() => navigation.navigate('ForgotPassword')}
                             uppercase={false}
                             style={Styles.buttonPlus}
+                            color={theme.colors.primary}
                         >
                             Recuperar Contraseña
                         </Button>
@@ -117,7 +127,7 @@ export default function Login() {
                 </Card.Actions>
             </Card>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
-                <Text style={{ marginTop: 50 }}>Versión 1.0.0</Text>
+                <Text style={{ marginTop: 50, color: theme.colors.primary }}>Versión 1.0.0</Text>
             </View>
         </View>
     )
@@ -125,8 +135,8 @@ export default function Login() {
 
 function initialValues() {
     return {
-        email: '',
-        password: ''
+        email: 'carneiroluis2@gmail.com',
+        password: '123456'
     }
 }
 
@@ -145,7 +155,7 @@ function validationSchema() {
 
 const styles = StyleSheet.create({
     error: {
-        color: 'red',
+        color: '#f9672e',
         marginBottom: 20,
         marginTop: -15
     }

@@ -7,9 +7,8 @@ export const getToken = (params) => {
         dispatch(loadingToken(true))
         const data = await API.postDB(`login`, params)
         const datos = await data?.data
-        console.log(datos)
         if (datos?.data?.token) {
-            const planId = datos?.data?.plan_user?.planId
+            const planId = datos?.data?.plan_user?.plan_id
             if (planId) {
                 dispatch(addPlanId(planId))
             }

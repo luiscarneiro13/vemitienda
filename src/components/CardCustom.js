@@ -1,6 +1,6 @@
 import { View, Text, FlatList, Alert, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native'
 import React, { useRef } from 'react'
-import { List } from 'react-native-paper'
+import { List, useTheme } from 'react-native-paper'
 import { DIGITALOCEAN } from '../constants/Data'
 import { useSelector } from 'react-redux'
 import { Card } from 'react-native-elements'
@@ -8,6 +8,7 @@ import { Card } from 'react-native-elements'
 export default function CardCustom({ onClick, share }) {
 
     const inputEl = useRef(null)
+    const theme = useTheme()
     const products = useSelector(state => state?.products.products) || []
     const productsFilters = useSelector(state => state?.products.productsFilters) || []
 
@@ -20,6 +21,8 @@ export default function CardCustom({ onClick, share }) {
                     <List.Item
                         title={products[index].name}
                         description={products[index].category?.name}
+                        titleStyle={{ color: theme.colors.primary }}
+                        descriptionStyle={{ color: theme.colors.primary }}
                         left={props =>
                             products[index]?.image ?
                                 <>
@@ -33,7 +36,7 @@ export default function CardCustom({ onClick, share }) {
                                 <Text></Text>
                         }
                         onPress={() => onClick(products[index])}
-                        style={{ backgroundColor: '#F9F9F9', marginTop: 5 }}
+                        style={{ backgroundColor: '#F3F3F3', marginTop: 5 }}
                     />
                 )
             }
@@ -43,6 +46,8 @@ export default function CardCustom({ onClick, share }) {
                     <List.Item
                         title={products[index].name}
                         description={products[index].category?.name}
+                        titleStyle={{ color: theme.colors.primary, fontWeight:'bold' }}
+                        descriptionStyle={{ color: theme.colors.primary }}
                         left={props =>
                             products[index]?.image ?
                                 <>
@@ -56,7 +61,7 @@ export default function CardCustom({ onClick, share }) {
                                 <Text></Text>
                         }
                         onPress={() => onClick(products[index])}
-                        style={{ backgroundColor: '#F9F9F9', marginTop: 5 }}
+                        style={{ backgroundColor: '#FFF', marginTop: 5 }}
                     />
                 )
             }

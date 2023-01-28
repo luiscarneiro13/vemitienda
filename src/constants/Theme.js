@@ -5,9 +5,11 @@ const THEME = {
     roundness: 2,
     colors: {
         ...DefaultTheme.colors,
-        primary: '#0c77c3',
+        primary: '#053e66',
+        primary1: '#3FA9F5',
         secondary: '#333333',
-        background: '#FFFFFF',
+        errors:'#f9672e',
+        background: '#F3F3F3',
     },
 }
 

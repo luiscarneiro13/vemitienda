@@ -1,7 +1,7 @@
 import { useFormik } from 'formik'
 import React, { useEffect, useRef, useState } from 'react'
 import { View, ScrollView, Text, ActivityIndicator, Alert, Image } from 'react-native'
-import { Button, TextInput } from 'react-native-paper'
+import { Button, TextInput, useTheme } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 import Header from '../../components/Header'
 import HeaderGrid from '../../components/HeaderGrid'
@@ -28,6 +28,7 @@ export default function Index() {
     const company = useSelector(state => state.company)
     const isLoading = useSelector(state => state.company?.isLoading)
     const navigator = useNavigation()
+    const theme = useTheme()
 
     useEffect(() => {
         if (company?.company?.logo?.thumbnail) {
@@ -127,80 +128,97 @@ export default function Index() {
 
                 <ScrollView >
                     <HeaderGrid sending={sending} onPress={logout} title="Mi Tienda" showButton={true} titleButton='Salir' iconButton='logout' />
-                    <View style={{ marginBottom: 20 }}>
-                        {/* <Text>{JSON.stringify(foto)}</Text> */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                            {foto ?
-                                <Image mode='cover' source={{ uri: foto }} style={{ width: 120, height: 120 }} />
-                                :
-                                <Text>Sin Imagen</Text>
-                            }
-                        </View>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
-                            <Button onPress={pickImage} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
-                                {labelFoto}
-                            </Button>
-                            <Button onPress={pickImageLibrary} mode='outlined' icon={'image'} style={Styles.buttonPlus}>
-                                {labelLibrary}
-                            </Button>
-                        </View>
-                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            {formik.errors.image && <Text style={Styles.error}> {formik.errors.image}</Text>}
-                        </View>
-                    </View>
+
                     <View style={{ marginTop: 10 }}>
                         <>
                             <Text>Ésta condiguración estará en el pdf que genera la App</Text>
 
                             <TextInput
-                                mode='outlined'
+                                mode='flat'
                                 label="Nombre comercial"
                                 placeholder="Ingrese su nombre comercial aquí"
-                                style={{ marginTop: 15 }}
                                 value={formik.values?.name || ''}
                                 onChangeText={(text) => formik.setFieldValue('name', text)}
+                                outlineColor={theme.colors.primary}
+                                color={theme.colors.primary}
+                                theme={{ colors: { text: theme.colors.primary } }}
+                                style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#FFF' }}
                             />
                             {formik.errors.name && <Text style={Styles.error}>{formik.errors.name}</Text>}
 
                             <TextInput
-                                mode='outlined'
+                                mode='flat'
                                 label="Email"
                                 placeholder="Ingrese su email comercial aquí"
-                                style={{ marginTop: 15 }}
                                 value={formik.values?.email || ''}
                                 onChangeText={(text) => formik.setFieldValue('email', text)}
+                                outlineColor={theme.colors.primary}
+                                color={theme.colors.primary}
+                                theme={{ colors: { text: theme.colors.primary } }}
+                                style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                             />
                             {formik.errors.email && <Text style={Styles.error}>{formik.errors.email}</Text>}
 
                             <TextInput
-                                mode='outlined'
+                                mode='flat'
                                 label="Slogan o lema"
                                 placeholder="Ingrese su slogan o lema comercial aquí"
-                                style={{ marginTop: 15 }}
                                 value={formik.values?.slogan || ''}
                                 onChangeText={(text) => formik.setFieldValue('slogan', text)}
+                                outlineColor={theme.colors.primary}
+                                color={theme.colors.primary}
+                                theme={{ colors: { text: theme.colors.primary } }}
+                                style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                             />
                             {formik.errors.slogan && <Text style={Styles.error}>{formik.errors.slogan}</Text>}
 
                             <TextInput
-                                mode='outlined'
+                                mode='flat'
                                 label="Teléfono"
                                 placeholder="Ingrese su teléfono comercial aquí"
-                                style={{ marginTop: 15 }}
                                 value={formik.values?.phone || ''}
                                 onChangeText={(text) => formik.setFieldValue('phone', text)}
+                                outlineColor={theme.colors.primary}
+                                color={theme.colors.primary}
+                                theme={{ colors: { text: theme.colors.primary } }}
+                                style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                             />
                             {formik.errors.phone && <Text style={Styles.error}>{formik.errors.phone}</Text>}
 
                             <TextInput
-                                mode='outlined'
+                                mode='flat'
                                 label="Color de fondo del Catálogo"
                                 placeholder="Ejemplo: #FFFFFF"
-                                style={{ marginTop: 15 }}
                                 value={formik.values?.background_color_catalog || ''}
                                 onChangeText={(text) => formik.setFieldValue('background_color_catalog', text)}
+                                outlineColor={theme.colors.primary}
+                                color={theme.colors.primary}
+                                theme={{ colors: { text: theme.colors.primary } }}
+                                style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                             />
                             {formik.errors.background_color_catalog && <Text style={Styles.error}>{formik.errors.background_color_catalog}</Text>}
+
+                            <View style={{ marginBottom: 20 }}>
+                                {/* <Text>{JSON.stringify(foto)}</Text> */}
+                                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop:20 }}>
+                                    {foto ?
+                                        <Image mode='cover' source={{ uri: foto }} style={{ width: 120, height: 120 }} />
+                                        :
+                                        <Text>Sin Imagen</Text>
+                                    }
+                                </View>
+                                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', marginTop: 10 }}>
+                                    <Button onPress={pickImage} mode='outlined' icon={'camera'} style={Styles.buttonPlus}>
+                                        {labelFoto}
+                                    </Button>
+                                    <Button onPress={pickImageLibrary} mode='outlined' icon={'image'} style={Styles.buttonPlus}>
+                                        {labelLibrary}
+                                    </Button>
+                                </View>
+                                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                    {formik.errors.image && <Text style={Styles.error}> {formik.errors.image}</Text>}
+                                </View>
+                            </View>
 
                             <View style={{ marginTop: 15 }}></View>
                             <Button

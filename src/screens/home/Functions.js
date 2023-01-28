@@ -12,13 +12,13 @@ export function initialValues(item = null) {
     }
 }
 
-export function validationSchema({ imagenCargada }) {
+export function validationSchema({ imagenCargada, foto }) {
     const data = {
         name: Yup.string('Formato inválido').required('Ingrese el nombre').min(3, 'Mínimo 3 caracteres').max(90, 'Máximo 90 caracteres'),
         category_id: Yup.number().min(1, 'Seleccione una Categoría')
     }
 
-    if (imagenCargada) {
+    if (imagenCargada || !foto) {
         data.image = Yup.object('').required('Por favor, Tome o seleccione una foto')
     }
 
