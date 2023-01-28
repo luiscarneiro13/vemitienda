@@ -29,6 +29,7 @@ export default function Index() {
         dispatch(getCompanyThunk())
         dispatch(getCategoriesThunk())
         dispatch(getTemplatesThunk())
+        console.log(productsStore)
     }, [])
 
     useFocusEffect(() => {

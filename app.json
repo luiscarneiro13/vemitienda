@@ -34,8 +34,8 @@
         "WRITE_EXTERNAL_STORAGE",
         "NOTIFICATIONS"
       ],
-      "package": "com.misplantitas.luis",
-      "versionCode": 2
+      "package": "com.vemitienda.online",
+      "versionCode": 1
     },
     "plugins": [
       [
