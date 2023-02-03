@@ -14,7 +14,13 @@ export default function MoneyComponent({ label, onChange, value }) {
                 render={props =>
                     <TextInputMask
                         {...props}
-                        type={'only-numbers'}
+                        type={'money'}
+                        options={{
+                            separator: ',',
+                            delimiter: '.',
+                            unit: '',
+                            suffixUnit: ''
+                        }}
                         onChangeText={text => { onChange(text) }}
                     />
                 }

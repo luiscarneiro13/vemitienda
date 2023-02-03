@@ -60,6 +60,7 @@ export default function Index(prop) {
         onSubmit: (data) => {
             (
                 async () => {
+                    console.log(data)
                     try {
                         data.imagenCargada = imagenCargada
                         if (accion === 'Update') {

@@ -1,15 +1,16 @@
 import * as Yup from 'yup'
 
 export function initialValues(item = null) {
-    return {
+    const data = {
         name: item?.name || '',
         description: '',
         image: item?.image ? item?.image[0]?.thumbnail : '',
         price: item?.price || 0, // Debe ser entero AJURO
         category_id: item?.category_id || 0,
-        share: item?.share ? item?.share : 1,
+        share: item?.share ?? 1,
         thumbnail: ''
     }
+    return data
 }
 
 export function validationSchema({ imagenCargada, foto }) {
