@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Image, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Header from '../../components/Header'
 import Search from '../../components/Search'
 import CardCustom from '../../components/CardCustom'
@@ -7,17 +7,14 @@ import ScrollHorizontal from '../../components/ScrollHorizontal'
 import { Styles } from '../../constants/Styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { ActivityIndicator, Button, useTheme } from 'react-native-paper'
-import { Camera } from 'expo-camera'
-import * as MediaLibrary from 'expo-media-library'
+import { Button, useTheme } from 'react-native-paper'
 import { getCategoriesThunk, getCompanyThunk, getProducts, getTemplatesThunk } from '../../redux/thunks'
 import { productsFilters } from '../../redux/slices'
-import { ThemeConsumer } from 'react-native-elements'
-
 
 export default function Index() {
 
     const [query, setQuery] = useState('')
+    const [modalVisible, setModalVisible] = useState(false)
     const theme = useTheme()
     const navigator = useNavigation()
     const company = useSelector(state => state.company.company) || []
@@ -66,20 +63,24 @@ export default function Index() {
     const filterCategory = (query) => {
         changeSearch(query)
     }
+    
 
     const clickHandlerShare = async () => {
+       
         if (planId === 2) {
             if (!company?.url_tienda) {
                 navigator.navigate('Store');
                 Alert.alert('Mensaje', 'Debe agregar la información de su tienda para poder compartir el catálogo')
             } else {
-                await Share.share({
-                    message: company.url_tienda
-                })
+                navigator.navigate('Share')
+                // await Share.share({
+                //     message: company.url_tienda
+                // })
             }
         } else {
             Alert.alert('Mensaje', 'Debe activar el plan premium para compartir su Catálogo')
         }
+        
     }
 
     return (
@@ -119,8 +120,9 @@ export default function Index() {
                         style={styles.floatingButtonStyle}
                     />
                 </TouchableOpacity>
-
             </View>
+
+
         </View>
     )
 }
@@ -146,4 +148,45 @@ const styles = StyleSheet.create({
         height: 50,
         //backgroundColor:'black'
     },
+    centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  }
 })
