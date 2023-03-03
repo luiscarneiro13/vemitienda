@@ -26,14 +26,13 @@ export default function Index() {
   const theme = useTheme();
   const navigator = useNavigation();
   const company = useSelector((state) => state.company.company) || [];
-  const categoriesStore =
-    useSelector((state) => state.categories.categories) || [];
+  const categoriesStore = useSelector((state) => state.categories.categories) || [];
   let categories = [{ id: 0, name: "Todos los productos" }];
   const productsStore = useSelector((state) => state?.products.products) || [];
   const planId = useSelector((state) => state?.token.plan_id) || [];
   const dispatch = useDispatch();
 
-  productsStore.map((item) => {
+  categoriesStore.map((item) => {
     categories.push({ id: item.id, name: item.name });
   });
 

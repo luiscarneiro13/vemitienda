@@ -6,7 +6,7 @@ export function initialValues(item = null) {
         slogan: item?.slogan || '',
         email: item?.email || '',
         phone: item?.phone || '',
-        background_color_catalog: item?.background_color_catalog || '#FFFFFF',
+        background_color_catalog: '#FFFFFF',
         image: item?.logo?.thumbnail || '',
         thumbnail: ''
     }

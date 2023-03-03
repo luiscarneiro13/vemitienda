@@ -10,7 +10,7 @@ export default function MoneyComponent({ label, onChange, value }) {
                 label={label}
                 mode='outlined'
                 value={value}
-                maxLength={5}
+                maxLength={10}
                 render={props =>
                     <TextInputMask
                         {...props}

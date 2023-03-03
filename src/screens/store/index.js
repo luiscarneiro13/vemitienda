@@ -131,7 +131,7 @@ export default function Index() {
 
                     <View style={{ marginTop: 10 }}>
                         <>
-                            <Text>Ésta condiguración estará en el pdf que genera la App</Text>
+                            <Text>Ésta configuración estará en el pdf que genera la App</Text>
 
                             <TextInput
                                 mode='flat'
@@ -185,7 +185,7 @@ export default function Index() {
                             />
                             {formik.errors.phone && <Text style={Styles.error}>{formik.errors.phone}</Text>}
 
-                            <TextInput
+                            {/* <TextInput
                                 mode='flat'
                                 label="Color de fondo del Catálogo"
                                 placeholder="Ejemplo: #FFFFFF"
@@ -196,7 +196,7 @@ export default function Index() {
                                 theme={{ colors: { text: theme.colors.primary } }}
                                 style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                             />
-                            {formik.errors.background_color_catalog && <Text style={Styles.error}>{formik.errors.background_color_catalog}</Text>}
+                            {formik.errors.background_color_catalog && <Text style={Styles.error}>{formik.errors.background_color_catalog}</Text>} */}
 
                             <View style={{ marginBottom: 20 }}>
                                 {/* <Text>{JSON.stringify(foto)}</Text> */}
