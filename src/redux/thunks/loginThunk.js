@@ -16,10 +16,6 @@ export const getToken = (params) => {
 
         }
 
-        // if (data.errors){
-        //     Alert.alert('Mensaje',)
-        // }
-
         dispatch(loadingToken(false))
     }
 }

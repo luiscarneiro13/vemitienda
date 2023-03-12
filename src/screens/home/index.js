@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Header from '../../components/Header'
 import Search from '../../components/Search'
 import CardCustom from '../../components/CardCustom'
@@ -63,24 +63,21 @@ export default function Index() {
     const filterCategory = (query) => {
         changeSearch(query)
     }
-    
+
 
     const clickHandlerShare = async () => {
-       
+
         if (planId === 2) {
             if (!company?.url_tienda) {
                 navigator.navigate('Store');
                 Alert.alert('Mensaje', 'Debe agregar la información de su tienda para poder compartir el catálogo')
             } else {
                 navigator.navigate('Share')
-                // await Share.share({
-                //     message: company.url_tienda
-                // })
             }
         } else {
             Alert.alert('Mensaje', 'Debe activar el plan premium para compartir su Catálogo')
         }
-        
+
     }
 
     return (
@@ -131,7 +128,7 @@ const styles = StyleSheet.create({
     buttonPlus: {
         borderRadius: 10,
         height: 40,
-        borderColor:"#053e66"
+        borderColor: "#053e66"
     },
     touchableOpacityStyle: {
         position: 'absolute',
@@ -149,44 +146,44 @@ const styles = StyleSheet.create({
         //backgroundColor:'black'
     },
     centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  }
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+    },
+    buttonOpen: {
+        backgroundColor: '#F194FF',
+    },
+    buttonClose: {
+        backgroundColor: '#2196F3',
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+    }
 })
