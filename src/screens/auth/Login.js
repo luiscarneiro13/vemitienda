@@ -127,7 +127,7 @@ export default function Login() {
                 </Card.Actions>
             </Card>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
-                <Text style={{ marginTop: 50, color: theme.colors.primary }}>Versión 1.0.6</Text>
+                <Text style={{ marginTop: 50, color: theme.colors.primary }}>Versión 1.0.7</Text>
             </View>
         </View>
     )
