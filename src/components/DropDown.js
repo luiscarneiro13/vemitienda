@@ -5,7 +5,7 @@ import { TextInput } from 'react-native-paper';
 
 export const DropList = (items) => {
 
-    const { value, labelField, valueField, label, placeholder, searchPlaceholder, iconName, data, onChange } = items
+    const { value, labelField, valueField, label, placeholder, searchPlaceholder, iconName, data, onChange, color } = items
 
     const [isFocus, setIsFocus] = useState(false);
 
@@ -29,7 +29,7 @@ export const DropList = (items) => {
         <View style={styles.container}>
             {renderLabel()}
             <Dropdown
-                style={[styles.dropdown, isFocus && { borderColor: '#0c77c3', borderWidth:2 }]}
+                style={[styles.dropdown, isFocus && { borderColor: '#0c77c3', borderWidth: 2 }]}
                 placeholderStyle={iconName ? styles.placeholderStyle : { ...styles.placeholderStyle, marginLeft: 4 }}
                 selectedTextStyle={iconName ? styles.selectedTextStyle : null}
                 inputSearchStyle={styles.inputSearchStyle}
@@ -38,6 +38,7 @@ export const DropList = (items) => {
                 search
                 maxHeight={300}
                 labelField={labelField ? labelField : 'nombre'}
+                itemTextStyle={{ color: color ? color : '#000' }}
                 valueField={valueField ? valueField : 'id'}
                 placeholder={!isFocus ? `${placeholder}` : '...'}
                 searchPlaceholder={searchPlaceholder}
@@ -46,7 +47,7 @@ export const DropList = (items) => {
                 onBlur={() => setIsFocus(false)}
                 onChange={item => { onChange(item) }}
                 renderLeftIcon={() => iconName ? <TextInput.Icon name={iconName} /> : null}
-                backgroundColor='rgba(52, 52, 52, 0.8)'
+                backgroundColor={'rgba(52, 52, 52, 0.8)'}
             />
 
         </View>

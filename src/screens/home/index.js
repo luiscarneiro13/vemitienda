@@ -8,7 +8,7 @@ import { Styles } from '../../constants/Styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { Button, useTheme } from 'react-native-paper'
-import { getCategoriesThunk, getCompanyThunk, getProducts, getTemplatesThunk } from '../../redux/thunks'
+import { getCategoriesThunk, getCompanyThunk, getProducts, getTemplatesThunk, getThemesThunk } from '../../redux/thunks'
 import { productsFilters } from '../../redux/slices'
 
 export default function Index() {
@@ -26,6 +26,7 @@ export default function Index() {
     useEffect(() => {
         dispatch(getProducts())
         dispatch(getCompanyThunk())
+        dispatch(getThemesThunk())
         dispatch(getCategoriesThunk())
         dispatch(getTemplatesThunk())
     }, [])

@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 import { composeWithDevTools } from '@redux-devtools/extension'
 
-import { categoriesSlice, productsSlice, tokenSlice, companySlice, registerSlice, resetPasswordSlice } from './slices/'
+import { categoriesSlice, productsSlice, tokenSlice, companySlice, registerSlice, resetPasswordSlice, themesSlice } from './slices/'
 
 const combinedReducer = combineReducers({
     categories: categoriesSlice.reducer,
@@ -11,6 +11,7 @@ const combinedReducer = combineReducers({
     company: companySlice.reducer,
     register: registerSlice.reducer,
     resetPassword: resetPasswordSlice.reducer,
+    themes: themesSlice.reducer,
 })
 
 const rootReducer = (state, action) => {

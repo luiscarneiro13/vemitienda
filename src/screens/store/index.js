@@ -27,8 +27,10 @@ export default function Index() {
     const dispatch = useDispatch()
     const company = useSelector(state => state.company)
     const isLoading = useSelector(state => state.company?.isLoading)
+    const themes = useSelector(state => state.themes?.themes)
     const navigator = useNavigation()
     const theme = useTheme()
+    const [themeLocal, setThemeLocal] = useState('#ffffff')
 
     useEffect(() => {
         if (company?.company?.logo?.thumbnail) {
@@ -185,6 +187,28 @@ export default function Index() {
                             />
                             {formik.errors.phone && <Text style={Styles.error}>{formik.errors.phone}</Text>}
 
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <View style={{ width: '80%' }}>
+                                    <DropList
+                                        label="Tema"
+                                        placeholder="Color de la tienda"
+                                        searchPlaceholder="Escriba aquí para buscar ..."
+                                        labelField={"spanish"}
+                                        data={themes}
+                                        value={formik.values.theme_id || ""}
+                                        backgroundColor="#000"
+                                        onChange={(value) => {
+                                            setThemeLocal(value.hexadecimal)
+                                            formik.setFieldValue("theme_id", value.id)
+                                        }}
+                                    />
+                                </View>
+                                <View style={{ backgroundColor: { themeLocal }, width: '10%', height: 30 }}></View>
+                            </View>
+                            {formik.errors.theme_id && (
+                                <Text style={Styles.error}>{formik.errors.theme_id}</Text>
+                            )}
+
                             {/* <TextInput
                                 mode='flat'
                                 label="Color de fondo del Catálogo"
@@ -200,7 +224,7 @@ export default function Index() {
 
                             <View style={{ marginBottom: 20 }}>
                                 {/* <Text>{JSON.stringify(foto)}</Text> */}
-                                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop:20 }}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
                                     {foto ?
                                         <Image mode='cover' source={{ uri: foto }} style={{ width: 120, height: 120 }} />
                                         :

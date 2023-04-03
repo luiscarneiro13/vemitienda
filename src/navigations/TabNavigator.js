@@ -71,6 +71,21 @@ export default function TabNavigator() {
         />
 
         <Tab.Screen
+          name="ShareNavigator"
+          component={NavigatorPremium}
+          options={{
+            tabBarLabel: "",
+            tabBarIcon: ({ color, size }) => (
+              <Header
+                textColor={textColorGlobal}
+                icon={"information-outline"}
+                title="Planes"
+              />
+            ),
+          }}
+        />
+
+        <Tab.Screen
           name="StoreNavigator"
           component={NavigatorStore}
           options={{
@@ -85,20 +100,7 @@ export default function TabNavigator() {
           }}
         />
 
-        <Tab.Screen
-          name="ShareNavigator"
-          component={NavigatorPremium}
-          options={{
-            tabBarLabel: "",
-            tabBarIcon: ({ color, size }) => (
-              <Header
-                textColor={textColorGlobal}
-                icon={"information-outline"}
-                title="Información"
-              />
-            ),
-          }}
-        />
+
       </Tab.Navigator>
       <View
         style={{

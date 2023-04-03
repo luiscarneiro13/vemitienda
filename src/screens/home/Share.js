@@ -20,6 +20,7 @@ import DropList from "../../components/DropDown";
 import Atras from "../../components/Atras";
 import HeaderGrid from "../../components/HeaderGrid";
 import { Share } from "react-native";
+import { URL_BASE } from "../../constants/Data";
 
 export default function Index() {
   const [query, setQuery] = useState("");
@@ -32,6 +33,8 @@ export default function Index() {
   const productsStore = useSelector((state) => state?.products.products) || [];
   const planId = useSelector((state) => state?.token.plan_id) || [];
   const dispatch = useDispatch();
+  const [catSelected, setCatSelected] = useState(0);
+  const [shopSelected, setShopSelected] = useState((company.is_shop === 1) ? 2 : 1);
 
   categoriesStore.map((item) => {
     categories.push({ id: item.id, name: item.name });
@@ -85,7 +88,7 @@ export default function Index() {
   };
 
   const clickHandlerShare = async () => {
-    if (planId === 2) {
+    if (planId > 1) {
       if (!company?.url_tienda) {
         navigator.navigate("Store")
         Alert.alert(
@@ -93,9 +96,20 @@ export default function Index() {
           "Debe agregar la información de su tienda para poder compartir el catálogo"
         );
       } else {
-        const message = `${company.url_tienda}?cat=${cat}`
+        let base = ''
+        switch (shopSelected) {
+          case 1:
+            base = company.url_tienda
+            break;
+          case 2:
+            base = URL_BASE + company.slug
+            break;
+        }
+
+        const message = `${base}?cat=${cat}`
         navigator.navigate("Home");
         await Share.share({ message });
+
       }
     } else {
       Alert.alert(
@@ -112,8 +126,23 @@ export default function Index() {
       <View style={Styles.container}>
         <View style={{ flexDirection: "row" }}>
           <Atras />
-          <HeaderGrid title={"Compartir catálogo"} />
+          <HeaderGrid title={"Compartir"} />
         </View>
+        <DropList
+          label="Tipo"
+          placeholder="Que va a compartir?"
+          searchPlaceholder="Escriba aquí para buscar ..."
+          labelField={"name"}
+          data={company.is_shop === 1 ? [
+            { id: 1, name: 'Catálogo' },
+            { id: 2, name: 'Tienda Online' },
+          ] : [
+            { id: 1, name: 'Catálogo' },
+          ]}
+          value={shopSelected}
+          backgroundColor="#000"
+          onChange={(value) => setShopSelected(value.id)}
+        />
 
         <DropList
           label="Categoría"
@@ -121,9 +150,9 @@ export default function Index() {
           searchPlaceholder="Escriba aquí para buscar ..."
           labelField={"name"}
           data={categories}
-          value={0}
+          value={catSelected}
           backgroundColor="#000"
-          onChange={(value) => setCat(value.id)}
+          onChange={(value) => setCatSelected(value.id)}
         />
 
         <View style={{ marginTop: 50 }}>

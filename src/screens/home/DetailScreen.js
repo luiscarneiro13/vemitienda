@@ -24,6 +24,7 @@ import {
 } from "../../redux/thunks/productsThunk";
 import { loadingProducts } from "../../redux/slices";
 import { DIGITALOCEAN } from "../../constants/Data";
+import { TextInputMask } from "react-native-masked-text";
 
 export default function Index(prop) {
   const params = prop.route.params || null;
@@ -38,6 +39,7 @@ export default function Index(prop) {
   const [labelFoto, setLabelFoto] = useState("Tomar Foto");
   const [labelLibrary, setLabelLibrary] = useState("Galería");
   const categories = useSelector((state) => state.categories.categories);
+  const company = useSelector((state) => state.company.company);
   const isLoading = useSelector((state) => state.products.isLoading);
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
@@ -61,13 +63,12 @@ export default function Index(prop) {
   };
 
   const formik = useFormik({
-    initialValues: Func.initialValues(props),
+    initialValues: Func.initialValues(props, company),
     validationSchema: Yup.object(
-      Func.validationSchema({ imagenCargada, foto })
+      Func.validationSchema({ imagenCargada, foto, company })
     ),
     onSubmit: (data) => {
       (async () => {
-        console.log(data);
         try {
           data.imagenCargada = imagenCargada;
           if (accion === "Update") {
@@ -195,9 +196,26 @@ export default function Index(prop) {
             {formik.errors.name && (
               <Text style={Styles.error}>{formik.errors.name}</Text>
             )}
+            {company.is_shop===1 &&
+              <>
+                <TextInput
+                  mode="outlined"
+                  label="Cantidad disponible"
+                  value={formik.values.available.toString()}
+                  onChangeText={(text) => {
+                    if (parseInt(text)) {
 
+                    }
+                    formik.setFieldValue("available", text)
+                  }}
+                />
+                {formik.errors.available && (
+                  <Text style={Styles.error}>{formik.errors.available}</Text>
+                )}
+              </>
+            }
             <MoneyComponent
-              label="Precio (Opcional)"
+              label={company.is_shop ? "Precio" : "Precio (Opcional)"}
               value={formik.values.price.toString()}
               onChange={(value) => formik.setFieldValue("price", value)}
             />
