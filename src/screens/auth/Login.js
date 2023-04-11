@@ -135,8 +135,8 @@ export default function Login() {
 
 function initialValues() {
     return {
-        email: 'naranja@gmail.com',
-        password: '123456'
+        email: '',
+        password: ''
     }
 }
 
