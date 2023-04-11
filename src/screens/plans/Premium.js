@@ -24,8 +24,8 @@ export default function Index() {
 
       <View style={Styles.container}>
         <View style={{ flexDirection: "row" }}>
-          <Atras />
-          <HeaderGrid title={"Información"} />
+          {/* <Atras /> */}
+          <HeaderGrid title={"Planes"} />
         </View>
 
         <Card>
@@ -41,7 +41,7 @@ export default function Index() {
           <Card.Title title="Plan Catálogo" />
           <Card.Content>
             <Text variant="titleLarge">
-              El costo del plan catálogo es de 10$ por 12 meses y podrás tener
+              El costo del plan catálogo es de 2$ mensuales y podrás tener
               todos los productos que sean necesarios en tu catálogo, además podrás
               compartir el catálogo de forma ilimitada
             </Text>
@@ -52,8 +52,8 @@ export default function Index() {
           <Card.Title title="Plan Tienda Online" />
           <Card.Content>
             <Text variant="titleLarge">
-              El costo del plan catálogo es de 5$ mensuales y podrás tener
-              todos los productos que sean necesarios en tu catálogo, además la aplicación creará
+              El costo del plan catálogo es de 9$ mensuales y podrás tener
+              todos los productos que sean necesarios y además la aplicación creará
               una tienda para ti, con carrito de compras. Con este plan tendrás acceso a los pedidos 
               y podrás cambiarle el status. También se descuenta la cantidad de productos en cada pedido 
               así que tendrás el inventario actualizado

@@ -30,8 +30,8 @@ export default function Index() {
     const themes = useSelector(state => state.themes?.themes)
     const navigator = useNavigation()
     const theme = useTheme()
-    const [themeLocal, setThemeLocal] = useState('#ffffff')
-
+    const [themeLocal, setThemeLocal] = useState(company.company.theme ? company.company.theme.hexadecimal : '#ffffff')
+    
     useEffect(() => {
         if (company?.company?.logo?.thumbnail) {
             if (company.company.logo.thumbnail.includes('file:')) {
@@ -188,9 +188,10 @@ export default function Index() {
                             {formik.errors.phone && <Text style={Styles.error}>{formik.errors.phone}</Text>}
 
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <View style={{ backgroundColor: themeLocal, width: 30, height: 30 }}></View>
                                 <View style={{ width: '80%' }}>
                                     <DropList
-                                        label="Tema"
+                                        label="Tema para la tienda"
                                         placeholder="Color de la tienda"
                                         searchPlaceholder="Escriba aquí para buscar ..."
                                         labelField={"spanish"}
@@ -203,7 +204,6 @@ export default function Index() {
                                         }}
                                     />
                                 </View>
-                                <View style={{ backgroundColor: { themeLocal }, width: '10%', height: 30 }}></View>
                             </View>
                             {formik.errors.theme_id && (
                                 <Text style={Styles.error}>{formik.errors.theme_id}</Text>

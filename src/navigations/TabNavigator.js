@@ -5,8 +5,10 @@ import NavigatorHome from "./Tabs/NavigatorHome";
 import NavigatorCategories from "./Tabs/NavigatorCategories";
 import NavigatorPremium from "./Tabs/NavigatorPremium";
 import NavigatorStore from "./Tabs/NavigatorStore";
+import NavigatorOrders from "./Tabs/NavigatorOrders";
 import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useTheme } from "react-native-paper";
+import { useSelector } from "react-redux";
 
 MIcon.loadFont();
 
@@ -14,6 +16,7 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
   const theme = useTheme();
+  const planId = useSelector((state) => state?.token.plan_id) || [];
   const textColorGlobal = theme.colors.primary;
 
   const Header = ({ icon, title, textColor }) => {
@@ -69,6 +72,24 @@ export default function TabNavigator() {
             ),
           }}
         />
+
+        {planId === 2
+          &&
+          <Tab.Screen
+            name="OrderNavigator"
+            component={NavigatorOrders}
+            options={{
+              tabBarLabel: "",
+              tabBarIcon: ({ color, size }) => (
+                <Header
+                  textColor={textColorGlobal}
+                  icon={"order-bool-descending-variant"}
+                  title="Pedidos"
+                />
+              ),
+            }}
+          />
+        }
 
         <Tab.Screen
           name="ShareNavigator"

@@ -93,15 +93,17 @@ export default function Index() {
         navigator.navigate("Store")
         Alert.alert(
           "Mensaje",
-          "Debe agregar la información de su tienda para poder compartir el catálogo"
+          "Debe agregar la información de su tienda"
         );
       } else {
         let base = ''
         switch (shopSelected) {
-          case 1:
+          case 0:
+            //Catálogo
             base = company.url_tienda
             break;
-          case 2:
+          case 1:
+            //Tienda
             base = URL_BASE + company.slug
             break;
         }
@@ -114,7 +116,7 @@ export default function Index() {
     } else {
       Alert.alert(
         "Mensaje",
-        "Debe activar el plan premium para compartir su Catálogo"
+        "Debe activar el plan de pago para compartir su Catálogo o Tienda"
       );
     }
   };
@@ -134,10 +136,10 @@ export default function Index() {
           searchPlaceholder="Escriba aquí para buscar ..."
           labelField={"name"}
           data={company.is_shop === 1 ? [
-            { id: 1, name: 'Catálogo' },
-            { id: 2, name: 'Tienda Online' },
+            { id: 0, name: 'Catálogo (Sin carrito de compras)' },
+            { id: 1, name: 'Tienda Online (Con carrito de compras)' },
           ] : [
-            { id: 1, name: 'Catálogo' },
+            { id: 0, name: 'Catálogo (Sin carrito de compras)' },
           ]}
           value={shopSelected}
           backgroundColor="#000"
