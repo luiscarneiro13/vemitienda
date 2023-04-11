@@ -9,9 +9,10 @@ export const getOrdersThunk = (page = 0) => {
             dispatch(loadingOrders(true))
             const data = await API.getDB(`orders`)
             const resp = await data?.data
-            message = resp?.message
-            dispatch(addOrders(resp?.data))
-            dispatch(loadingOrders(false))
+            if (resp) {
+                dispatch(addOrders(resp?.data))
+                dispatch(loadingOrders(false))
+            }
         } catch (error) {
             message = 'Ocurrió un error inesperado!'
             Alert.alert('Mensaje Tienda', message)

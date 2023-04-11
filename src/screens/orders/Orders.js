@@ -5,7 +5,7 @@ import { Styles } from "../../constants/Styles";
 import HeaderGrid from "../../components/HeaderGrid";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { Button, List, useTheme } from "react-native-paper";
+import { ActivityIndicator, Button, List, Text, useTheme } from "react-native-paper";
 import { FlatList } from "react-native";
 import { Badge } from 'react-native-elements'
 import { getOrdersThunk } from "../../redux/thunks/ordersThunk";
@@ -14,6 +14,7 @@ import { getOrdersThunk } from "../../redux/thunks/ordersThunk";
 export default function Orders() {
 
   const orders = useSelector(state => state.orders.orders) || []
+  const isLoading = useSelector(state => state.orders.isLoading)
   const theme = useTheme()
   const navigator = useNavigation()
   const dispatch = useDispatch()
@@ -68,13 +69,24 @@ export default function Orders() {
         <View style={{ flexDirection: "row" }}>
           <HeaderGrid title={"Pedidos"} />
         </View>
+        {isLoading ?
+          <ActivityIndicator />
+          :
+          <>
+            {orders.length ?
+              <FlatList
+                data={orders}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+              />
+              :
+              <View style={{ justifyContents: 'center', alignItems: 'center', marginTop: 'auto', marginBottom: 'auto' }}>
+                <Text>No hay datos disponibles</Text>
+              </View>
+            }
+          </>
+        }
 
-        <FlatList
-          // style={style || null}
-          data={orders}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
 
       </View>
     </View>

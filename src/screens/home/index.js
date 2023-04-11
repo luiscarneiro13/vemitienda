@@ -7,7 +7,7 @@ import ScrollHorizontal from '../../components/ScrollHorizontal'
 import { Styles } from '../../constants/Styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { Button, useTheme } from 'react-native-paper'
+import { ActivityIndicator, Button, useTheme } from 'react-native-paper'
 import { getCategoriesThunk, getCompanyThunk, getProducts, getTemplatesThunk, getThemesThunk } from '../../redux/thunks'
 import { productsFilters } from '../../redux/slices'
 
@@ -20,6 +20,7 @@ export default function Index() {
     const company = useSelector(state => state.company.company) || []
     const categories = useSelector(state => state.categories.categories) || []
     const productsStore = useSelector(state => state?.products.products) || []
+    const isLoading = useSelector(state => state?.products.isLoading)
     const planId = useSelector(state => state?.token.plan_id) || []
     const dispatch = useDispatch()
 
@@ -67,8 +68,7 @@ export default function Index() {
 
 
     const clickHandlerShare = async () => {
-
-        if (planId === 2) {
+        if (planId > 1) {
             if (!company?.url_tienda) {
                 navigator.navigate('Store');
                 Alert.alert('Mensaje', 'Debe agregar la información de su tienda para poder compartir el catálogo')
@@ -78,7 +78,6 @@ export default function Index() {
         } else {
             Alert.alert('Mensaje', 'Debe activar el plan premium para compartir su Catálogo')
         }
-
     }
 
     return (
@@ -101,19 +100,18 @@ export default function Index() {
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                     <ScrollHorizontal categories={categories} filterCategory={(item) => filterCategory(item)} />
                 </View>
-                <CardCustom onClick={onClickCardCustom} share={false} />
+                {
+                    isLoading ?
+                        <ActivityIndicator />
+                        :
+                        <CardCustom onClick={onClickCardCustom} share={false} />
+                }
 
                 <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={clickHandlerShare}
                     style={styles.touchableOpacityStyle}>
                     <Image
-                        //We are making FAB using TouchableOpacity with an image
-                        //We are using online image here
-                        // source={{
-                        //     uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/plus_icon.png',
-                        // }}
-                        //You can use you project image Example below
                         source={require('../../assets/share.png')}
                         style={styles.floatingButtonStyle}
                     />

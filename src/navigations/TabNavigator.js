@@ -73,7 +73,7 @@ export default function TabNavigator() {
           }}
         />
 
-        {planId === 2
+        {planId === 3
           &&
           <Tab.Screen
             name="OrderNavigator"

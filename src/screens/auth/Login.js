@@ -127,7 +127,7 @@ export default function Login() {
                 </Card.Actions>
             </Card>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
-                <Text style={{ marginTop: 50, color: theme.colors.primary }}>Versión 1.1.0</Text>
+                <Text style={{ marginTop: 50, color: theme.colors.primary }}>Versión 1.1.1</Text>
             </View>
         </View>
     )
@@ -135,8 +135,8 @@ export default function Login() {
 
 function initialValues() {
     return {
-        email: '',
-        password: ''
+        email: 'naranja@gmail.com',
+        password: '123456'
     }
 }
 
