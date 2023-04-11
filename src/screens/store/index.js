@@ -133,8 +133,6 @@ export default function Index() {
 
                     <View style={{ marginTop: 10 }}>
                         <>
-                            <Text>Ésta configuración estará en el pdf que genera la App</Text>
-
                             <TextInput
                                 mode='flat'
                                 label="Nombre comercial"
