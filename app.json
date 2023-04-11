@@ -4,7 +4,7 @@
     "slug": "ve_mi_tienda",
     "version": "1.1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon2.png",
     "splash": {
       "image": "./assets/splash2.png",
       "resizeMode": "cover",
@@ -23,9 +23,6 @@
         "NSPhotoLibraryAddUsageDescription": "Permitir a $(PRODUCT_NAME) guardar fotos."
       }
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
     "android": {
       "permissions": [
         "CAMERA",
@@ -38,7 +35,7 @@
         "android.permission.ACCESS_MEDIA_LOCATION"
       ],
       "package": "com.vemitienda.online",
-      "versionCode": 9
+      "versionCode": 11
     },
     "plugins": [
       [
