@@ -68,7 +68,7 @@ export const storeCompanyThunk = (params, navigator) => {
                 throw new Error();
             }
         } catch (error) {
-            console.log("Entró el error al guardar datos de la tienda")
+            // console.log("Entró el error al guardar datos de la tienda")
             dispatch(loadingCompany(false))
         }
     }

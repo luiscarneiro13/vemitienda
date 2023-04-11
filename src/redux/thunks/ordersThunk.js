@@ -26,7 +26,6 @@ export const updateStatusThunk = (params) => {
         try {
             dispatch(loadingOrders(true))
             const dataStatus = await API.postDB(`updateStatus`, params)
-            console.log('resp', dataStatus)
             const respDataStatus = await dataStatus?.data
             if (respDataStatus) {
                 const data = await API.getDB(`orders`)

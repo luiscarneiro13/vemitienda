@@ -42,7 +42,6 @@ export const storeProductThunk = (params, navigator) => {
             }
 
         } catch (error) {
-            console.log("Entró el error")
             dispatch(loadingProducts(false))
         }
     }

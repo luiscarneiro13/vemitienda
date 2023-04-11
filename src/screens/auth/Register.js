@@ -28,7 +28,7 @@ export default function Register() {
                 try {
                     dispatch(storeRegister(data, navigation))
                 } catch (error) {
-                    console.log(error)
+                    // console.log(error)
                 }
 
             })()

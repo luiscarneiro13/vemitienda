@@ -16,7 +16,7 @@ export const storeImageProductThunk = (params) => {
                     "Content-Type": "multipart/form-data",
                 },
             }).then((resp) => {
-                console.log("Se guardó la imagen")
+                // console.log("Se guardó la imagen")
             })
 
         } catch (error) {
@@ -73,7 +73,7 @@ export const storeLogoThunk = (params) => {
                     "Content-Type": "multipart/form-data",
                 },
             }).then((resp) => {
-                console.log("Guardó el logo")
+                // console.log("Guardó el logo")
             })
 
         } catch (error) {

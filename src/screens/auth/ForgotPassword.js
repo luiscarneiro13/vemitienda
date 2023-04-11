@@ -28,7 +28,7 @@ export default function ForgotPassword() {
                 try {
                     dispatch(searchEmail(data, navigation))
                 } catch (error) {
-                    console.log(error)
+                    // console.log(error)
                 }
             })()
         }

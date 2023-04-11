@@ -79,7 +79,7 @@ export default function Index(prop) {
             dispatch(storeProductThunk(data, navigator));
           }
         } catch (error) {
-          console.log("ERROR CAPTURADO AL ENVIAR");
+          // console.log("ERROR CAPTURADO AL ENVIAR");
         }
       })();
     },

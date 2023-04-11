@@ -48,7 +48,6 @@ export default function Index() {
             // setSending(false)
         } catch (error) {
             setSending(false)
-            console.log("error: ", error)
         }
     }
 

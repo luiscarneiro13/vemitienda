@@ -42,7 +42,7 @@ export default function Login() {
                 try {
                     dispatch(getToken(data))
                 } catch (error) {
-                    console.log(error)
+                    // console.log(error)
                 }
                 setSending(false)
 
@@ -135,8 +135,8 @@ export default function Login() {
 
 function initialValues() {
     return {
-        email: 'carneiroluis2@gmail.com',
-        password: '123456'
+        email: '',
+        password: ''
     }
 }
 

@@ -57,7 +57,7 @@ export default function Index() {
                     try {
                         dispatch(storeCompanyThunk(data, navigator))
                     } catch (error) {
-                        console.log("ERROR CAPTURADO AL ENVIAR")
+                        // console.log("ERROR CAPTURADO AL ENVIAR")
                     }
                 }
             )()
