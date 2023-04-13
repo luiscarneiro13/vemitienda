@@ -5,11 +5,15 @@ export const tokenSlice = createSlice({
     initialState: {
         token: null,
         isLoading: false,
-        plan_id: 1 //plan free por defecto
+        plan_id: 1, //plan free por defecto,
+        email: '',
     },
     reducers: {
         addToken(state, action) {
             state.token = action.payload
+        },
+        addEmail(state, action) {
+            state.email = action.payload
         },
         addPlanId(state, action) {
             state.plan_id = action.payload
@@ -28,4 +32,5 @@ export const {
     deleteToken,
     loadingToken,
     addPlanId,
+    addEmail,
 } = tokenSlice.actions

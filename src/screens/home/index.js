@@ -10,6 +10,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { ActivityIndicator, Button, useTheme } from 'react-native-paper'
 import { getCategoriesThunk, getCompanyThunk, getProducts, getTemplatesThunk, getThemesThunk } from '../../redux/thunks'
 import { productsFilters } from '../../redux/slices'
+import { userInfoThunk } from '../../redux/thunks/userInfoThunk'
 
 export default function Index() {
 
@@ -25,6 +26,7 @@ export default function Index() {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        dispatch(userInfoThunk())
         dispatch(getProducts())
         dispatch(getCompanyThunk())
         dispatch(getThemesThunk())
@@ -41,7 +43,12 @@ export default function Index() {
     }
 
     const goAdd = () => {
-        navigator.navigate('HomeDetails', { update: false })
+        if (!company?.url_tienda) {
+            Alert.alert('Mensaje', 'Debe agregar la información de su tienda para poder compartir el catálogo')
+            navigator.navigate('StoreNavigator')
+        } else {
+            navigator.navigate('HomeDetails', { update: false })
+        }
     }
 
     const changeSearch = (query) => {
@@ -68,16 +75,22 @@ export default function Index() {
 
 
     const clickHandlerShare = async () => {
+
         if (planId > 1) {
             if (!company?.url_tienda) {
-                navigator.navigate('Store');
+                navigator.navigate('StoreNavigator')
                 Alert.alert('Mensaje', 'Debe agregar la información de su tienda para poder compartir el catálogo')
             } else {
-                navigator.navigate('Share')
+                if (!productsStore.lenght) {
+                    Alert.alert('Mensaje', 'Para poder compartir, usted debe agregar productos')
+                } else {
+                    navigator.navigate('ShareNavigator')
+                }
             }
         } else {
-            Alert.alert('Mensaje', 'Debe activar el plan premium para compartir su Catálogo')
+            Alert.alert('Mensaje', 'Debe activar un plan premium para compartir su Catálogo')
         }
+
     }
 
     return (

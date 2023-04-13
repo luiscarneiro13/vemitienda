@@ -30,7 +30,7 @@ export default function Index() {
     const themes = useSelector(state => state.themes?.themes)
     const navigator = useNavigation()
     const theme = useTheme()
-    const [themeLocal, setThemeLocal] = useState(company.company.theme ? company.company.theme.hexadecimal : '#ffffff')
+    const [themeLocal, setThemeLocal] = useState(company?.company?.theme ? company.company.theme.hexadecimal : '#ffffff')
     
     useEffect(() => {
         if (company?.company?.logo?.thumbnail) {
