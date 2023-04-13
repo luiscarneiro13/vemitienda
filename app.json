@@ -2,7 +2,7 @@
   "expo": {
     "name": "Ve mi Tienda",
     "slug": "ve_mi_tienda",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "orientation": "portrait",
     "icon": "./assets/icon2.png",
     "splash": {
@@ -35,7 +35,7 @@
         "android.permission.ACCESS_MEDIA_LOCATION"
       ],
       "package": "com.vemitienda.online",
-      "versionCode": 11
+      "versionCode": 12
     },
     "plugins": [
       [
