@@ -81,7 +81,7 @@ export default function Index() {
                 navigator.navigate('StoreNavigator')
                 Alert.alert('Mensaje', 'Debe agregar la información de su tienda para poder compartir el catálogo')
             } else {
-                if (!productsStore.lenght) {
+                if (!productsStore.length) {
                     Alert.alert('Mensaje', 'Para poder compartir, usted debe agregar productos')
                 } else {
                     navigator.navigate('ShareNavigator')
