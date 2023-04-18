@@ -34,7 +34,7 @@ export default function Index() {
   const planId = useSelector((state) => state?.token.plan_id) || [];
   const dispatch = useDispatch();
   const [catSelected, setCatSelected] = useState(0);
-  const [shopSelected, setShopSelected] = useState((company.is_shop === 1) ? 2 : 1);
+  const [shopSelected, setShopSelected] = useState(0);
 
   categoriesStore.map((item) => {
     categories.push({ id: item.id, name: item.name });

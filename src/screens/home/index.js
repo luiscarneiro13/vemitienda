@@ -84,7 +84,7 @@ export default function Index() {
                 if (!productsStore.length) {
                     Alert.alert('Mensaje', 'Para poder compartir, usted debe agregar productos')
                 } else {
-                    navigator.navigate('ShareNavigator')
+                    navigator.navigate('Share')
                 }
             }
         } else {
