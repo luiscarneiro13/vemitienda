@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "Ve mi Tienda",
-    "slug": "ve_mi_tienda",
-    "version": "1.1.3",
+    "slug": "ve_mi_tienda_colombia",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon2.png",
     "splash": {
@@ -34,8 +34,8 @@
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.ACCESS_MEDIA_LOCATION"
       ],
-      "package": "com.vemitienda.online",
-      "versionCode": 13
+      "package": "com.vemitienda.online.col",
+      "versionCode": 1
     },
     "plugins": [
       [
