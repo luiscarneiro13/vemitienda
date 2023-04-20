@@ -9,6 +9,7 @@ import SvgComponent from './Svg'
 import { Styles } from '../../constants/Styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { storeRegister } from '../../redux/thunks/registerThunk'
+import { COUNTRY_ID } from '../../constants/Data'
 
 export default function Register() {
 
@@ -25,6 +26,7 @@ export default function Register() {
         validationSchema: Yup.object(validationSchema()),
         onSubmit: (data) => {
             (async () => {
+                data.country_id = COUNTRY_ID
                 try {
                     dispatch(storeRegister(data, navigation))
                 } catch (error) {
@@ -61,7 +63,7 @@ export default function Register() {
                         outlineColor={theme.colors.primary}
                         color={theme.colors.primary}
                         theme={{ colors: { text: theme.colors.primary } }}
-                        style={{ marginBottom: 10, backgroundColor:'#FFF' }}
+                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                     />
                     {formik.errors.name && <Text style={styles.error}>{formik.errors.name}</Text>}
 
@@ -74,7 +76,7 @@ export default function Register() {
                         outlineColor={theme.colors.primary}
                         color={theme.colors.primary}
                         theme={{ colors: { text: theme.colors.primary } }}
-                        style={{ marginBottom: 10, backgroundColor:'#FFF' }}
+                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                     />
                     {formik.errors.email && <Text style={styles.error}>{formik.errors.email}</Text>}
 
@@ -89,7 +91,7 @@ export default function Register() {
                         outlineColor={theme.colors.primary}
                         color={theme.colors.primary}
                         theme={{ colors: { text: theme.colors.primary } }}
-                        style={{ marginBottom: 10, backgroundColor:'#FFF' }}
+                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                     />
                     {formik.errors.password && <Text style={styles.error}>{formik.errors.password}</Text>}
 
@@ -104,7 +106,7 @@ export default function Register() {
                         outlineColor={theme.colors.primary}
                         color={theme.colors.primary}
                         theme={{ colors: { text: theme.colors.primary } }}
-                        style={{ marginBottom: 10, backgroundColor:'#FFF' }}
+                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
                     />
                     {formik.errors.password_confirmation && <Text style={styles.error}>{formik.errors.password_confirmation}</Text>}
 
