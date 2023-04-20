@@ -7,6 +7,7 @@ export const storeRegister = (params, navigator) => {
     return async (dispatch, getState) => {
         dispatch(loadingRegister(true))
         const data = await API.postDB(`register`, params)
+        console.log('data',data.data)
         if (data?.data) {
             const message = data?.data?.message
             Alert.alert('Mensaje', message)
