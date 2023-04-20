@@ -12,6 +12,7 @@ export const storeRegister = (params, navigator) => {
             const message = data?.data?.message
             Alert.alert('Mensaje', message)
             navigator.navigate('Login')
+            dispatch(loadingRegister(false))
         } else {
             dispatch(loadingRegister(false))
         }
