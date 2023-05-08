@@ -10,7 +10,8 @@ export function initialValues(item = null, company) {
         category_id: item?.category_id || 0,
         share: item?.share ?? 1,
         thumbnail: '',
-        available: item?.available ?? 0
+        available: item?.available ?? 0,
+        code: item?.code || ''
     }
     return data
 }

@@ -196,6 +196,15 @@ export default function Index(prop) {
             {formik.errors.name && (
               <Text style={Styles.error}>{formik.errors.name}</Text>
             )}
+            <TextInput
+              mode="outlined"
+              label="Código del producto (opcional)"
+              value={formik.values.code}
+              onChangeText={(text) => formik.setFieldValue("code", text)}
+            />
+            {formik.errors.code && (
+              <Text style={Styles.error}>{formik.errors.code}</Text>
+            )}
             {company.is_shop===1 &&
               <>
                 <TextInput
