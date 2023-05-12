@@ -205,7 +205,7 @@ export default function Index(prop) {
             {formik.errors.code && (
               <Text style={Styles.error}>{formik.errors.code}</Text>
             )}
-            {company.is_shop===1 &&
+            {company.is_shop === 1 &&
               <>
                 <TextInput
                   mode="outlined"
