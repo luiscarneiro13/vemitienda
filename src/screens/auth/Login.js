@@ -127,7 +127,7 @@ export default function Login() {
                 </Card.Actions>
             </Card>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
-                <Text style={{ marginTop: 50, color: theme.colors.primary }}>Venezuela. Versión 1.1.4</Text>
+                <Text style={{ marginTop: 50, color: theme.colors.primary }}>Venezuela. Versión 1.1.5</Text>
             </View>
         </View>
     )
