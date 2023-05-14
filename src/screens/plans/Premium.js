@@ -52,11 +52,11 @@ export default function Index() {
           <Card.Title title="Plan Tienda Online" />
           <Card.Content>
             <Text variant="titleLarge">
-              Después de los 30 días gratuitos, el costo del plan catálogo es de 2$ mensuales y podrás tener
+              Después de los 30 días gratuitos, el costo del plan tienda online es de 2$ mensuales y podrás tener
               todos los productos que sean necesarios y además la aplicación creará
               una tienda para ti, con carrito de compras. Con este plan tendrás acceso a los pedidos 
               y podrás cambiarle el status. También se descuenta la cantidad de productos en cada pedido 
-              así que tendrás el inventario actualizado
+              así que tendrás el inventario actualizado. Incluye carrito de compras
             </Text>
           </Card.Content>
         </Card>
