@@ -3,7 +3,7 @@ import React, { useRef } from 'react'
 import { List, useTheme } from 'react-native-paper'
 import { DIGITALOCEAN } from '../constants/Data'
 import { useSelector } from 'react-redux'
-import { Card } from 'react-native-elements'
+import { Avatar, Card, ListItem } from 'react-native-elements'
 
 export default function CardCustom({ onClick, share }) {
 
@@ -11,6 +11,7 @@ export default function CardCustom({ onClick, share }) {
     const theme = useTheme()
     const products = useSelector(state => state?.products.products) || []
     const productsFilters = useSelector(state => state?.products.productsFilters) || []
+    const company = useSelector(state => state.company.company) || []
 
     const RenderItem = ({ item }) => {
         const index = products.findIndex(value => value.id === item.id)
@@ -42,26 +43,56 @@ export default function CardCustom({ onClick, share }) {
             }
         } else {
             if (products[index]) {
+
+                const name = products[index].name
+                const available = products[index].available
+                const category = products[index].category?.name
+                let code = ''
+
+                let color = '#FFFFFF'
+                let availableText = ''
+                let url = ''
+
+                if (products[index].code) {
+                    code = `#${products[index].code} - `
+                }
+
+                if (company.is_shop) {
+                    if (available > 0) {
+                        if (available === 1) {
+                            availableText = `${available} disponible`
+                        } else {
+                            availableText = `${available} disponibles`
+                        }
+                    } else {
+                        availableText = `Agotado`
+                        color = '#FFF4F2'
+                    }
+                }
+
+                if (products[index]?.image) {
+                    if (products[index]?.image[0]?.thumbnail?.includes('file')) {
+                        url = products[index]?.image[0]?.thumbnail
+                    } else {
+                        url = DIGITALOCEAN + products[index]?.image[0]?.thumbnail
+                    }
+                }
+
                 return (
                     <List.Item
-                        title={products[index].name}
-                        description={products[index].category?.name}
-                        titleStyle={{ color: theme.colors.primary, fontWeight:'bold' }}
+                        title={`${code}${name}`}
+                        titleNumberOfLines={2}
+                        description={`${category}\n${availableText}`}
+                        titleStyle={{ color: theme.colors.primary, fontWeight: 'bold' }}
                         descriptionStyle={{ color: theme.colors.primary }}
                         left={props =>
                             products[index]?.image ?
-                                <>
-                                    {products[index]?.image[0]?.thumbnail?.includes('file') ?
-                                        <Image mode='cover' source={{ uri: products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
-                                        :
-                                        <Image mode='cover' source={{ uri: DIGITALOCEAN + products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
-                                    }
-                                </>
+                                <Image mode='cover' source={{ uri: url }} style={{ width: size, height: size, zIndex: 3 }} />
                                 :
                                 <Text></Text>
                         }
-                        onPress={() => onClick(products[index])}
-                        style={{ backgroundColor: '#FFF', marginTop: 5 }}
+
+                        style={{ backgroundColor: color, marginTop: 5 }}
                     />
                 )
             }

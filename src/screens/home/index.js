@@ -58,7 +58,7 @@ export default function Index() {
         if (query.length) {
 
             const filtrado = productsStore.filter(item => {
-                if (item?.name?.includes(query) || item?.category?.name?.includes(query) || item?.description?.includes(query)) {
+                if (item?.name?.includes(query) || item?.category?.name?.includes(query) || item?.description?.includes(query) || item?.code?.includes(query)) {
                     return item
                 }
             })
