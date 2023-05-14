@@ -15,7 +15,7 @@ export default function CardCustom({ onClick, share }) {
 
     const RenderItem = ({ item }) => {
         const index = products.findIndex(value => value.id === item.id)
-        const size = 80
+        const size = 90
         if (share) {
             if (products[index]?.share === 1) {
                 return (
@@ -47,15 +47,11 @@ export default function CardCustom({ onClick, share }) {
                 const name = products[index].name
                 const available = products[index].available
                 const category = products[index].category?.name
-                let code = ''
+                let description=''
 
                 let color = '#FFFFFF'
                 let availableText = ''
                 let url = ''
-
-                if (products[index].code) {
-                    code = `#${products[index].code} - `
-                }
 
                 if (company.is_shop) {
                     if (available > 0) {
@@ -78,11 +74,18 @@ export default function CardCustom({ onClick, share }) {
                     }
                 }
 
+                if (products[index].code) {
+                    description = `#${products[index].code}\n${category}\n${availableText}`
+                }else{
+                    description = `${category}\n${availableText}`
+                }
+
                 return (
                     <List.Item
-                        title={`${code}${name}`}
+                        title={`${name}`}
                         titleNumberOfLines={2}
-                        description={`${category}\n${availableText}`}
+                        description={`${description}`}
+                        descriptionNumberOfLines={4}
                         titleStyle={{ color: theme.colors.primary, fontWeight: 'bold' }}
                         descriptionStyle={{ color: theme.colors.primary }}
                         left={props =>
