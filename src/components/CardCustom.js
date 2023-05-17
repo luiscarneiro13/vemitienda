@@ -47,7 +47,7 @@ export default function CardCustom({ onClick, share }) {
                 const name = products[index].name
                 const available = products[index].available
                 const category = products[index].category?.name
-                let description=''
+                let description = ''
 
                 let color = '#FFFFFF'
                 let availableText = ''
@@ -76,7 +76,7 @@ export default function CardCustom({ onClick, share }) {
 
                 if (products[index].code) {
                     description = `#${products[index].code}\n${category}\n${availableText}`
-                }else{
+                } else {
                     description = `${category}\n${availableText}`
                 }
 
@@ -94,7 +94,7 @@ export default function CardCustom({ onClick, share }) {
                                 :
                                 <Text></Text>
                         }
-
+                        onPress={() => onClick(products[index])}
                         style={{ backgroundColor: color, marginTop: 5 }}
                     />
                 )
