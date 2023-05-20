@@ -18,7 +18,7 @@ export const Styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: 'bold',
-        paddingTop:3
+        paddingTop: 3
     },
     titleBtn: {
         flex: 1,
@@ -36,11 +36,14 @@ export const Styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    styleView:{},
+    styleView: {},
     buttonPlus: {
         borderRadius: 10,
         height: 40,
         borderColor: '#053e66',
+    },
+    buttonGoogle: {
+        backgroundColor: '#DD4B39',
     },
     buttonDelete: {
         borderRadius: 10,
