@@ -43,6 +43,7 @@ export default function Index() {
     }
 
     const goAdd = () => {
+        console.log('url_tienda',company?.url_tienda)
         if (!company?.url_tienda) {
             Alert.alert('Mensaje', 'Debe agregar la información de su tienda para poder compartir el catálogo')
             navigator.navigate('StoreNavigator')
@@ -77,7 +78,7 @@ export default function Index() {
     const clickHandlerShare = async () => {
 
         if (planId > 1) {
-            if (!company?.url_tienda) {
+            if (!company?.name) {
                 navigator.navigate('StoreNavigator')
                 Alert.alert('Mensaje', 'Debe agregar la información de su tienda para poder compartir el catálogo')
             } else {
