@@ -199,7 +199,7 @@ export default function Login() {
                 </Card.Content>
             </Card>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
-                <Text style={{ color: theme.colors.primary }}>Venezuela. Versión 1.1.8</Text>
+                <Text style={{ color: theme.colors.primary }}>Venezuela. Versión 1.2.0</Text>
             </View>
         </View>
     )
