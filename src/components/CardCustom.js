@@ -45,6 +45,7 @@ export default function CardCustom({ onClick, share }) {
             if (products[index]) {
 
                 const name = products[index].name
+                const price = products[index].price
                 const available = products[index].available
                 const category = products[index].category?.name
                 let description = ''
@@ -53,18 +54,19 @@ export default function CardCustom({ onClick, share }) {
                 let availableText = ''
                 let url = ''
 
-                if (company.is_shop) {
-                    if (available > 0) {
-                        if (available === 1) {
-                            availableText = `${available} disponible`
-                        } else {
-                            availableText = `${available} disponibles`
-                        }
+                // if (company.is_shop) {
+                if (available > 0) {
+                    if (available === 1) {
+                        availableText = `${available} disponible`
                     } else {
-                        availableText = `Agotado`
-                        color = '#FFF4F2'
+                        availableText = `${available} disponibles`
                     }
                 }
+                // else {
+                //     availableText = `Agotado`
+                //     color = '#FFF4F2'
+                // }
+                // }
 
                 if (products[index]?.image) {
                     if (products[index]?.image[0]?.thumbnail?.includes('file')) {
@@ -81,23 +83,38 @@ export default function CardCustom({ onClick, share }) {
                 }
 
                 return (
-                    <List.Item
-                        title={`${name}`}
-                        titleNumberOfLines={2}
-                        description={`${description}`}
-                        descriptionNumberOfLines={4}
-                        titleStyle={{ color: theme.colors.primary, fontWeight: 'bold' }}
-                        descriptionStyle={{ color: theme.colors.primary }}
-                        left={props =>
-                            products[index]?.image ?
-                                <Image mode='cover' source={{ uri: url }} style={{ width: size, height: size, zIndex: 3 }} />
-                                :
-                                <Text></Text>
-                        }
-                        onPress={() => onClick(products[index])}
-                        style={{ backgroundColor: color, marginTop: 5 }}
-                    />
+                    <TouchableOpacity onPress={() => onClick(products[index])}>
+                        <Card>
+                            <Card.Image
+                                style={{ padding: 0, width: 100, height: 100 }}
+                                source={{ uri: url }}
+                            />
+                            <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 10 }}>{name}</Text>
+                            {(price && price > 0) &&
+                                <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 12 }}>${price}</Text>
+                            }
+                        </Card>
+                    </TouchableOpacity>
                 )
+
+                // return (
+                //     <List.Item
+                //         title={`${name}`}
+                //         titleNumberOfLines={2}
+                //         description={`${description}`}
+                //         descriptionNumberOfLines={4}
+                //         titleStyle={{ color: theme.colors.primary, fontWeight: 'bold' }}
+                //         descriptionStyle={{ color: theme.colors.primary }}
+                //         left={props =>
+                //             products[index]?.image ?
+                //                 <Image mode='cover' source={{ uri: url }} style={{ width: size, height: size, zIndex: 3 }} />
+                //                 :
+                //                 <Text></Text>
+                //         }
+                //         onPress={() => onClick(products[index])}
+                //         style={{ backgroundColor: color, marginTop: 5 }}
+                //     />
+                // )
             }
         }
     }
@@ -131,6 +148,7 @@ export default function CardCustom({ onClick, share }) {
                             data={productsFilters}
                             renderItem={(item) => RenderItem(item)}
                             keyExtractor={item => item.id || inputEl}
+                            numColumns={2}
                         />
                     }
                 </>

@@ -18,7 +18,7 @@ export default function ButtonSocial({ provider, onClick }) {
                     icon={{ name: "google", type: "font-awesome" }}
                     containerStyle={Styles.buttonGoogle}
                 />
-                <Text>Google</Text>
+                <Text>Ingresar</Text>
             </TouchableOpacity>
         )
     }

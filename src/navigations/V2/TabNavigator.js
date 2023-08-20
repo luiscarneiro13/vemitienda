@@ -73,6 +73,39 @@ export default function TabNavigator() {
           }}
         />
 
+        {planId === 3
+          &&
+          <Tab.Screen
+            name="OrderNavigator"
+            component={NavigatorOrders}
+            options={{
+              tabBarLabel: "",
+              tabBarIcon: ({ color, size }) => (
+                <Header
+                  textColor={textColorGlobal}
+                  icon={"order-bool-descending-variant"}
+                  title="Pedidos"
+                />
+              ),
+            }}
+          />
+        }
+
+        <Tab.Screen
+          name="ShareNavigator"
+          component={NavigatorPremium}
+          options={{
+            tabBarLabel: "",
+            tabBarIcon: ({ color, size }) => (
+              <Header
+                textColor={textColorGlobal}
+                icon={"information-outline"}
+                title="Planes"
+              />
+            ),
+          }}
+        />
+
         <Tab.Screen
           name="StoreNavigator"
           component={NavigatorStore}
