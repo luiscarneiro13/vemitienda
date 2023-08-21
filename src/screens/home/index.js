@@ -96,7 +96,6 @@ export default function Index() {
     return (
         <View style={{ backgroundColor: "#FFF", flex: 1 }}>
             <Header />
-
             <View style={Styles.container}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Search query={query} onChange={(item) => changeSearch(item)} />

@@ -4,7 +4,7 @@ export const companySlice = createSlice({
     name: 'company',
     initialState: {
         company: {},
-        isLoading: true
+        isLoading: false
     },
     reducers: {
         loadingCompany(state, action) {

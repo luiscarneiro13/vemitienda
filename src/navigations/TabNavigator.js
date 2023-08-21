@@ -16,7 +16,6 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
   const theme = useTheme();
-  const planId = useSelector((state) => state?.token.plan_id) || [];
   const textColorGlobal = theme.colors.primary;
 
   const Header = ({ icon, title, textColor }) => {

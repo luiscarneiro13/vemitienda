@@ -59,10 +59,10 @@ export default function Index() {
             quality: 1,
         });
 
-        if (!result.cancelled) {
-
+        if (!result.canceled) {
+            const uri=result.assets[0].uri
             const imgReducida = await manipulateAsync(
-                result.uri,
+                uri,
                 [{ resize: { width: 700, height: 700 } }],
                 {
                     compress: 1,
@@ -85,10 +85,10 @@ export default function Index() {
             quality: 1,
         });
 
-        if (!result2.cancelled) {
-
+        if (!result2.canceled) {
+            const uri=result2.assets[0].uri
             const imgReducida2 = await manipulateAsync(
-                result2.uri,
+                uri,
                 [{ resize: { width: 700, height: 700 } }],
                 {
                     compress: 1,

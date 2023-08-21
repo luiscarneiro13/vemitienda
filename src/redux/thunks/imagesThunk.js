@@ -73,7 +73,7 @@ export const storeLogoThunk = (params) => {
                     "Content-Type": "multipart/form-data",
                 },
             }).then((resp) => {
-                // console.log("Guardó el logo")
+                // console.log("Guardó el logo", resp)
             })
 
         } catch (error) {

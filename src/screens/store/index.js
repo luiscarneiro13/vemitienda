@@ -7,7 +7,7 @@ import Header from '../../components/Header'
 import HeaderGrid from '../../components/HeaderGrid'
 import SparatorFooter from '../../components/SparatorFooter'
 import { Styles } from '../../constants/Styles'
-import { deleteToken, loadingCompany } from '../../redux/slices'
+import { addOnboarding, deleteToken, loadingCompany } from '../../redux/slices'
 import { storeCompanyThunk } from '../../redux/thunks'
 import * as Func from './Functions'
 import * as Yup from 'yup'
@@ -44,6 +44,7 @@ export default function Index() {
 
     const logout = async () => {
         dispatch(deleteToken())
+        dispatch(addOnboarding(0))
     }
 
     const formik = useFormik({
@@ -67,11 +68,11 @@ export default function Index() {
     const pickImage = async () => {
         let result = await ImagePicker.launchCameraAsync({ allowsEditing: true, aspect: [4, 4], quality: 1 });
 
-        if (!result.cancelled) {
+        if (!result.canceled) {
             dispatch(loadingCompany(true))
-
+            const uri=result.assets[0].uri
             const imgReducida = await manipulateAsync(
-                result.uri,
+                uri,
                 [{ resize: { width: 700, height: 700 } }],
                 { compress: 1, format: SaveFormat.PNG, base64: true }
             )
@@ -80,7 +81,7 @@ export default function Index() {
             formik.setFieldValue('image', { uri: imgReducida.uri, name: 'imageNombre', type: 'image/png' })
 
             const thumbnail = await manipulateAsync(
-                result.uri,
+                uri,
                 [{ resize: { width: 250, height: 250 } }],
                 { compress: 1, format: SaveFormat.PNG, base64: true }
             )
@@ -96,11 +97,11 @@ export default function Index() {
     const pickImageLibrary = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({ allowsEditing: true, aspect: [4, 4], quality: 1 })
 
-        if (!result.cancelled) {
+        if (!result.canceled) {
             dispatch(loadingCompany(true))
-
+            const uri=result.assets[0].uri
             const imgReducida = await manipulateAsync(
-                result.uri,
+                uri,
                 [{ resize: { width: 700, height: 700 } }],
                 { compress: 1, format: SaveFormat.PNG, base64: true }
             )
@@ -108,7 +109,7 @@ export default function Index() {
             formik.setFieldValue('image', { uri: imgReducida.uri, name: 'imageNombre', type: 'image/png' })
 
             const thumbnail = await manipulateAsync(
-                result.uri,
+                uri,
                 [{ resize: { width: 250, height: 250 } }],
                 { format: SaveFormat.PNG, base64: true }
             )
@@ -221,7 +222,6 @@ export default function Index() {
                             {formik.errors.background_color_catalog && <Text style={Styles.error}>{formik.errors.background_color_catalog}</Text>} */}
 
                             <View style={{ marginBottom: 20 }}>
-                                {/* <Text>{JSON.stringify(foto)}</Text> */}
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
                                     {foto ?
                                         <Image mode='cover' source={{ uri: foto }} style={{ width: 120, height: 120 }} />

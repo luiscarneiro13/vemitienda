@@ -98,11 +98,11 @@ export default function Index(prop) {
       quality: 1,
     });
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       dispatch(loadingProducts(true));
-
+      const uri=result.assets[0].uri
       const imgReducida = await manipulateAsync(
-        result.uri,
+        uri,
         [{ resize: { width: 700, height: 700 } }],
         { compress: 1, format: SaveFormat.PNG }
       );
@@ -115,7 +115,7 @@ export default function Index(prop) {
       });
 
       const thumbnail = await manipulateAsync(
-        result.uri,
+        uri,
         [{ resize: { width: 250, height: 250 } }],
         { compress: 1, format: SaveFormat.PNG }
       );
@@ -141,11 +141,11 @@ export default function Index(prop) {
       quality: 1,
     });
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       dispatch(loadingProducts(true));
-
+      const uri=result.assets[0].uri
       const imgReducida = await manipulateAsync(
-        result.uri,
+        uri,
         [{ resize: { width: 700, height: 700 } }],
         { compress: 1, format: SaveFormat.PNG }
       );
@@ -157,7 +157,7 @@ export default function Index(prop) {
       });
 
       const thumbnail = await manipulateAsync(
-        result.uri,
+        uri,
         [{ resize: { width: 250, height: 250 } }],
         { compress: 1, format: SaveFormat.PNG }
       );

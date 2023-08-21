@@ -89,7 +89,9 @@ export default function Login() {
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <SvgComponent />
             <View>
-                <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -310 }} />
+            {/* <Image
+                    source={require('../../assets/init.jpg')} style={{ width: 400, height: 300, marginTop: -310 }}
+                /> */}
             </View>
             <Card style={{ width: '90%', marginTop: 20, borderRadius: 10 }}>
                 <Card.Content>
@@ -103,6 +105,7 @@ export default function Login() {
                 </Card.Content>
             </Card>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
+                <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -370 }} />
                 <Text style={{ color: theme.colors.primary }}>Venezuela. Versión 1.3.0</Text>
             </View>
         </View>

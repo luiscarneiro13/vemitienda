@@ -16,6 +16,7 @@ export default function CardCustom({ onClick, share }) {
     const RenderItem = ({ item }) => {
         const index = products.findIndex(value => value.id === item.id)
         const size = 90
+        const luis = 'lkjaslkdj alksdjlkajsdlkj aslkdjalksjdlkajsd'
         if (share) {
             if (products[index]?.share === 1) {
                 return (
@@ -83,18 +84,18 @@ export default function CardCustom({ onClick, share }) {
                 }
 
                 return (
-                    <TouchableOpacity onPress={() => onClick(products[index])}>
-                        <Card>
+                    <Card width="42%">
+                        <TouchableOpacity onPress={() => onClick(products[index])}>
                             <Card.Image
-                                style={{ padding: 0, width: 100, height: 100 }}
-                                source={{ uri: url }}
+                                style={{ padding: 0, width: '100%', height: 100 }}
+                                source={{ uri: DIGITALOCEAN + item.image[0].thumbnail }}
                             />
                             <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 10 }}>{name}</Text>
-                            {(price && price > 0) &&
+                            {price &&
                                 <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 12 }}>${price}</Text>
                             }
-                        </Card>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                    </Card>
                 )
 
                 // return (
@@ -135,23 +136,29 @@ export default function CardCustom({ onClick, share }) {
     return (
         <>
             {productsFilters.length ?
-                <>
-                    {share ?
-                        <FlatList
-                            data={productsFilters}
-                            renderItem={(item) => RenderItem2Columns(item)}
-                            keyExtractor={item => item.id || inputEl}
-                            numColumns={2}
-                        />
-                        :
-                        <FlatList
-                            data={productsFilters}
-                            renderItem={(item) => RenderItem(item)}
-                            keyExtractor={item => item.id || inputEl}
-                            numColumns={2}
-                        />
-                    }
-                </>
+                // <>
+                //     {share ?
+                //         <FlatList
+                //             data={productsFilters}
+                //             renderItem={(item) => RenderItem2Columns(item)}
+                //             keyExtractor={item => item.id || inputEl}
+                //             numColumns={2}
+                //         />
+                //         :
+                //         <FlatList
+                //             data={productsFilters}
+                //             renderItem={(item) => RenderItem(item)}
+                //             keyExtractor={item => item.id || inputEl}
+                //             numColumns={2}
+                //         />
+                //     }
+                // </>
+                <FlatList
+                    data={productsFilters}
+                    renderItem={(item) => RenderItem(item)}
+                    keyExtractor={item => item.id || inputEl}
+                    numColumns={2}
+                />
                 :
                 <View style={{ justifyContents: 'center', alignItems: 'center', marginTop: 'auto', marginBottom: 'auto' }}>
                     <Text>No hay datos disponibles</Text>

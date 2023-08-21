@@ -8,12 +8,14 @@ import store from './src/redux/store'
 import axios from 'axios'
 import Loading from './src/components/Loading'
 import AuthNavigator from './src/navigations/AuthNavigator'
+import OnboardingNavigator from './src/navigations/OnboardingNavigator'
 import { URL_PRODUCTION } from './src/constants/Data'
 import { Alert } from 'react-native'
 
 const RootNavigation = () => {
 
   const token = useSelector(state => state?.token.token) || null
+  const onboarding = useSelector(state => state?.userInfo.onboarding)
 
   axios.defaults.baseURL = URL_PRODUCTION
 
@@ -48,12 +50,28 @@ const RootNavigation = () => {
     // throw error
   })
 
+  let componentToRender = null
+
+  if (!token && !onboarding) {
+    componentToRender = <AuthNavigator />
+  }else if(token && onboarding){
+    componentToRender = <TabNavigator />
+  }else{
+    componentToRender = <OnboardingNavigator />
+  }
+
+  // if (token && onboarding) {
+  //   componentToRender = <TabNavigator />
+  // } else if (token && !onboarding) {
+  //   componentToRender = <OnboardingNavigator />
+  // } else {
+  //   componentToRender = <AuthNavigator />
+  // }
+
   return (
     <PaperProvider theme={THEME}>
       <NavigationContainer>
-        {
-          token ? <TabNavigator /> : <AuthNavigator />
-        }
+        {componentToRender}
       </NavigationContainer>
     </PaperProvider>
   )

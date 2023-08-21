@@ -1,7 +1,8 @@
 import { Alert } from 'react-native'
 import * as API from '../../api'
-import { loadingCompany, addCompany } from '../slices'
+import { loadingCompany, addCompany, addOnboarding } from '../slices'
 import { storeLogoThunk } from './imagesThunk'
+import { userInfoThunk } from './userInfoThunk'
 
 export const getCompanyThunk = (page = 0) => {
     return async (dispatch, getState) => {
@@ -47,19 +48,56 @@ export const storeCompanyThunk = (params, navigator) => {
             const datos = resp?.data
 
             if (datos) {
-                
-                if(params.imagenCargada){
-                    dispatch(storeLogoThunk(params)).then(()=>{
+
+                if (params.imagenCargada) {
+                    dispatch(storeLogoThunk(params)).then(() => {
                         dispatch(getCompanyThunk()).then(() => {
                             dispatch(loadingCompany(false))
                             navigator.navigate('Home')
-                            Alert.alert('Mensaje datos de la Tienda', message)
+                            Alert.alert('Mensaje', message)
                         })
                     })
-                }else{
+                } else {
                     dispatch(getCompanyThunk()).then(() => {
                         dispatch(loadingCompany(false))
                         navigator.navigate('Home')
+                        Alert.alert('Mensaje datos de la Tienda', message)
+                    })
+                }
+
+            } else {
+                throw new Error();
+            }
+        } catch (error) {
+            // console.log("Entró el error al guardar datos de la tienda")
+            dispatch(loadingCompany(false))
+        }
+    }
+}
+
+export const storeCompanyOnboardingThunk = (params, navigator) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch(loadingCompany(true))
+            params.onboarding = true
+            const data = await API.postDB(`company-user`, params)
+            const resp = await data?.data
+            const message = await resp.message
+            const datos = resp?.data
+
+            if (datos) {
+                if (params.imagenCargada) {
+                    dispatch(storeLogoThunk(params)).then(() => {
+                        dispatch(getCompanyThunk()).then(() => {
+                            userInfoThunk()
+                            dispatch(addOnboarding(1))
+                            dispatch(loadingCompany(false))
+                            Alert.alert('Bienvenido')
+                        })
+                    })
+                } else {
+                    dispatch(getCompanyThunk()).then(() => {
+                        dispatch(loadingCompany(false))
                         Alert.alert('Mensaje datos de la Tienda', message)
                     })
                 }
