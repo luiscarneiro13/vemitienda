@@ -37,7 +37,7 @@
         "com.google.android.gms.permission.AD_ID"
       ],
       "package": "com.vemitienda.online",
-      "versionCode": 22
+      "versionCode": 23
     },
     "plugins": [
       [
