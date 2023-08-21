@@ -83,7 +83,6 @@ export default function Screen2(prop) {
               {formik.errors.phone && <Text style={Styles.error}> {formik.errors.phone}</Text>}
 
             </View>
-            <Text>LUIS: {company.company.isLoading}</Text>
           </View>
 
         </View>
