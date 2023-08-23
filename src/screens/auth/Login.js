@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { View, Image, StyleSheet, Text, TouchableOpacity, Button as BTN } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Card, useTheme } from 'react-native-paper'
+import { ActivityIndicator, Card, useTheme } from 'react-native-paper'
 import SvgComponent from './Svg'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import {  loginExternal } from '../../redux/thunks'
+import { loginExternal } from '../../redux/thunks'
 import { deleteToken } from '../../redux/slices'
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
@@ -20,7 +20,7 @@ export default function Login() {
     const theme = useTheme()
     const navigation = useNavigation()
     const dispatch = useDispatch()
-    const startLoadingToken = useSelector(state => state.token.isLoading)
+    const isLoading = useSelector(state => state.token.isLoading)
 
     // INICIO DE SESIÓN CON GOOGLE
 
@@ -86,28 +86,36 @@ export default function Login() {
     }, [])
 
     return (
+
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <SvgComponent />
             <View>
-            {/* <Image
+                {/* <Image
                     source={require('../../assets/init.jpg')} style={{ width: 400, height: 300, marginTop: -310 }}
                 /> */}
             </View>
-            <Card style={{ width: '90%', marginTop: 20, borderRadius: 10 }}>
-                <Card.Content>
+            {!isLoading &&
+                <Card style={{ width: '90%', marginTop: 20, borderRadius: 10 }}>
+                    <Card.Content>
 
-                    <View style={{ marginTop: 0, flexDirection: 'row', justifyContent: 'space-around' }}>
+                        <View style={{ marginTop: 0, flexDirection: 'row', justifyContent: 'space-around' }}>
 
-                        <ButtonSocial provider="google" onClick={() => promptAsync()} />
+                            <ButtonSocial provider="google" onClick={() => promptAsync()} />
 
-                    </View>
+                        </View>
+                    </Card.Content>
+                </Card>
+            }
 
-                </Card.Content>
-            </Card>
+            {isLoading &&
+                <ActivityIndicator />
+            }
+
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
-                <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -370 }} />
-                <Text style={{ color: theme.colors.primary }}>Venezuela. Versión 1.3.0</Text>
+                <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -400 }} />
+                <Text style={{ color: theme.colors.primary, marginTop: -16 }}>Venezuela. Versión 1.3.2</Text>
             </View>
+
         </View>
     )
 }

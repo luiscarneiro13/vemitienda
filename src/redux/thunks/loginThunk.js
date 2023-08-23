@@ -1,7 +1,7 @@
 import { Alert } from 'react-native'
 import * as API from '../../api'
 import { addPlanId, addToken, loadingToken } from '../slices'
-import { addUserInfo } from '../slices/userInfoSlice'
+import { addEntrar, addUserInfo } from '../slices/userInfoSlice'
 
 const PROVIDER_SOCIAL = {
     google: 'social/login/google/callback',
@@ -40,19 +40,17 @@ export const loginExternal = (params) => {
 
             if (datos?.data?.token) {
 
-                const planId = datos?.data?.plan_user?.plan_id
-                
-                if (planId) {
-                    dispatch(addPlanId(planId))
-                }
-
-                dispatch(addToken(datos?.data?.token))
+                dispatch(addToken({
+                    token: datos?.data?.token,
+                    onboarding: datos?.data?.company.onboarding
+                }))
 
                 const data2 = await API.postDB(`user-information`, params)
                 const datos2 = await data2?.data?.data
 
                 dispatch(addUserInfo(datos2))
 
+                dispatch(addEntrar(true))
             }
 
             dispatch(loadingToken(false))

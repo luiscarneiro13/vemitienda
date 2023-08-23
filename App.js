@@ -14,12 +14,12 @@ import { Alert } from 'react-native'
 
 const RootNavigation = () => {
 
-  const token = useSelector(state => state?.token.token) || null
-  const onboarding = useSelector(state => state?.userInfo.onboarding)
+  const token = useSelector(state => state?.token) || null
+  const entrar = useSelector(state => state?.userInfo.entrar)
 
   axios.defaults.baseURL = URL_PRODUCTION
 
-  axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : ''
+  axios.defaults.headers.common['Authorization'] = token.token ? `Bearer ${token.token}` : ''
 
   /* Tuve que usar el interceptor, porque el token tarda para montarse en el estado de redux */
   axios.interceptors.request.use(
@@ -38,7 +38,7 @@ const RootNavigation = () => {
     }
   }, function (error) {
     /* Si hay un código diferente a 2xx, entonces busco a ver si es 403, de ser así lo envío al login */
-    if (error?.response?.data?.status === 403 && token) {
+    if (error?.response?.data?.status === 403 && token.token) {
       // dispatch(logoutUserInformation())
       // dispatch(deleteCargaInicial())
       // dispatch(logoutUsuario())
@@ -52,12 +52,16 @@ const RootNavigation = () => {
 
   let componentToRender = null
 
-  if (!token && !onboarding) {
-    componentToRender = <AuthNavigator />
-  }else if(token && onboarding){
-    componentToRender = <TabNavigator />
+  if(token.token){
+    if(entrar){
+      if(token.onboarding){
+        componentToRender = <TabNavigator />
+      }else{
+        componentToRender = <OnboardingNavigator />
+      }
+    }
   }else{
-    componentToRender = <OnboardingNavigator />
+    componentToRender = <AuthNavigator />
   }
 
   // if (token && onboarding) {

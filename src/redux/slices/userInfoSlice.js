@@ -5,14 +5,14 @@ export const userInfoSlice = createSlice({
     initialState: {
         userInfo: {},
         isLoading: false,
-        onboarding: 0
+        entrar: false,
     },
     reducers: {
         addUserInfo(state, action) {
             state.userInfo = action.payload
         },
-        addOnboarding(state, action) {
-            state.onboarding = action.payload
+        addEntrar(state, action) {
+            state.entrar = action.payload
         },
         loadingUserInfo(state, action) {
             state.isLoading = action.payload
@@ -23,5 +23,5 @@ export const userInfoSlice = createSlice({
 export const {
     addUserInfo,
     loadingUserInfo,
-    addOnboarding,
+    addEntrar,
 } = userInfoSlice.actions

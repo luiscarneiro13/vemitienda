@@ -22,7 +22,6 @@ export default function Index() {
     const categories = useSelector(state => state.categories.categories) || []
     const productsStore = useSelector(state => state?.products.products) || []
     const isLoading = useSelector(state => state?.products.isLoading)
-    const planId = useSelector(state => state?.token.plan_id) || []
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -76,19 +75,15 @@ export default function Index() {
 
     const clickHandlerShare = async () => {
 
-        if (planId > 1) {
-            if (!company?.name) {
-                navigator.navigate('StoreNavigator')
-                Alert.alert('Mensaje', 'Debe agregar la información de su tienda para poder compartir el catálogo')
-            } else {
-                if (!productsStore.length) {
-                    Alert.alert('Mensaje', 'Para poder compartir, usted debe agregar productos')
-                } else {
-                    navigator.navigate('Share')
-                }
-            }
+        if (!company?.name) {
+            navigator.navigate('StoreNavigator')
+            Alert.alert('Mensaje', 'Debe agregar la información de su tienda para poder compartir el catálogo')
         } else {
-            Alert.alert('Mensaje', 'Debe activar un plan premium para compartir su Catálogo')
+            if (!productsStore.length) {
+                Alert.alert('Mensaje', 'Para poder compartir, usted debe agregar productos')
+            } else {
+                navigator.navigate('Share')
+            }
         }
 
     }
