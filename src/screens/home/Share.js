@@ -31,7 +31,6 @@ export default function Index() {
   const categoriesStore = useSelector((state) => state.categories.categories) || [];
   let categories = [{ id: 0, name: "Todos los productos" }];
   const productsStore = useSelector((state) => state?.products.products) || [];
-  const planId = useSelector((state) => state?.token.plan_id) || [];
   const dispatch = useDispatch();
   const [catSelected, setCatSelected] = useState(0);
   const [shopSelected, setShopSelected] = useState(0);
@@ -88,37 +87,32 @@ export default function Index() {
   };
 
   const clickHandlerShare = async () => {
-    if (planId > 1) {
-      if (!company?.url_tienda) {
-        navigator.navigate("Store")
-        Alert.alert(
-          "Mensaje",
-          "Debe agregar la información de su tienda"
-        );
-      } else {
-        let base = ''
-        switch (shopSelected) {
-          case 0:
-            //Catálogo
-            base = company.url_tienda
-            break;
-          case 1:
-            //Tienda
-            base = URL_BASE + company.slug
-            break;
-        }
 
-        const message = `${base}?cat=${cat}`
-        navigator.navigate("Home");
-        await Share.share({ message });
-
-      }
-    } else {
+    if (!company?.url_tienda) {
+      navigator.navigate("Store")
       Alert.alert(
         "Mensaje",
-        "Debe activar el plan de pago para compartir su Catálogo o Tienda"
+        "Debe agregar la información de su tienda"
       );
+    } else {
+      let base = ''
+      switch (shopSelected) {
+        case 0:
+          //Catálogo
+          base = company.url_tienda
+          break;
+        case 1:
+          //Tienda
+          base = URL_BASE + company.slug
+          break;
+      }
+
+      const message = `${base}?cat=${cat}`
+      navigator.navigate("Home");
+      await Share.share({ message });
+
     }
+
   };
 
   return (

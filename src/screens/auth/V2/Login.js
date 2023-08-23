@@ -9,7 +9,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { getToken, loginExternal } from '../../redux/thunks'
 import { Styles } from '../../constants/Styles'
-import { addPlanId, addUserInfo, deleteToken } from '../../redux/slices'
+import { addUserInfo, deleteToken } from '../../redux/slices'
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import { Avatar } from 'react-native-elements'
