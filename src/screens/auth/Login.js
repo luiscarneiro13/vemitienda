@@ -113,7 +113,7 @@ export default function Login() {
 
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
                 <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -400 }} />
-                <Text style={{ color: theme.colors.primary, marginTop: -16 }}>Venezuela. Versión 1.3.2</Text>
+                <Text style={{ color: theme.colors.primary, marginTop: -16 }}>Venezuela. Versión 1.3.3</Text>
             </View>
 
         </View>
