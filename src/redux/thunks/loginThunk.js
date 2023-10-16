@@ -51,6 +51,8 @@ export const loginExternal = (params) => {
                 dispatch(addUserInfo(datos2))
 
                 dispatch(addEntrar(true))
+            } else if (datos?.data?.status == 400) {
+                alert(datos.data.message)
             }
 
             dispatch(loadingToken(false))
@@ -61,3 +63,16 @@ export const loginExternal = (params) => {
         }
     }
 }
+
+export const version = (params) => {
+    return async (dispatch, getState) => {
+        const url = `version`
+        try {
+            const data = await API.postDB(url, params)
+            const datos = await data?.data
+            console.log(datos.actualizar)
+            return datos.actualizar
+        } catch (error) {
+        }
+    }
+}       

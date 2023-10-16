@@ -42,7 +42,7 @@ export default function Screen1() {
       Func.validationSchema({ imagenCargada, foto })
     ),
     onSubmit: (data) => {
-      const datos = { image: data.image, thumbnail: data.thumbnail, theme_id: data.theme_id }
+      const datos = { image: data.image, thumbnail: data.image, theme_id: data.theme_id }
       navigator.navigate("Screen2", datos)
     },
   });

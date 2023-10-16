@@ -33,11 +33,11 @@ export default function Index() {
     const [themeLocal, setThemeLocal] = useState(company?.company?.theme ? company.company.theme.hexadecimal : '#ffffff')
     
     useEffect(() => {
-        if (company?.company?.logo?.thumbnail) {
-            if (company.company.logo.thumbnail.includes('file:')) {
-                setFoto(company.company.logo.thumbnail)
+        if (company?.company?.logo?.url) {
+            if (company.company.logo.url.includes('file:')) {
+                setFoto(company.company.logo.url)
             } else {
-                setFoto(DIGITALOCEAN + company.company.logo.thumbnail)
+                setFoto(DIGITALOCEAN + company.company.logo.url)
             }
         }
     }, [])

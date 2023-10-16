@@ -5,16 +5,18 @@ import { ActivityIndicator, Card, useTheme } from 'react-native-paper'
 import SvgComponent from './Svg'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginExternal } from '../../redux/thunks'
+import { loginExternal, version } from '../../redux/thunks'
 import { deleteToken } from '../../redux/slices'
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import ButtonSocial from '../../components/ButtonSocial'
+import { VERSION } from '../../constants/Data'
 
 export default function Login() {
 
     WebBrowser.maybeCompleteAuthSession()
 
+    const [actualizar, setActualizar] = useState(false)
     const [sending, setSending] = useState(false)
     const [showPass, setShowPass] = useState(true)
     const theme = useTheme()
@@ -85,6 +87,15 @@ export default function Login() {
         return () => { controller.abort() }
     }, [])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const vers = await dispatch(version({ version: VERSION }))
+            setActualizar(vers)
+        }
+
+        fetchData()
+    }, [])
+
     return (
 
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -100,7 +111,12 @@ export default function Login() {
 
                         <View style={{ marginTop: 0, flexDirection: 'row', justifyContent: 'space-around' }}>
 
-                            <ButtonSocial provider="google" onClick={() => promptAsync()} />
+                            {actualizar ?
+                                <Text>
+                                    Hay una actualización disponible, por favor descárguela
+                                </Text>
+                                :
+                                <ButtonSocial provider="google" onClick={() => promptAsync()} />}
 
                         </View>
                     </Card.Content>
@@ -113,7 +129,7 @@ export default function Login() {
 
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
                 <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -400 }} />
-                <Text style={{ color: theme.colors.primary, marginTop: -16 }}>Venezuela. Versión 1.3.3</Text>
+                <Text style={{ color: theme.colors.primary, marginTop: -16 }}>Venezuela. Versión {VERSION}</Text>
             </View>
 
         </View>

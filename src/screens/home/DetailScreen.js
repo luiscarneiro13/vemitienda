@@ -48,10 +48,10 @@ export default function Index(prop) {
   useEffect(() => {
     if (props) {
       if (!foto && props?.image?.length) {
-        if (props.image[0].thumbnail.includes("file:")) {
-          setFoto(props.image[0].thumbnail);
+        if (props.image[0].url.includes("file:")) {
+          setFoto(props.image[0].url);
         } else {
-          setFoto(DIGITALOCEAN + props.image[0].thumbnail);
+          setFoto(DIGITALOCEAN + props.image[0].url);
         }
       }
     }

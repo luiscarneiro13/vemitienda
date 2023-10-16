@@ -99,15 +99,15 @@ export default function Index() {
       switch (shopSelected) {
         case 0:
           //Catálogo
-          base = company.url_tienda
+          base = company.url_catalogo
           break;
         case 1:
           //Tienda
-          base = URL_BASE + company.slug
+          base = company.url_tienda_new
           break;
       }
 
-      const message = `${base}?cat=${cat}`
+      const message = `${base}?cat=${catSelected}`
       navigator.navigate("Home");
       await Share.share({ message });
 

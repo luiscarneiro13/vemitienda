@@ -19,7 +19,7 @@ export default function Screen2(prop) {
 
   const params = prop.route.params || null;
   const image = params?.image
-  const thumbnail = params?.thumbnail
+  const thumbnail = params?.image
   const theme_id = params?.theme_id
 
   const pagerRef = useRef(null)

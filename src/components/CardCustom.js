@@ -28,10 +28,10 @@ export default function CardCustom({ onClick, share }) {
                         left={props =>
                             products[index]?.image ?
                                 <>
-                                    {products[index]?.image[0].thumbnail.includes('file:') ?
-                                        <Image mode='cover' source={{ uri: products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
+                                    {products[index]?.image[0].url.includes('file:') ?
+                                        <Image mode='cover' source={{ uri: products[index]?.image[0]?.url }} style={{ width: size, height: size, zIndex: 3 }} />
                                         :
-                                        <Image mode='cover' source={{ uri: DIGITALOCEAN + products[index]?.image[0]?.thumbnail }} style={{ width: size, height: size, zIndex: 3 }} />
+                                        <Image mode='cover' source={{ uri: DIGITALOCEAN + products[index]?.image[0]?.url }} style={{ width: size, height: size, zIndex: 3 }} />
                                     }
                                 </>
                                 :
@@ -70,10 +70,10 @@ export default function CardCustom({ onClick, share }) {
                 // }
 
                 if (products[index]?.image) {
-                    if (products[index]?.image[0]?.thumbnail?.includes('file')) {
-                        url = products[index]?.image[0]?.thumbnail
+                    if (products[index]?.image[0]?.url?.includes('file')) {
+                        url = products[index]?.image[0]?.url
                     } else {
-                        url = DIGITALOCEAN + products[index]?.image[0]?.thumbnail
+                        url = DIGITALOCEAN + products[index]?.image[0]?.url
                     }
                 }
 
@@ -88,7 +88,7 @@ export default function CardCustom({ onClick, share }) {
                         <TouchableOpacity onPress={() => onClick(products[index])}>
                             <Card.Image
                                 style={{ padding: 0, width: '100%', height: 100 }}
-                                source={{ uri: DIGITALOCEAN + item.image[0].thumbnail }}
+                                source={{ uri: DIGITALOCEAN + item.image[0].url }}
                             />
                             <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 10 }}>{name}</Text>
                             {price &&
@@ -125,7 +125,7 @@ export default function CardCustom({ onClick, share }) {
             <Card>
                 <Card.Image
                     style={{ padding: 0, width: 100, height: 100 }}
-                    source={{ uri: DIGITALOCEAN + item.image[0].thumbnail }}
+                    source={{ uri: DIGITALOCEAN + item.image[0].url }}
                 />
                 <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 10 }}>{item.name}</Text>
                 <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 12 }}>${item.price}</Text>

@@ -5,7 +5,7 @@ export function initialValues(item = null, company) {
     const data = {
         name: item?.name || '',
         description: '',
-        image: item?.image ? item?.image[0]?.thumbnail : '',
+        image: item?.image ? item?.image[0]?.url : '',
         price: item?.price || 0, // Debe ser entero AJURO
         category_id: item?.category_id || 0,
         share: item?.share ?? 1,

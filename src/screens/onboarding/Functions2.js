@@ -8,7 +8,7 @@ export function initialValues(item = null, image, thumbnail, theme_id) {
         theme_id: theme_id,
         background_color_catalog: '#FFFFFF',
         image: image,
-        thumbnail: thumbnail,
+        thumbnail: image,
         imagenCargada: true,
     }
     return data

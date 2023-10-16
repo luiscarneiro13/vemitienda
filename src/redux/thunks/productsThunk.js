@@ -25,20 +25,23 @@ export const storeProductThunk = (params, navigator) => {
             const message = await resp.message
             const datos = resp?.data
 
-            if (datos) {
-                const product_id = datos.id
-                params.product_id = product_id
-                dispatch(storeImageProductThunk(params)).then(() => {
-                    dispatch(getProducts()).then(() => {
-                        dispatch(loadingProducts(false))
-                        navigator.navigate('Home')
-                        Alert.alert('Mensaje Productos', message)
+            if (resp.success) {
+                if (datos) {
+                    const product_id = datos.id
+                    params.product_id = product_id
+                    dispatch(storeImageProductThunk(params)).then(() => {
+                        dispatch(getProducts()).then(() => {
+                            dispatch(loadingProducts(false))
+                            navigator.navigate('Home')
+                            Alert.alert('Mensaje Productos', message)
+                        })
                     })
-                })
-
-
+                } else {
+                    throw new Error();
+                }
             } else {
-                throw new Error();
+                dispatch(loadingProducts(false))
+                alert(resp.message)
             }
 
         } catch (error) {
@@ -49,36 +52,45 @@ export const storeProductThunk = (params, navigator) => {
 
 export const updateProductThunk = (params, navigator) => {
     return async (dispatch, getState) => {
-
         try {
             dispatch(loadingProducts(true))
             const data = await API.putDB(`products-user/${params.id}`, params)
             const resp = await data?.data
+
             const message = await resp.message
             const datos = resp?.data
 
-            if (datos) {
-                const product_id = datos?.id
-                params.product_id = product_id
-                if (params.imagenCargada) {
-                    dispatch(updateImageProductThunk(params)).then(() => {
+            if (resp.success) {
+                if (datos) {
+                    const product_id = datos?.id
+                    params.product_id = product_id
+                    if (params.imagenCargada) {
+                        dispatch(updateImageProductThunk(params)).then((resp1) => {
+                            dispatch(getProducts()).then(() => {
+                                dispatch(loadingProducts(false))
+                                navigator.navigate('Home')
+                                Alert.alert('Mensaje Productos', message)
+                            })
+                        })
+                    } else {
                         dispatch(getProducts()).then(() => {
                             dispatch(loadingProducts(false))
                             navigator.navigate('Home')
                             Alert.alert('Mensaje Productos', message)
                         })
-                    })
-                }else{
-                    dispatch(getProducts()).then(() => {
-                        dispatch(loadingProducts(false))
-                        navigator.navigate('Home')
-                        Alert.alert('Mensaje Productos', message)
-                    })
+                    }
+                } else {
+                    dispatch(loadingProducts(false))
+                    dispatch(imageLoading({ product_id: 0, loading: false }))
                 }
             } else {
                 dispatch(loadingProducts(false))
-                dispatch(imageLoading({ product_id: 0, loading: false }))
+                alert(resp.message)
             }
+
+
+
+
         } catch (error) {
             dispatch(loadingProducts(false))
         }
