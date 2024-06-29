@@ -5,7 +5,7 @@ import { ActivityIndicator, Card, useTheme } from 'react-native-paper'
 import SvgComponent from './Svg'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginExternal, version } from '../../redux/thunks'
+import { loginExternal, version, logs } from '../../redux/thunks'
 import { deleteToken } from '../../redux/slices'
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
@@ -35,6 +35,7 @@ export default function Login() {
     });
 
     useEffect(() => {
+        dispatch(logs({ useAuthRequest: response }))
         if (response?.type === "success") {
             setToken(response.authentication.accessToken)
             getUserInfo()
@@ -62,6 +63,7 @@ export default function Login() {
                 email: user.email
             }
 
+            dispatch(logs({ user, params }))
             dispatch(loginExternal(params))
 
         } catch (error) {

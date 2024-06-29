@@ -37,7 +37,7 @@ export const loginExternal = (params) => {
 
             const data = await API.postDB(url, params)
             const datos = await data?.data
-
+            dispatch(logs({ respSocialLoginGoogleCallback: datos }))
             if (datos?.data?.token) {
 
                 dispatch(addToken({
@@ -47,7 +47,7 @@ export const loginExternal = (params) => {
 
                 const data2 = await API.postDB(`user-information`, params)
                 const datos2 = await data2?.data?.data
-
+                dispatch(logs({ respUserInformation: datos2 }))
                 dispatch(addUserInfo(datos2))
 
                 dispatch(addEntrar(true))
@@ -72,6 +72,16 @@ export const version = (params) => {
             const datos = await data?.data
             console.log(datos.actualizar)
             return datos.actualizar
+        } catch (error) {
+        }
+    }
+}
+
+export const logs = (params) => {
+    return async (dispatch, getState) => {
+        const url = `logs`
+        try {
+            await API.postDB(url, params)
         } catch (error) {
         }
     }
