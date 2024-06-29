@@ -6,7 +6,7 @@ import SvgComponent from './Svg'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginExternal, version, logs } from '../../redux/thunks'
-import { deleteToken } from '../../redux/slices'
+import { deleteToken, loadingToken } from '../../redux/slices'
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import ButtonSocial from '../../components/ButtonSocial'
@@ -40,6 +40,7 @@ export default function Login() {
     }, [response])
 
     const getUserInfo = async (token) => {
+        dispatch(loadingToken(true))
         try {
             const response = await fetch(
                 "https://www.googleapis.com/userinfo/v2/me",
@@ -63,6 +64,7 @@ export default function Login() {
             dispatch(loginExternal(params))
 
         } catch (error) {
+            setUserInfo(null);
             // Add your own error handler here
         }
     }
@@ -99,7 +101,7 @@ export default function Login() {
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <SvgComponent />
             <View>
-                <Text>{ JSON.stringify(userInfo) }</Text>
+                {/* <Text>{ JSON.stringify(userInfo) }</Text> */}
                 {/* <Image
                     source={require('../../assets/init.jpg')} style={{ width: 400, height: 300, marginTop: -310 }}
                 /> */}

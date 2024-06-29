@@ -30,6 +30,7 @@ export const getToken = (params) => {
 }
 
 export const loginExternal = (params) => {
+    
     return async (dispatch, getState) => {
 
         const url = `${PROVIDER_SOCIAL[params.provider]}`
