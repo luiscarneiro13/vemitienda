@@ -31,13 +31,12 @@ export const getToken = (params) => {
 
 export const loginExternal = (params) => {
     return async (dispatch, getState) => {
-        dispatch(loadingToken(true))
+
         const url = `${PROVIDER_SOCIAL[params.provider]}`
         try {
-
             const data = await API.postDB(url, params)
             const datos = await data?.data
-            dispatch(logs({ respSocialLoginGoogleCallback: datos }))
+            // dispatch(logs({ respSocialLoginGoogleCallback: datos }))
             if (datos?.data?.token) {
 
                 dispatch(addToken({
@@ -47,7 +46,7 @@ export const loginExternal = (params) => {
 
                 const data2 = await API.postDB(`user-information`, params)
                 const datos2 = await data2?.data?.data
-                dispatch(logs({ respUserInformation: datos2 }))
+                // dispatch(logs({ respUserInformation: datos2 }))
                 dispatch(addUserInfo(datos2))
 
                 dispatch(addEntrar(true))
@@ -59,7 +58,7 @@ export const loginExternal = (params) => {
 
         } catch (error) {
             dispatch(loadingToken(false))
-            console.log('error', error)
+            // console.log('error', error)
         }
     }
 }

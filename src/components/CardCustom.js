@@ -16,7 +16,7 @@ export default function CardCustom({ onClick, share }) {
     const RenderItem = ({ item }) => {
         const index = products.findIndex(value => value.id === item.id)
         const size = 90
-        const luis = 'lkjaslkdj alksdjlkajsdlkj aslkdjalksjdlkajsd'
+
         if (share) {
             if (products[index]?.share === 1) {
                 return (
@@ -71,7 +71,7 @@ export default function CardCustom({ onClick, share }) {
 
                 if (products[index]?.image) {
                     if (products[index]?.image[0]?.url?.includes('file')) {
-                        url = products[index]?.image[0]?.url
+                        url = products.image[0]?.url
                     } else {
                         url = DIGITALOCEAN + products[index]?.image[0]?.url
                     }
@@ -88,7 +88,7 @@ export default function CardCustom({ onClick, share }) {
                         <TouchableOpacity onPress={() => onClick(products[index])}>
                             <Card.Image
                                 style={{ padding: 0, width: '100%', height: 100 }}
-                                source={{ uri: DIGITALOCEAN + item.image[0].url }}
+                                source={{ uri: url }}
                             />
                             <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 10 }}>{name}</Text>
                             {price &&

@@ -26,7 +26,6 @@ export default function Login() {
 
     // INICIO DE SESIÓN CON GOOGLE
 
-    const [token, setToken] = useState("");
     const [userInfo, setUserInfo] = useState(null);
 
     const [request, response, promptAsync] = Google.useAuthRequest({
@@ -35,15 +34,12 @@ export default function Login() {
     });
 
     useEffect(() => {
-        dispatch(logs({ useAuthRequest: response }))
         if (response?.type === "success") {
-            setToken(response.authentication.accessToken)
-            getUserInfo()
-
+            getUserInfo(response.authentication.accessToken)
         }
-    }, [response, token])
+    }, [response])
 
-    const getUserInfo = async () => {
+    const getUserInfo = async (token) => {
         try {
             const response = await fetch(
                 "https://www.googleapis.com/userinfo/v2/me",
@@ -63,7 +59,7 @@ export default function Login() {
                 email: user.email
             }
 
-            dispatch(logs({ user, params }))
+            // dispatch(logs({ user, params }))
             dispatch(loginExternal(params))
 
         } catch (error) {
@@ -103,6 +99,7 @@ export default function Login() {
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <SvgComponent />
             <View>
+                <Text>{ JSON.stringify(userInfo) }</Text>
                 {/* <Image
                     source={require('../../assets/init.jpg')} style={{ width: 400, height: 300, marginTop: -310 }}
                 /> */}
