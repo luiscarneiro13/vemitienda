@@ -11,6 +11,7 @@ import AuthNavigator from './src/navigations/AuthNavigator'
 import OnboardingNavigator from './src/navigations/OnboardingNavigator'
 import { URL_PRODUCTION } from './src/constants/Data'
 import { Alert } from 'react-native'
+import * as Updates from 'expo-updates';
 
 const RootNavigation = () => {
 
@@ -52,15 +53,15 @@ const RootNavigation = () => {
 
   let componentToRender = null
 
-  if(token.token){
-    if(entrar){
-      if(token.onboarding){
+  if (token.token) {
+    if (entrar) {
+      if (token.onboarding) {
         componentToRender = <TabNavigator />
-      }else{
+      } else {
         componentToRender = <OnboardingNavigator />
       }
     }
-  }else{
+  } else {
     componentToRender = <AuthNavigator />
   }
 
@@ -81,12 +82,41 @@ const RootNavigation = () => {
   )
 }
 
+const checkForUpdates = async () => {
+
+  try {
+    const update = await Updates.checkForUpdateAsync();
+    if (update.isAvailable) {
+      Alert.alert(
+        'Nueva versión disponible',
+        'Hay una nueva versión disponible en la Play Store. ¿Deseas actualizar ahora?',
+        [
+          { text: 'Cancelar' },
+          {
+            text: 'Actualizar', onPress: async () => {
+              await Updates.fetchUpdateAsync();
+              await Updates.reloadAsync(); // depende de tu necesidad puedes usar Updates.reloadAsync() para recargar la aplicación y aplicar la actualización de inmediato
+            }
+          },
+        ]
+      );
+      return true
+    } else {
+      return false
+    }
+  } catch (e) {
+    return false
+  }
+}
+
 export default function App() {
+
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     setInterval(() => {
       setIsLoaded(true)
+      checkForUpdates();
     }, 5000)
   }, [])
 
