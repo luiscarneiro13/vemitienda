@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { View, Image, StyleSheet, Text, TouchableOpacity, Button as BTN } from 'react-native'
+import { View, Image, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { ActivityIndicator, Card, useTheme } from 'react-native-paper'
 import SvgComponent from './Svg'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginExternal, version, logs } from '../../redux/thunks'
+import { loginExternal, version } from '../../redux/thunks'
 import { deleteToken, loadingToken } from '../../redux/slices'
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
@@ -17,10 +17,7 @@ export default function Login() {
     WebBrowser.maybeCompleteAuthSession()
 
     const [actualizar, setActualizar] = useState(false)
-    const [sending, setSending] = useState(false)
-    const [showPass, setShowPass] = useState(true)
     const theme = useTheme()
-    const navigation = useNavigation()
     const dispatch = useDispatch()
     const isLoading = useSelector(state => state.token.isLoading)
 
@@ -31,6 +28,7 @@ export default function Login() {
     const [request, response, promptAsync] = Google.useAuthRequest({
         androidClientId: "895842208250-ju0l1c9msodak02iqj7m1lluo9gt4cfs.apps.googleusercontent.com",
         expoClientId: "895842208250-avq22gq2ugrgillani7c4485grehl5f4.apps.googleusercontent.com",
+        scopes: ['profile', 'email'], // Asegúrate de que los scopes sean los correctos
     });
 
     useEffect(() => {
@@ -100,12 +98,7 @@ export default function Login() {
 
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <SvgComponent />
-            <View>
-                {/* <Text>{ JSON.stringify(userInfo) }</Text> */}
-                {/* <Image
-                    source={require('../../assets/init.jpg')} style={{ width: 400, height: 300, marginTop: -310 }}
-                /> */}
-            </View>
+
             {!isLoading &&
                 <Card style={{ width: '90%', marginTop: 20, borderRadius: 10 }}>
                     <Card.Content>
@@ -130,7 +123,7 @@ export default function Login() {
 
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
                 <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -400 }} />
-                <Text style={{ color: theme.colors.primary, marginTop: -16 }}>Venezuela. Versión {VERSION}</Text>
+                <Text style={{ color: theme.colors.primary, marginTop: -16 }}>Versión {VERSION}</Text>
             </View>
 
         </View>
