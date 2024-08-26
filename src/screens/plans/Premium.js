@@ -31,8 +31,8 @@ export default function Index() {
         <Card>
           <Card.Title title="Contacto" />
           <Card.Content>
-            <Text variant="titleLarge">Sitio web: https://vemitienda.online</Text>
-            <Text variant="titleLarge">Email: info@vemitienda.online</Text>
+            <Text variant="titleLarge">Sitio web: https://vemitienda.com.ve</Text>
+            <Text variant="titleLarge">Email: info@vemitienda.com</Text>
             <Text variant="titleLarge">Teléfono: 0424 849 68 99</Text>
           </Card.Content>
         </Card>

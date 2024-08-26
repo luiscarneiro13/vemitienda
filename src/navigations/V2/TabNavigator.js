@@ -132,7 +132,7 @@ export default function TabNavigator() {
         }}
       >
         <Text style={{ color: "#04304f", fontSize: 10 }}>
-          Sitio web: https://vemitienda.online
+          Sitio web: https://vemitienda.com.ve
         </Text>
       </View>
     </>

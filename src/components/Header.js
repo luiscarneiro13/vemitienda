@@ -24,7 +24,7 @@ export default function Header() {
                         <Text style={{ color: 'white' }}>
                             {/* <Text style={{ fontWeight: 'bold' }}>
                                 Contáctanos: </Text>
-                            info@vemitienda.online */}
+                            info@vemitienda.com */}
                         </Text>
                     </View>
                 </View>
