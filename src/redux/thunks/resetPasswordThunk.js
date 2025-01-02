@@ -11,14 +11,20 @@ export const searchEmail = (params, navigator) => {
 
         if (data?.data) {
             const datos = data?.data?.data
-            const dataEmail = await API.postDB(`reset1`, {
-                user_id: datos.id
-            })
-            if (dataEmail?.data) {
+            console.log(datos)
+            if (datos) {
+                const dataEmail = await API.postDB(`reset1`, {
+                    user_id: datos.id
+                })
+                if (dataEmail?.data) {
+                    dispatch(loadingResetPassword(false))
+                    navigator.navigate('Login')
+                    const message = dataEmail?.data?.message
+                    Alert.alert('Mensaje', message)
+                }
+            } else {
                 dispatch(loadingResetPassword(false))
-                navigator.navigate('Login')
-                const message = dataEmail?.data?.message
-                Alert.alert('Mensaje', message)
+                Alert.alert('Mensaje', 'No existe el email')
             }
         } else {
             dispatch(loadingResetPassword(false))

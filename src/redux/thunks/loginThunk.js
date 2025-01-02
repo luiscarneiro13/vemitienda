@@ -13,16 +13,16 @@ export const getToken = (params) => {
         dispatch(loadingToken(true))
         const data = await API.postDB(`login`, params)
         const datos = await data?.data
-
         if (datos?.data?.token) {
-            const planId = datos?.data?.plan_user?.plan_id
-            if (planId) {
-                dispatch(addPlanId(planId))
-            }
-            dispatch(addToken(datos?.data?.token))
+            // console.log("LUIS", datos.data)
+            dispatch(addToken({
+                token: datos?.data?.token,
+                onboarding: datos?.data?.company.onboarding
+            }))
             const data2 = await API.postDB(`user-information`, params)
             const datos2 = await data2?.data?.data
             dispatch(addUserInfo(datos2))
+            dispatch(addEntrar(true))
         }
 
         dispatch(loadingToken(false))
@@ -30,7 +30,7 @@ export const getToken = (params) => {
 }
 
 export const loginExternal = (params) => {
-    
+
     return async (dispatch, getState) => {
 
         const url = `${PROVIDER_SOCIAL[params.provider]}`
@@ -70,7 +70,7 @@ export const version = (params) => {
         try {
             const data = await API.postDB(url, params)
             const datos = await data?.data
-            console.log(datos.actualizar)
+            // console.log(datos.actualizar)
             return datos.actualizar
         } catch (error) {
         }

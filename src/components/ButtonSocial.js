@@ -11,18 +11,19 @@ export default function ButtonSocial({ provider, onClick }) {
 
     const Google = () => {
         return (
-            <TouchableOpacity onPress={() => { onClick() }} disabled={startLoadingToken}>
-                <Avatar
-                    size={48}
-                    rounded
-                    icon={{ name: "google", type: "font-awesome" }}
-                    containerStyle={Styles.buttonGoogle}
-                />
-                <Text>Ingresar</Text>
-            </TouchableOpacity>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <TouchableOpacity onPress={() => { onClick() }} disabled={startLoadingToken}>
+                    <Avatar
+                        size={48}
+                        rounded
+                        icon={{ name: "google", type: "font-awesome" }}
+                        containerStyle={Styles.buttonGoogle}
+                    />
+                </TouchableOpacity>
+                <Text>Ingresar con Google</Text>
+            </View>
         )
     }
-
 
     const SwitchSocialButton = () => {
         switch (provider) {

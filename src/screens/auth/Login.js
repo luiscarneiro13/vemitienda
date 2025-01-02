@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { View, Image, Text } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import { ActivityIndicator, Card, useTheme } from 'react-native-paper'
+import { View, Image, Text, StyleSheet } from 'react-native'
+import { ActivityIndicator, Button, Card, TextInput, useTheme } from 'react-native-paper'
 import SvgComponent from './Svg'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginExternal, version } from '../../redux/thunks'
+import { getToken, loginExternal, version } from '../../redux/thunks'
 import { deleteToken, loadingToken } from '../../redux/slices'
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import ButtonSocial from '../../components/ButtonSocial'
 import { VERSION } from '../../constants/Data'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { Styles } from '../../constants/Styles'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Login() {
 
@@ -20,6 +23,10 @@ export default function Login() {
     const theme = useTheme()
     const dispatch = useDispatch()
     const isLoading = useSelector(state => state.token.isLoading)
+    const [showPass, setShowPass] = useState(true)
+    const startLoadingToken = useSelector(state => state.token.isLoading)
+    const [sending, setSending] = useState(false)
+    const navigation = useNavigation()
 
     // INICIO DE SESIÓN CON GOOGLE
 
@@ -67,10 +74,27 @@ export default function Login() {
         }
     }
 
-
     // FIN INICIO DE SESIÓN CON GOOGLE
 
+    const formik = useFormik({
+        initialValues: initialValues(),
+        validationSchema: Yup.object(validationSchema()),
+        onSubmit: (data) => {
+            (async () => {
+                try {
+                    dispatch(getToken(data))
+                } catch (error) {
+                    // console.log(error)
+                }
+                // setSending(false)
 
+            })()
+        }
+    })
+
+    const showingPass = () => {
+        setShowPass(!showPass)
+    }
 
     useEffect(() => {
         dispatch(deleteToken())
@@ -94,11 +118,84 @@ export default function Login() {
         fetchData()
     }, [])
 
+
     return (
 
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <SvgComponent />
 
+            <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
+                <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -400 }} />
+                <Text style={{ color: theme.colors.primary, marginTop: -16 }}>Versión {VERSION}</Text>
+            </View>
+
+            <Card style={{ width: '90%', marginTop: -205, borderRadius: 10 }}>
+                <Card.Title title="Inicio de Sesión email" titleStyle={{ color: theme.colors.primary }} />
+                <Card.Content>
+
+                    <TextInput
+                        mode='flat'
+                        label="Email"
+                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
+                        value={formik.values.email}
+                        onChangeText={(text) => formik.setFieldValue('email', text)}
+                        outlineColor={theme.colors.primary}
+                        color={theme.colors.primary}
+                        theme={{ colors: { text: theme.colors.primary } }}
+
+                    />
+                    <Text style={styles.error}>{formik.errors.email}</Text>
+
+                    <TextInput
+                        mode='flat'
+                        label="Contraseña"
+                        secureTextEntry={showPass}
+                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
+                        value={formik.values.password}
+                        onChangeText={(text) => formik.setFieldValue('password', text)}
+                        outlineColor={theme.colors.primary}
+                        color={theme.colors.primary}
+                        theme={{ colors: { text: theme.colors.primary } }}
+                    />
+                    <Text style={styles.error}>{formik.errors.password}</Text>
+
+                    <Button
+                        icon="account"
+                        mode="contained"
+                        onPress={formik.handleSubmit}
+                        uppercase={false}
+                        loading={startLoadingToken}
+                        disabled={startLoadingToken}
+                        style={Styles.buttonPlus}
+                    >
+                        Iniciar Sesión con email
+                    </Button>
+
+
+
+                </Card.Content>
+                <Card.Actions style={{ paddingTop: 50 }}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+                        {/* <Button
+                            mode='outline'
+                            onPress={() => navigation.navigate('Register')}
+                            uppercase={false}
+                            style={Styles.buttonPlus}
+                            color={theme.colors.primary}
+                        >
+                            Registro
+                        </Button> */}
+                        <Button
+                            onPress={() => navigation.navigate('ForgotPassword')}
+                            uppercase={false}
+                            style={Styles.buttonPlus}
+                            color={theme.colors.primary}
+                        >
+                            Recuperar Contraseña
+                        </Button>
+                    </View>
+                </Card.Actions>
+            </Card>
             {!isLoading &&
                 <Card style={{ width: '90%', marginTop: 20, borderRadius: 10 }}>
                     <Card.Content>
@@ -113,6 +210,7 @@ export default function Login() {
                                 <ButtonSocial provider="google" onClick={() => promptAsync()} />}
 
                         </View>
+
                     </Card.Content>
                 </Card>
             }
@@ -120,12 +218,34 @@ export default function Login() {
             {isLoading &&
                 <ActivityIndicator />
             }
-
-            <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
-                <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -400 }} />
-                <Text style={{ color: theme.colors.primary, marginTop: -16 }}>Versión {VERSION}</Text>
-            </View>
-
         </View>
     )
 }
+
+function initialValues() {
+    return {
+        email: '',
+        password: ''
+    }
+}
+
+function validationSchema() {
+    return {
+        email: Yup.string('Formato inválido')
+            .required('Email requerido')
+            .email('Email inválido')
+            .max(90, 'Máximo 90 caracteres'),
+        password: Yup.string('Formato inválido')
+            .required('Contraseña requerida')
+            .min(3, 'Mínimo 3 caracteres')
+            .max(20, 'Máximo 20 caracteres')
+    }
+}
+
+const styles = StyleSheet.create({
+    error: {
+        color: '#f9672e',
+        marginBottom: 20,
+        marginTop: -15
+    }
+})
