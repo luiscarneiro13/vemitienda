@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, Image } from 'react-native';
-import ViewPager from '@react-native-community/viewpager';
+import PagerView from 'react-native-pager-view';
 import { useNavigation } from '@react-navigation/native';
 import { Feather as Icon } from '@expo/vector-icons';
 import { useSelector, useDispatch } from "react-redux";
@@ -98,7 +98,7 @@ export default function Screen1() {
   }
 
   return (
-    <ViewPager style={{ flex: 1 }} ref={pagerRef}>
+    <PagerView style={{ flex: 1 }} ref={pagerRef}>
       <View key="1">
         <View
           style={{
@@ -167,6 +167,6 @@ export default function Screen1() {
           rightButtonPress={formik.handleSubmit}
         />
       </View>
-    </ViewPager>
+    </PagerView>
   )
 }

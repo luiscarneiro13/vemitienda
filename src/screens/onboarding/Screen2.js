@@ -9,7 +9,7 @@ import * as Func from "./Functions2"
 import * as Yup from "yup"
 import { Styles } from "../../constants/Styles"
 import Footer from './components/Footer'
-import ViewPager from '@react-native-community/viewpager'
+import PagerView from 'react-native-pager-view';
 import { useNavigation } from '@react-navigation/native'
 import { storeCompanyOnboardingThunk } from '../../redux/thunks'
 
@@ -42,7 +42,7 @@ export default function Screen2(prop) {
   }
 
   return (
-    <ViewPager style={{ flex: 1 }} ref={pagerRef}>
+    <PagerView style={{ flex: 1 }} ref={pagerRef}>
       <View key="1">
         <View
           style={{
@@ -96,6 +96,6 @@ export default function Screen2(prop) {
           leftButtonPress={() => { previousButton() }}
         />
       </View>
-    </ViewPager>
+    </PagerView>
   )
 }
