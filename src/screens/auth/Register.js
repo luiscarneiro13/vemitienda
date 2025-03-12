@@ -57,7 +57,7 @@ export default function Register() {
                     <TextInput
                         mode='flat'
                         label="Nombre y Apellido"
-                        left={<TextInput.Icon name="account" color={theme.colors.primary} />}
+                        left={<TextInput.Icon icon="account" color={theme.colors.primary} />}
                         value={formik.values.name}
                         onChangeText={(text) => formik.setFieldValue('name', text)}
                         outlineColor={theme.colors.primary}
@@ -70,7 +70,7 @@ export default function Register() {
                     <TextInput
                         mode='flat'
                         label="Email"
-                        left={<TextInput.Icon name="mail" color={theme.colors.primary} />}
+                        left={<TextInput.Icon icon="mail" color={theme.colors.primary} />}
                         value={formik.values.email}
                         onChangeText={(text) => formik.setFieldValue('email', text)}
                         outlineColor={theme.colors.primary}
@@ -84,8 +84,8 @@ export default function Register() {
                         mode='flat'
                         label="Contraseña"
                         secureTextEntry={showPass1}
-                        left={<TextInput.Icon name="lock" color={theme.colors.primary} />}
-                        right={<TextInput.Icon name="eye" color={theme.colors.primary} onPress={() => showingPass1()} />}
+                        left={<TextInput.Icon icon="lock" color={theme.colors.primary} />}
+                        right={<TextInput.Icon icon="eye" color={theme.colors.primary} onPress={() => showingPass1()} />}
                         value={formik.values.password}
                         onChangeText={(text) => formik.setFieldValue('password', text)}
                         outlineColor={theme.colors.primary}
@@ -99,8 +99,8 @@ export default function Register() {
                         mode='flat'
                         label="Repita la contraseña"
                         secureTextEntry={showPass2}
-                        left={<TextInput.Icon name="lock" color={theme.colors.primary} />}
-                        right={<TextInput.Icon name="eye" color={theme.colors.primary} onPress={() => showingPass2()} />}
+                        left={<TextInput.Icon icon="lock" color={theme.colors.primary} />}
+                        right={<TextInput.Icon icon="eye" color={theme.colors.primary} onPress={() => showingPass2()} />}
                         value={formik.values.password_confirmation}
                         onChangeText={(text) => formik.setFieldValue('password_confirmation', text)}
                         outlineColor={theme.colors.primary}

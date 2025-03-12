@@ -26,6 +26,7 @@ export default function ForgotPassword() {
 
             (async () => {
                 try {
+                    console.log("data",data)
                     dispatch(searchEmail(data, navigation))
                 } catch (error) {
                     // console.log(error)
@@ -46,7 +47,7 @@ export default function ForgotPassword() {
                     <TextInput
                         mode='flat'
                         label="Ingrese su Email"
-                        left={<TextInput.Icon name="email" color={theme.colors.primary} />}
+                        left={<TextInput.Icon icon="email" color={theme.colors.primary} />}
                         value={formik.values.email}
                         onChangeText={(text) => formik.setFieldValue('email', text)}
                         outlineColor={theme.colors.primary}

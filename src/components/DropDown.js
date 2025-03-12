@@ -46,7 +46,7 @@ export const DropList = (items) => {
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
                 onChange={item => { onChange(item) }}
-                renderLeftIcon={() => iconName ? <TextInput.Icon name={iconName} /> : null}
+                renderLeftIcon={() => iconName ? <TextInput.Icon icon={iconName} /> : null}
                 backgroundColor={'rgba(52, 52, 52, 0.8)'}
             />
 

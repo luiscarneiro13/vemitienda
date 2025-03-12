@@ -11,8 +11,7 @@ export const searchEmail = (params, navigator) => {
 
         if (data?.data) {
             const datos = data?.data?.data
-            console.log(datos)
-            if (datos) {
+             if (datos) {
                 const dataEmail = await API.postDB(`reset1`, {
                     user_id: datos.id
                 })
