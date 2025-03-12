@@ -26,6 +26,7 @@ export default function ForgotPassword() {
 
             (async () => {
                 try {
+                    console.log("data",data)
                     dispatch(searchEmail(data, navigation))
                 } catch (error) {
                     // console.log(error)
@@ -40,7 +41,7 @@ export default function ForgotPassword() {
             <View>
                 <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -310 }} />
             </View>
-            <Card style={{ width: '90%', marginTop: -205, borderRadius: 10 }}>
+            <Card style={{ width: '90%', marginTop: -205, borderRadius: 10, backgroundColor:'#FFF' }}>
                 <Card.Title title="Recuperar de Contraseña" />
                 <Card.Content>
                     <TextInput

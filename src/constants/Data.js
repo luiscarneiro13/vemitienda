@@ -1,5 +1,4 @@
-// const DOMINIO = 'https://vemitienda.com.ve/'
-const DOMINIO = 'https://vemitiendabackend.tests/'
+const DOMINIO = 'https://vemitienda.com.ve/'
 
 export const DIGITALOCEAN = DOMINIO
 export const URL_PRODUCTION = DOMINIO + 'api/v3/'

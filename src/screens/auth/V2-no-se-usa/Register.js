@@ -51,7 +51,7 @@ export default function Register() {
             <View>
                 <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -310 }} />
             </View>
-            <Card style={{ width: '90%', marginTop: -205, borderRadius: 10 }}>
+            <Card style={{ width: '90%', marginTop: -205, borderRadius: 10, backgroundColor:'#FFF' }}>
                 <Card.Title title="Registro" titleStyle={{ color: theme.colors.primary }} />
                 <Card.Content>
                     <TextInput

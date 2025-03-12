@@ -7,7 +7,8 @@ import { addUserPassword, loadingResetPassword } from '../slices'
 export const searchEmail = (params, navigator) => {
     return async (dispatch, getState) => {
         dispatch(loadingResetPassword(true))
-        const data = await API.postDB(`searchEmail`, params)
+          const data = await API.postDB(`searchEmail`, params)
+        console.log("resp:",data.data.data)
 
         if (data?.data) {
             const datos = data?.data?.data

@@ -119,74 +119,7 @@ export default function Login() {
             <View>
                 <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -310 }} />
             </View>
-            {/* <Card style={{ width: '90%', marginTop: -205, borderRadius: 10 }}>
-                <Card.Title title="Inicio de Sesión email" titleStyle={{ color: theme.colors.primary }} />
-                <Card.Content>
-                    <TextInput
-                        mode='flat'
-                        label="Email"
-                        left={<TextInput.Icon name="mail" color={theme.colors.primary} />}
-                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
-                        value={formik.values.email}
-                        onChangeText={(text) => formik.setFieldValue('email', text)}
-                        outlineColor={theme.colors.primary}
-                        color={theme.colors.primary}
-                        theme={{ colors: { text: theme.colors.primary } }}
-
-                    />
-                    <Text style={styles.error}>{formik.errors.email}</Text>
-
-                    <TextInput
-                        mode='flat'
-                        label="Contraseña"
-                        secureTextEntry={showPass}
-                        left={<TextInput.Icon name="lock" color={theme.colors.primary} />}
-                        right={<TextInput.Icon name="eye" color={theme.colors.primary} onPress={() => showingPass()} />}
-                        style={{ marginBottom: 10, backgroundColor: '#FFF' }}
-                        value={formik.values.password}
-                        onChangeText={(text) => formik.setFieldValue('password', text)}
-                        outlineColor={theme.colors.primary}
-                        color={theme.colors.primary}
-                        theme={{ colors: { text: theme.colors.primary } }}
-                    />
-                    <Text style={styles.error}>{formik.errors.password}</Text>
-
-                    <Button
-                        icon="account"
-                        mode="contained"
-                        onPress={formik.handleSubmit}
-                        uppercase={false}
-                        loading={startLoadingToken}
-                        disabled={startLoadingToken}
-                        style={Styles.buttonPlus}
-                    >
-                        Iniciar Sesión con email
-                    </Button>
-
-                </Card.Content>
-                <Card.Actions style={{ paddingTop: 50 }}>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-                        <Button
-                            mode='outline'
-                            onPress={() => navigation.navigate('Register')}
-                            uppercase={false}
-                            style={Styles.buttonPlus}
-                            color={theme.colors.primary}
-                        >
-                            Registro
-                        </Button>
-                        <Button
-                            onPress={() => navigation.navigate('ForgotPassword')}
-                            uppercase={false}
-                            style={Styles.buttonPlus}
-                            color={theme.colors.primary}
-                        >
-                            Recuperar Contraseña
-                        </Button>
-                    </View>
-                </Card.Actions>
-            </Card> */}
-            <Card style={{ width: '90%', marginTop: 20, borderRadius: 10 }}>
+            <Card style={{ width: '90%', marginTop: 20, borderRadius: 10, backgroundColor:'#FFF' }}>
                 <Card.Title title="Tambien puede iniciar sesión con" titleStyle={{ color: theme.colors.primary }} />
                 <Card.Content>
 

@@ -28,7 +28,7 @@ export default function Index() {
           <HeaderGrid title={"Planes"} />
         </View>
 
-        <Card>
+        <Card style={{ backgroundColor: '#FFF' }}>
           <Card.Title title="Contacto" />
           <Card.Content>
             <Text variant="titleLarge">Sitio web: https://vemitienda.com.ve</Text>
@@ -37,7 +37,7 @@ export default function Index() {
           </Card.Content>
         </Card>
 
-        <Card>
+        <Card style={{ backgroundColor: '#FFF' }}>
           <Card.Title title="Plan Catálogo" />
           <Card.Content>
             <Text variant="titleLarge">
@@ -48,14 +48,14 @@ export default function Index() {
           </Card.Content>
         </Card>
 
-        <Card>
+        <Card style={{ backgroundColor:'#FFF' }}>
           <Card.Title title="Plan Tienda Online" />
           <Card.Content>
             <Text variant="titleLarge">
               Después de los 30 días gratuitos, el costo del plan tienda online es de 1.99$ mensuales y podrás tener
               todos los productos que sean necesarios y además la aplicación creará
-              una tienda para ti, con carrito de compras. Con este plan tendrás acceso a los pedidos 
-              y podrás cambiarle el status. También se descuenta la cantidad de productos en cada pedido 
+              una tienda para ti, con carrito de compras. Con este plan tendrás acceso a los pedidos
+              y podrás cambiarle el status. También se descuenta la cantidad de productos en cada pedido
               así que tendrás el inventario actualizado. Incluye carrito de compras
             </Text>
           </Card.Content>

@@ -69,7 +69,7 @@ export default function OrderDetails(data) {
           <HeaderGrid title={`Detalles del pedido N° ${item.id}`} />
         </View>
 
-        <Card>
+        <Card style={{ backgroundColor:'#FFF' }}>
           <Card.Content>
             <Card.Title title="Datos del pedido" />
             <Text variant="titleLarge">{`Pedido ${item?.id}`}</Text>

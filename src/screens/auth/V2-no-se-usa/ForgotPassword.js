@@ -41,9 +41,11 @@ export default function ForgotPassword() {
             <View>
                 <Image source={require('../../images/icon.png')} style={{ width: 170, height: 130, marginTop: -310 }} />
             </View>
-            <Card style={{ width: '90%', marginTop: -205, borderRadius: 10 }}>
+            <Card style={{ width: '90%', marginTop: -205, borderRadius: 10, backgroundColor:'#FFF' }}>
                 <Card.Title title="Recuperar de Contraseña" />
                 <Card.Content>
+                    <Text>HOLA</Text>
+
                     <TextInput
                         mode='flat'
                         label="Ingrese su Email"

@@ -129,7 +129,7 @@ export default function Login() {
                 <Text style={{ color: theme.colors.primary, marginTop: -16 }}>Versión {VERSION}</Text>
             </View>
 
-            <Card style={{ width: '90%', marginTop: -205, borderRadius: 10 }}>
+            <Card style={{ width: '90%', marginTop: -205, borderRadius: 10, backgroundColor:'#FFF' }}>
                 <Card.Title title="Inicio de Sesión email" titleStyle={{ color: theme.colors.primary }} />
                 <Card.Content>
 
@@ -197,22 +197,28 @@ export default function Login() {
                 </Card.Actions>
             </Card>
             {!isLoading &&
-                <Card style={{ width: '90%', marginTop: 20, borderRadius: 10 }}>
-                    <Card.Content>
+                <>
+                    <Card style={{ width: '90%', marginTop: 20, borderRadius: 10, backgroundColor:'#FFF' }}>
+                        <Card.Content>
 
-                        <View style={{ marginTop: 0, flexDirection: 'row', justifyContent: 'space-around' }}>
+                            <View style={{ marginTop: 0, flexDirection: 'row', justifyContent: 'space-around' }}>
 
-                            {actualizar ?
-                                <Text>
-                                    Hay una actualización disponible, por favor descárguela
-                                </Text>
-                                :
-                                <ButtonSocial provider="google" onClick={() => promptAsync()} />}
+                                {actualizar ?
+                                    <Text>
+                                        Hay una actualización disponible, por favor descárguela
+                                    </Text>
+                                    :
+                                    <ButtonSocial provider="google" onClick={() => promptAsync()} />}
 
-                        </View>
+                            </View>
 
-                    </Card.Content>
-                </Card>
+
+                        </Card.Content>
+                    </Card>
+                    <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
+                        <Text style={{ color: theme.colors.primary }}>Venezuela. Versión {VERSION}</Text>
+                    </View>
+                </>
             }
 
             {isLoading &&
