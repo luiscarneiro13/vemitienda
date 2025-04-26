@@ -1,0 +1,9 @@
+# Ignorar node_modules (se instala dentro del contenedor)
+node_modules
+
+# Ignorar archivos temporales o basura
+*.log
+*.tmp
+*.swp
+*.swo
+*.DS_Store

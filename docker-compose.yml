@@ -1,0 +1,16 @@
+services:
+  react-native:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: react-native-dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    working_dir: /app
+    tty: true
+    stdin_open: true
+    network_mode: "host" # <<<<<< AQUI!
+    environment:
+      - NODE_ENV=development
+      - REACT_NATIVE_PACKAGER_HOSTNAME=192.168.16.192
