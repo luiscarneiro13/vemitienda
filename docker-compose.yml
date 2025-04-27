@@ -10,7 +10,12 @@ services:
     working_dir: /app
     tty: true
     stdin_open: true
-    network_mode: "host" # <<<<<< AQUI!
+    # network_mode: "host"  <-- ELIMINA ESTA LÍNEA
+    ports:
+      - "8081:8081"
+      - "19000:19000"
+      - "19001:19001"
+      - "19002:19002"
     environment:
       - NODE_ENV=development
-      - REACT_NATIVE_PACKAGER_HOSTNAME=192.168.16.192
+      - REACT_NATIVE_PACKAGER_HOSTNAME=192.168.16.193  # Opcional, pero útil para la comunicación al host
