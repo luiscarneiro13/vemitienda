@@ -13,4 +13,4 @@ services:
     network_mode: "host" # <<<<<< AQUI!
     environment:
       - NODE_ENV=development
-      - REACT_NATIVE_PACKAGER_HOSTNAME=192.168.16.192
+      - REACT_NATIVE_PACKAGER_HOSTNAME=192.168.16.193 # Pendiente que esta ip a veces cambia

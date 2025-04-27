@@ -19,6 +19,13 @@ if [[ "$PURGE" == "s" || "$PURGE" == "S" ]]; then
   docker system prune -af --volumes
 fi
 
+# Comprobamos si el contenedor ya existe
+if [ "$(docker ps -a -q -f name=^react-native-dev$)" ]; then
+  echo ">> Deteniendo y eliminando contenedor react-native-dev existente..."
+  docker stop react-native-dev
+  docker rm react-native-dev
+fi
+
 echo ">> Reconstruyendo el contenedor react-native..."
 docker compose build
 
@@ -29,6 +36,4 @@ docker compose up -d react-native
 sleep 5
 
 echo ">> Entrando al contenedor react-native-dev..."
-# docker exec -it react-native-dev bash -c "npx expo start --host lan"
 docker exec -it react-native-dev bash -c "CHOKIDAR_USEPOLLING=true npx expo start --host lan"
-
