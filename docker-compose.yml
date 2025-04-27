@@ -18,4 +18,4 @@ services:
       - "19002:19002"
     environment:
       - NODE_ENV=development
-      - REACT_NATIVE_PACKAGER_HOSTNAME=192.168.16.193  # Opcional, pero útil para la comunicación al host
+      - REACT_NATIVE_PACKAGER_HOSTNAME=192.168.16.193 # Pendiente que esta ip a veces cambia
