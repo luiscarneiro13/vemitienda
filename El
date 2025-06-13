@@ -1,0 +1,2 @@
+ contenedor vemitienda-app no está en ejecución.
+ contenedor react-native-dev no está en ejecución.

@@ -11,24 +11,24 @@ echo.
 docker ps --filter "name=react-native-dev" --format "{{.Names}}" | findstr /C:"react-native-dev" >nul 2>&1
 if %errorlevel% == 0 (
     echo >> Deteniendo el contenedor react-native-dev...
-    docker compose down react-native
+    docker compose down react-native-dev
 ) else (
     echo >> El contenedor react-native-dev no está en ejecución.
 )
 
 echo.
 echo =================================
-echo Reconstruyendo el contenedor react-native...
+echo Reconstruyendo el contenedor react-native-dev...
 echo.
 
 docker compose build
 
 echo.
 echo =================================
-echo Iniciando servicio react-native con puertos abiertos...
+echo Iniciando servicio react-native-dev con puertos abiertos...
 echo.
 
-docker compose up -d react-native
+docker compose up -d react-native-dev
 
 REM Esperamos unos segundos
 timeout /t 5 /nobreak >nul
