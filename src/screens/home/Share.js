@@ -95,7 +95,9 @@ export default function Index() {
         "Debe agregar la información de su tienda"
       );
     } else {
-      let base = ''
+      let base = company.url_catalogo
+
+      /*
       switch (shopSelected) {
         case 0:
           //Catálogo
@@ -106,6 +108,7 @@ export default function Index() {
           base = company.url_tienda_new
           break;
       }
+      */
 
       const message = `${base}?cat=${catSelected}`
       navigator.navigate("Home");
@@ -124,21 +127,23 @@ export default function Index() {
           <Atras />
           <HeaderGrid title={"Compartir"} />
         </View>
+        {/* 
         <DropList
           label="Tipo"
           placeholder="Que va a compartir?"
           searchPlaceholder="Escriba aquí para buscar ..."
           labelField={"name"}
           data={company.is_shop === 1 ? [
-            { id: 0, name: 'Catálogo (Sin carrito de compras)' },
+            { id: 0, name: 'Catálogo' },
             // { id: 1, name: 'Tienda Online (Con carrito de compras)' },
           ] : [
-            { id: 0, name: 'Catálogo (Sin carrito de compras)' },
+            { id: 0, name: 'Catálogo' },
           ]}
           value={shopSelected}
           backgroundColor="#000"
           onChange={(value) => setShopSelected(value.id)}
-        />
+        /> 
+        */}
 
         <DropList
           label="Categoría"
