@@ -131,7 +131,7 @@ export default function Index() {
           labelField={"name"}
           data={company.is_shop === 1 ? [
             { id: 0, name: 'Catálogo (Sin carrito de compras)' },
-            { id: 1, name: 'Tienda Online (Con carrito de compras)' },
+            // { id: 1, name: 'Tienda Online (Con carrito de compras)' },
           ] : [
             { id: 0, name: 'Catálogo (Sin carrito de compras)' },
           ]}
