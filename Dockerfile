@@ -1,16 +1,4 @@
-FROM reactnativecommunity/react-native-android:v16.0
-
-# Instalamos herramientas útiles
-RUN apt-get update && apt-get install -y \
-    git \
-    nano \
-    curl \
-    unzip \
-    wget \
-    && rm -rf /var/lib/apt/lists/*
-
-# Instalamos expo-cli y eas-cli globalmente
-RUN npm install -g expo-cli eas-cli @expo/ngrok@^4.1.0
+FROM carneiroluis2/reactnative:latest
 
 # Definimos carpeta de trabajo
 WORKDIR /app
