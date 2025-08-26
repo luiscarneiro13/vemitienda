@@ -84,18 +84,43 @@ export default function CardCustom({ onClick, share }) {
                 }
 
                 return (
-                    <Card width="42%">
+                    <Card
+                        width="42%"
+                        containerStyle={{
+                            borderColor: '#b8d5e9',
+                            borderWidth: 1,
+                            borderRadius: 12,
+                            elevation: 4,
+                            shadowColor: '#000',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 3.84,
+                            padding: 0,           // elimina espacio interno
+                            overflow: 'hidden',   // respeta el redondeo
+                        }}
+                    >
                         <TouchableOpacity onPress={() => onClick(products[index])}>
                             <Card.Image
-                                style={{ padding: 0, width: '100%', height: 100 }}
+                                style={{
+                                    width: '100%',
+                                    height: 100,
+                                    margin: 0, // separación de 1px del borde
+                                    borderTopLeftRadius: 11,
+                                    borderTopRightRadius: 11,
+                                    borderBottomLeftRadius: 0,
+                                    borderBottomRightRadius: 0,
+                                }}
                                 source={{ uri: url }}
                             />
-                            <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 10 }}>{name}</Text>
-                            {price &&
-                                <Text style={{ justifyContent: 'center', alignItems: 'center', fontSize: 12 }}>${price}</Text>
-                            }
+                            <View style={{ padding: 8 }}>
+                                <Text style={{ textAlign: 'center', fontSize: 10 }}>{name}</Text>
+                                {price && (
+                                    <Text style={{ textAlign: 'center', fontSize: 12 }}>${price}</Text>
+                                )}
+                            </View>
                         </TouchableOpacity>
                     </Card>
+
                 )
 
                 // return (

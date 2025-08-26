@@ -22,8 +22,9 @@ export default function Search({ query, onChange }) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        marginBottom: -5,
-        padding: 5,
+        // marginBottom: -5,
+        paddingLeft: 5,
+        paddingTop:5,
         backgroundColor: '#F3F3F3',
         width: '60%',
         borderRadius: 10,

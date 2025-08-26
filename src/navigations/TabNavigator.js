@@ -37,8 +37,8 @@ export default function TabNavigator() {
           headerTransparent: true,
           tabBarStyle: {
             backgroundColor: "#F3F3F3",
-            height: 70,
-            marginBottom: -10,
+            height: 110,
+            marginBottom: -30,
           },
         }}
       >

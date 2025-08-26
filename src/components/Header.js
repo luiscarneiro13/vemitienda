@@ -10,7 +10,7 @@ export default function Header() {
     return (
         <>
             <StatusBar translucent backgroundColor="#053e66" />
-            <LinearGradient colors={['#C7E6FF', '#F3F3F3']}>
+            <LinearGradient colors={['#b8d5e9', '#F3F3F3']}>
                 <View style={styles.header}>
                     <View style={styles.headerTitle}>
                         <Image
