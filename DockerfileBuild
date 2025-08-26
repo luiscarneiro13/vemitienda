@@ -1,4 +1,4 @@
-FROM  reactnativecommunity/react-native-android:v16.0
+FROM  reactnativecommunity/react-native-android:v18.0
 WORKDIR /app
 COPY . .
 
