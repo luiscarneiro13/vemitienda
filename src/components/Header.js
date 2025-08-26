@@ -10,22 +10,13 @@ export default function Header() {
     return (
         <>
             <StatusBar translucent backgroundColor="#053e66" />
-            <LinearGradient colors={['#F3F3F3', '#F3F3F3']}
-                style={styles.gradient} >
+            <LinearGradient colors={['#C7E6FF', '#F3F3F3']}>
                 <View style={styles.header}>
                     <View style={styles.headerTitle}>
                         <Image
                             source={require('../images/icon.png')}
                             style={styles.image}
                         />
-                        {/* <Text style={{ ...styles.title, color: 'white' }}>Ve mi Tienda</Text> */}
-                    </View>
-                    <View style={{ marginTop: -10 }}>
-                        <Text style={{ color: 'white' }}>
-                            {/* <Text style={{ fontWeight: 'bold' }}>
-                                Contáctanos: </Text>
-                            info@vemitienda.com */}
-                        </Text>
                     </View>
                 </View>
             </LinearGradient>
@@ -61,6 +52,6 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     gradient: {
-        zIndex: -1000
+        backgroundColor: "#FFFFFF"
     }
 })
