@@ -28,7 +28,7 @@
 
 
 ### Actualizar imagen base
-    docker build -t reactnative -f Dockerfile.base .
-    docker tag reactnative carneiroluis2/reactnative:latest
+    docker build -t carneiroluis2/reactnative:v1.1 -f Dockerfile.base .
+    docker tag carneiroluis2/reactnative:v1.1 carneiroluis2/reactnative:latest
     docker login
     docker push carneiroluis2/reactnative:latest
