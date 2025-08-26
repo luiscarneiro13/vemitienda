@@ -27,12 +27,8 @@
     docker compose -f docker-compose-build.yml up --build
 
 
-**Abrir puertos desde windows para comunicacion con wsl**
-
-
-    la Direccion del wsl es: 172.23.52.48. Si cambia entonces hay que correr el comando con la nueva direccion
-    En powershel hay que redirigir los puertos de windows hacia ws (Ejecutar en powersehll modo admin)l:
-    netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=8081 connectaddress=172.23.52.48 connectport=8081
-    netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=19000 connectaddress=172.23.52.48 connectport=19000
-    netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=19001 connectaddress=172.23.52.48 connectport=19001
-    netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=19002 connectaddress=172.23.52.48 connectport=19002
+### Actualizar imagen base
+    docker build -t reactnative -f Dockerfile.base .
+    docker tag reactnative carneiroluis2/reactnative:latest
+    docker login
+    docker push carneiroluis2/reactnative:latest
